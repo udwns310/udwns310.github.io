@@ -138,7 +138,8 @@ body:hover #hud{opacity:.9}
 #overview .it:hover,#overview .it.cur{background:#26334a}
 #overview .it span{color:#7f93b5;width:60px;flex:none;text-align:right;font-variant-numeric:tabular-nums}
 #overview .it em{color:#ffcf8a;font-style:normal;margin-left:auto;font-size:16px}
-@media (prefers-reduced-motion:reduce){
+/* OS의 '움직임 줄이기' 설정과 무관하게 발표에서는 애니메이션을 항상 켠다(아래 블록은 일부러 비활성) */
+@media not all{
   .slide.active .r{animation:none;opacity:1}
   .slide.active .bar .trk i,.slide.active .eng .mini i{transition:none}
   .life div{transform:none!important;animation:none!important}
