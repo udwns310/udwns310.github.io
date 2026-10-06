@@ -638,8 +638,8 @@
         padding: 6px 6px;
       }
       .pt td {
-        font-size: 21px;
-        padding: 8px 6px;
+        font-size: 20px;
+        padding: 4px 6px;
       }
       .pt td.zz {
         color: var(--blue);
@@ -795,6 +795,150 @@
       .qn b {
         color: var(--blue);
       }
+      .tr-big {
+        background: #05507d;
+        color: #fff;
+        border-radius: 18px;
+        padding: 20px 26px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      .tr-big .v {
+        font-size: 64px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+      .tr-big .l {
+        font-size: 23px;
+        line-height: 1.4;
+        color: #d7e8f3;
+      }
+      .tr-big .l b {
+        color: #fff;
+      }
+      .tr-card {
+        background: #fff;
+        border: 2.5px solid var(--line);
+        border-radius: 16px;
+        padding: 14px 20px;
+        box-shadow: 0 3px 0 #d5d4cf;
+      }
+      .tr-card h3 {
+        font-size: 26px;
+        font-weight: 800;
+        margin: 0 0 4px;
+      }
+      .tr-card p {
+        font-size: 21px;
+        color: var(--ink2);
+        margin: 0;
+        line-height: 1.4;
+      }
+      .tr-card p b {
+        color: var(--blue);
+      }
+      .tr-end {
+        background: #eef5fa;
+        border-left: 8px solid var(--blue);
+        border-radius: 0 14px 14px 0;
+        padding: 16px 22px;
+        font-size: 25px;
+        line-height: 1.45;
+      }
+      .tr-end b {
+        color: var(--blue);
+      }
+      .tb {
+        position: absolute;
+        border: 3px dashed #05507d;
+        border-radius: 8px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        pointer-events: none;
+      }
+      .tb1 {
+        background: rgba(139, 145, 144, 0.22);
+        border-color: #8b9190;
+      }
+      .tb2 {
+        background: rgba(5, 80, 125, 0.12);
+      }
+      .tb span {
+        margin-top: 6px;
+        background: #fff;
+        border-radius: 999px;
+        padding: 2px 12px;
+        font-size: 17px;
+        font-weight: 800;
+        color: #05507d;
+        white-space: nowrap;
+      }
+      .tb1 span {
+        color: #4b5151;
+      }
+      .fgwrap {
+        background: #fff;
+        border: 2.5px solid var(--line);
+        border-radius: 20px;
+        padding: 20px 22px;
+        box-shadow:
+          0 4px 0 #d5d4cf,
+          0 14px 28px rgba(0, 0, 0, 0.12);
+      }
+      .fgrid {
+        display: grid;
+        grid-template-columns: 104px repeat(15, 1fr);
+        gap: 5px;
+        align-items: center;
+      }
+      .fgc {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+      }
+      .fgl {
+        font-size: 19px;
+        font-weight: 700;
+      }
+      .fgs {
+        height: 34px;
+        border-radius: 5px;
+      }
+      .fgeq {
+        margin-top: 18px;
+        font-size: 26px;
+        text-align: center;
+      }
+      .fgeq .big {
+        color: var(--blue);
+        font-size: 30px;
+      }
+      .fgnote {
+        margin-top: 8px;
+        font-size: 20px;
+        color: var(--ink2);
+        text-align: center;
+      }
+      .wtab th{font-size:16px;padding:4px 8px}
+      .wtab td{font-size:19px;padding:3px 8px}
+      .wtab tr.sel td{background:#e3eef6;font-weight:800;color:var(--blue)}
+      .f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;margin-top:30px}
+      .f3 .pc{min-height:0;padding:22px 22px}
+      .f3p{font-size:21px;line-height:1.45;color:var(--ink2);margin:0}
+      .f3p b{color:var(--blue)}
+      .f3n{font-size:17px;color:var(--muted);margin:0}
+      .wsvg{margin-top:2px}
+      .f3l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+      .f3l li{font-size:19px;display:flex;align-items:center;gap:8px;margin:0}
+      .f3l i{display:inline-block;width:14px;height:14px;border-radius:50%}
+      .f3eq{margin-top:auto;font-size:21px;line-height:1.5;background:#eef5fa;border-radius:12px;padding:12px 14px}
+      .f3eq b{color:var(--blue)}
+      .f3 .wtab td,.f3 .wtab th{font-size:20px;padding:7px 8px}
+      .f3 .wtab th{font-size:17px}
       .kns {
         display: flex;
         gap: 30px;
@@ -2136,13 +2280,13 @@
         <!-- 전처리 (다른 구성안) -->
         <section
           class="slide"
-          data-title="전처리 4단계: 점검, 정답, 표준화, 분할"
+          data-title="전처리 4단계: 점검, 정답, 스케일링, 분할"
           data-sec="② 데이터 이해 · 전처리"
           data-t="60"
         >
           <div class="chap">② 데이터 이해 · 전처리</div>
           <h2 class="r" style="--d: 0">
-            전처리 4단계: <em>점검 → 정답 → 표준화 → 분할</em>
+            전처리 4단계: <em>점검 → 정답 → 스케일링 → 분할</em>
           </h2>
           <div class="p2">
             <div class="q r" style="--d: 250">
@@ -2181,9 +2325,9 @@
             <div class="q r" style="--d: 650">
               <div class="qh">
                 <span class="pn">3</span>
-                <h3>운전조건별 표준화</h3>
+                <h3>스케일링</h3>
                 <div class="fm">
-                  조건별로 <b>Z-score</b> 산출<br />(값 − 평균) ÷ 표준편차
+                  운전조건별 표준화 (<b>Z-score</b>)<br />(값 − 평균) ÷ 표준편차
                 </div>
               </div>
               <div class="qb">
@@ -2222,6 +2366,10 @@
                 <p class="qn">
                   원래값 1,255~1,478로 분산 → 표준화 후 −1.7~−0.9로 수렴
                 </p>
+                <p class="qn" style="font-size: 17px; margin-top: 4px">
+                  스케일링 5가지 × 모델 3개 비교 → <b>운전조건별 표준화</b> 선정
+                  (RandomForest 오차 14.4 → 11.8)
+                </p>
               </div>
             </div>
             <div class="q r" style="--d: 850">
@@ -2256,145 +2404,83 @@
           <div class="pg"></div>
         </section>
 
-        <!-- 표준화 방식 비교 -->
-        <section
-          class="slide"
-          data-title="전처리 방식 비교: 운전조건별 표준화를 고른 근거"
-          data-sec="② 데이터 이해 · 전처리"
-          data-t="50"
-        >
-          <div class="chap">② 데이터 이해 · 전처리</div>
-          <h2 class="r" style="--d: 0">
-            값 맞추기 방식 5가지를 <em>모델 3개로 비교</em>했습니다
-          </h2>
-          <div
-            class="grid"
-            style="
-              grid-template-columns: 1.25fr 0.75fr;
-              margin-top: 36px;
-              gap: 44px;
-            "
-          >
-            <div class="card r" style="--d: 250">
-              <h3>validation 평균 오차 (MAE, 사이클 · 낮을수록 좋음)</h3>
-              <table class="cmp">
-                <tr>
-                  <th>방식</th>
-                  <th class="n">Ridge</th>
-                  <th class="n">MLP</th>
-                  <th class="n">RandomForest</th>
-                </tr>
-                <tr>
-                  <td>적용 안 함</td>
-                  <td class="n">19.14</td>
-                  <td class="n">24.29</td>
-                  <td class="n">14.38</td>
-                </tr>
-                <tr>
-                  <td>전체 표준화</td>
-                  <td class="n">19.48</td>
-                  <td class="n">13.28</td>
-                  <td class="n">14.38</td>
-                </tr>
-                <tr>
-                  <td>전체 min-max</td>
-                  <td class="n">20.01</td>
-                  <td class="n">13.88</td>
-                  <td class="n">14.38</td>
-                </tr>
-                <tr>
-                  <td>운전조건별 min-max</td>
-                  <td class="n">15.05</td>
-                  <td class="n"><b>11.03</b></td>
-                  <td class="n">12.07</td>
-                </tr>
-                <tr class="sel">
-                  <td>운전조건별 표준화 (선택)</td>
-                  <td class="n"><b>14.67</b></td>
-                  <td class="n">11.28</td>
-                  <td class="n"><b>11.82</b></td>
-                </tr>
-              </table>
-              <p class="sm" style="font-size: 20px; margin-top: 14px">
-                같은 분할(학습 200대 / 검증 49대)·같은 특성 · 굵은 글씨 = 모델별
-                최저
-              </p>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 18px">
-              <div class="card r" style="--d: 500">
-                <h3>운전조건별이 확실히 좋음</h3>
-                <p class="sm" style="font-size: 24px">
-                  세 모델 모두 오차가 크게 줄었습니다. RandomForest 14.4 → 11.8
-                  (−18%)
-                </p>
-              </div>
-              <div class="card r" style="--d: 700">
-                <h3>전체 값으로는 효과 미미</h3>
-                <p class="sm" style="font-size: 24px">
-                  운전조건을 구분하지 않으면 RandomForest는 변화가 없고, Ridge는
-                  오히려 나빠졌습니다.
-                </p>
-              </div>
-              <div class="card r" style="--d: 900">
-                <h3>표준화 vs min-max</h3>
-                <p class="sm" style="font-size: 24px">
-                  차이가 작습니다. Ridge·RF에서 가장 좋은 표준화를 골랐습니다.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="foot">Sentinel · 5조 감시자들</div>
-          <div class="pg"></div>
-        </section>
-
         <!-- 6 시계열 -->
         <section
           class="slide"
-          data-title="시계열 분석: 센서 추이"
+          data-title="시계열 분석: 추세선만으로는 한계"
           data-sec="③ 시계열 패턴 분석"
           data-t="55"
         >
           <div class="chap">③ 시계열 패턴 분석</div>
+          <h2 class="r" style="--d: 0">
+            <em>추세선만으로는</em> 열화 패턴을 잡을 수 없습니다
+          </h2>
           <div
             class="grid"
             style="
-              grid-template-columns: 1.08fr 1fr;
-              gap: 56px;
-              margin-top: 6px;
+              grid-template-columns: 1fr 0.9fr;
+              gap: 46px;
+              margin-top: 26px;
             "
           >
-            <div>
-              <h2 class="r" style="--d: 0">
-                센서는 엔진마다 <em>서서히, 다른 속도로</em> 변합니다
-              </h2>
-              <ul class="b" style="margin-top: 28px">
-                <li class="r" style="--d: 300">
-                  비행 조건 차이를 뺀(운전조건 보정) 값으로 보면 센서가
-                  <b>한 방향으로 서서히 이동</b>합니다.
-                </li>
-                <li class="r" style="--d: 500">
-                  추세성 상위: 코어 속도(s9), 보정 코어 속도(s14), 팬 속도(s8),
-                  보정 팬 속도(s13)
-                </li>
-                <li class="r" style="--d: 700">
-                  같은 센서도 엔진마다 열화 속도가 다름 → 수명이 128 ~
-                  543사이클로 벌어짐
-                </li>
-              </ul>
-              <div class="warn r" style="--d: 950; margin-top: 34px">
-                그래서 "평균 수명 − 현재 사이클"만으로는 한계가 큽니다. 기준
-                모델의 평균 오차는 <b>47.4사이클</b>.
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <div class="tr-big r" style="--d: 250">
+                <span class="v">0.51~0.57</span>
+                <span class="l"
+                  >센서와 사이클의 직선 상관 |r| (1이면 완벽한 직선) —
+                  <b>추세가 약한 편</b></span
+                >
+              </div>
+              <div class="tr-card r" style="--d: 450">
+                <h3>① 초반에는 엔진이 구분되지 않음</h3>
+                <p>고장 한참 전까지 엔진 3대의 값이 겹칩니다</p>
+              </div>
+              <div class="tr-card r" style="--d: 650">
+                <h3>② 상승 시점과 기울기가 엔진마다 다름</h3>
+                <p>
+                  #60은 약 150 사이클부터, #1은 200 이후 상승. #25는 뚜렷한 상승
+                  없이 150에서 고장
+                </p>
+              </div>
+              <div class="tr-card r" style="--d: 850">
+                <h3>③ 단순 기준 모델은 한계</h3>
+                <p>평균 수명 − 현재 사이클: 평균 오차 <b>47.4 사이클</b></p>
+              </div>
+              <div class="tr-end r" style="--d: 1100">
+                평평하다가 고장 직전에 가속하는 <b>비선형 패턴</b><br />
+                → 한 시점의 센서값만으로는 알 수 없음<br />
+                → <b>최근 15사이클의 변화</b>(평균·흔들림·기울기)를 함께 봐야 함
               </div>
             </div>
-            <div class="r" style="--d: 400; text-align: center">
-              <img
-                class="fig"
-                style="height: 800px; margin: 0 auto"
-                src="assets/sensor_trends.png"
-                alt="추세성 상위 센서 4개의 시계열"
-              />
-              <div class="cap">
-                추세성 상위 센서 4개 (엔진 3대, 운전조건 보정값)
+            <div class="card r" style="--d: 400; padding: 16px">
+              <div
+                style="position: relative; width: fit-content; margin: 0 auto"
+              >
+                <img
+                  src="assets/sensor_trends.png"
+                  alt="추세성 상위 센서 4개의 시계열"
+                  style="
+                    height: 680px;
+                    width: auto;
+                    display: block;
+                    border-radius: 10px;
+                  "
+                />
+                <div
+                  class="tb tb1"
+                  style="left: 10.3%; top: 6.6%; width: 41%; height: 16%"
+                >
+                  <span>초반: 3대 구분 불가</span>
+                </div>
+                <div
+                  class="tb tb2"
+                  style="left: 51.5%; top: 6.6%; width: 47%; height: 16%"
+                >
+                  <span>엔진마다 다른 시점에 상승</span>
+                </div>
+              </div>
+              <div class="cap" style="margin-top: 8px">
+                추세성 상위 센서 (엔진 3대, 운전조건 보정값)
               </div>
             </div>
           </div>
@@ -2411,59 +2497,48 @@
         >
           <div class="chap">③ 시계열 패턴 분석</div>
           <h2 class="r" style="--d: 0">
-            최근 15사이클의 <em>평균 · 흔들림 · 기울기</em>를 특성으로
+            센서 값을 <em>최근 변화를 담은 특성</em>으로 바꿉니다
           </h2>
-          <div
-            class="grid"
-            style="
-              grid-template-columns: 1fr 1.05fr;
-              gap: 50px;
-              margin-top: 34px;
-            "
-          >
-            <div>
-              <div class="flow r" style="--d: 250">
-                <div class="node">
-                  <h4>센서 15개</h4>
-                  <p>현재값</p>
-                </div>
-                <div class="arrow">+</div>
-                <div class="node b">
-                  <h4>최근 15사이클</h4>
-                  <p>평균 · 표준편차 · 기울기</p>
-                </div>
-                <div class="arrow">=</div>
-                <div class="node o">
-                  <h4>특성 60개</h4>
-                  <p>15 × 4</p>
-                </div>
-              </div>
-              <ul class="b" style="margin-top: 36px">
-                <li class="r" style="--d: 600">
-                  모델이 <b>모델과 무관하게</b> 뽑은 추세성 상위 8개 센서와
-                  비교했더니
-                </li>
-                <li class="r" style="--d: 800">
-                  모델 중요도 상위 8개 중
-                  <b class="hl">5개가 겹침</b> (s8·s11·s13·s14·s17) → 노이즈가
-                  아니라 <b>실제 열화 신호</b>를 보고 판단
-                </li>
-                <li class="r" style="--d: 1000">
-                  1위 s3 고압압축기 출구 온도 (0.50), 팬 속도 s8도 상위 → 고장
-                  모드 2종(압축기·팬) 반영
-                </li>
+          <div class="f3">
+            <div class="pc r" style="--d: 250">
+              <div class="ph1"><span class="pn">1</span><h3>특성 만들기</h3></div>
+              <p class="f3p">센서의 <b>최근 15사이클</b>에서 3가지를 계산</p>
+              <svg viewBox="0 0 540 300" width="100%" class="wsvg">
+                <rect x="428.7" y="14" width="101.3" height="252" fill="rgba(0,165,229,.16)" rx="8" />
+                <polyline points="18.0,222.1 24.4,217.1 30.8,227.4 37.1,251.1 43.5,235.2 49.9,249.1 56.3,233.6 62.7,240.2 69.0,229.8 75.4,216.9 81.8,255.5 88.2,224.7 94.6,231.3 100.9,240.6 107.3,232.2 113.7,223.0 120.1,250.6 126.5,215.1 132.8,208.0 139.2,201.0 145.6,206.2 152.0,205.7 158.4,174.4 164.7,212.2 171.1,207.6 177.5,204.8 183.9,194.5 190.3,189.8 196.6,197.0 203.0,159.7 209.4,200.4 215.8,220.1 222.2,192.4 228.5,176.9 234.9,208.1 241.3,177.6 247.7,178.0 254.1,188.2 260.4,214.9 266.8,167.4 273.2,162.4 279.6,183.2 285.9,178.9 292.3,157.9 298.7,159.4 305.1,167.2 311.5,130.5 317.8,151.6 324.2,135.3 330.6,182.7 337.0,115.1 343.4,124.4 349.7,197.3 356.1,146.2 362.5,133.5 368.9,171.1 375.3,120.2 381.6,110.4 388.0,102.9 394.4,109.0 400.8,113.7 407.2,165.6 413.5,107.6 419.9,109.1 426.3,106.5 432.7,104.4 439.1,92.0 445.4,104.1 451.8,84.7 458.2,83.5 464.6,75.7 471.0,83.1 477.3,87.8 483.7,49.8 490.1,67.8 496.5,51.2 502.9,70.7 509.2,48.7 515.6,48.0 522.0,30.5" fill="none" stroke="#05507d" stroke-width="3" stroke-linejoin="round" />
+                <line x1="432.7" y1="72.1" x2="522.0" y2="72.1" stroke="#4b5151" stroke-width="3" stroke-dasharray="6 5" />
+                <line x1="432.7" y1="103.6" x2="522.0" y2="40.6" stroke="#00a5e5" stroke-width="4" />
+                <circle cx="522.0" cy="30.5" r="7" fill="#05507d" stroke="#fff" stroke-width="2" />
+                <line x1="18" y1="266" x2="522" y2="266" stroke="#bdbdba" stroke-width="2" />
+                <text x="477.3" y="292" font-size="17" text-anchor="middle" fill="#05507d" font-weight="800">최근 15사이클</text>
+                <text x="20" y="292" font-size="15" fill="#8b9190">엔진 #1 · 고장 직전 80사이클 · s9(코어 속도)</text>
+              </svg>
+              <ul class="f3l">
+                <li><i style="background:#05507d"></i>현재값 <b>8,582</b></li>
+                <li><i style="background:#4b5151"></i>평균 <b>8,570</b></li>
+                <li><i style="background:#8b9190"></i>표준편차(흔들림) <b>6.2</b></li>
+                <li><i style="background:#00a5e5"></i>기울기 <b>+1.3</b> / 사이클</li>
               </ul>
+              <div class="f3eq">센서 1개 → 특성 4개<br /><b>센서 15개 → 특성 60개</b></div>
             </div>
-            <div class="r" style="--d: 500">
-              <img
-                class="fig"
-                style="width: 100%"
-                src="assets/feature_importance_top8.png"
-                alt="센서 중요도 상위 8개"
-              />
-              <div class="cap">
-                RandomForest 센서 중요도 (센서별 특성 4개 합산, 전체 합 = 1)
+            <div class="pc r" style="--d: 500">
+              <div class="ph1"><span class="pn">2</span><h3>구간 길이 정하기</h3></div>
+              <p class="f3p">평균 · 표준편차 · 기울기를 <b>최근 몇 사이클</b>로 계산할지 비교 (RandomForest, validation 오차)</p>
+              <div class="wtab">
+                <table>
+                  <tr><th>구간(사이클)</th><th class="n">모든 행</th><th class="n">고장 직전</th></tr>
+                  <tr><td>5</td><td class="n">10.92</td><td class="n">4.74</td></tr><tr><td>10</td><td class="n">11.18</td><td class="n">5.27</td></tr><tr class="sel"><td>15 (사용)</td><td class="n">11.04</td><td class="n">5.51</td></tr><tr><td>20</td><td class="n">10.77</td><td class="n">5.44</td></tr><tr><td>30</td><td class="n">9.46</td><td class="n">6.35</td></tr>
+                </table>
               </div>
+              <p class="f3n">고장 직전 = 엔진 마지막 사이클의 오차 · 분할 2가지 평균</p>
+              <div class="f3eq">5~20은 차이 거의 없음 → <b>15 유지</b><br />30은 고장 직전 오차가 커서 제외</div>
+            </div>
+            <div class="pc r" style="--d: 750">
+              <div class="ph1"><span class="pn">3</span><h3>중요한 센서 확인</h3></div>
+              <p class="f3p">RandomForest가 가장 많이 참고한 센서</p>
+              <img src="assets/feature_importance_top8.png" alt="센서 중요도 상위 8개" style="width: 100%; border-radius: 10px; border: 1.5px solid var(--line)" />
+              <p class="f3n">센서별 특성 4개 합산, 전체 합 = 1</p>
+              <div class="f3eq">상위 8개 중 <b>5개</b>가 추세성 상위와 겹침 (s8·s11·s13·s14·s17)<br />1위 <b>s3</b> 고압 압축기 출구 온도, 팬 속도 s8도 상위</div>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
@@ -3424,9 +3499,8 @@
         "① 문제 정의. 한 문장: 어떤 설비의 무엇을, 왜, 어느 수준까지 맞히면 성공인가. 설비=터보팬 엔진, 예측 대상=남은 비행 횟수(RUL). 이상 정의=남은 수명 40 이하. 중요한 이유=긴급 정비는 계획 정비보다 2~5배 비쌈(문헌 비율 1:2, 1:5). 필수=이진 분류, 선택=RUL 회귀. 성공 기준=혼동행렬과 정밀도·재현율·F1, 놓치지 않기(재현율) 우선.",
         "② 데이터의 구성. 한 행 = 엔진 한 대의 한 번의 운행(사이클). 26열: 엔진 번호·사이클 2, 운전 설정 3(고도·마하수·스로틀), 센서 21(온도·압력·회전속도·비율). 파란 행은 운전조건이 사이클마다 바뀐다는 것을 보여줌(FD004는 6가지 조합). 센서 21개 중 15개 사용: 같은 운전조건에서 표준편차가 0.01 미만인 사실상 상수 센서 6개(s1·s5·s10·s16·s18·s19)는 제외. train 61,249행(엔진 249대), test 41,214행(엔진 248대). FD004를 쓰는 이유: 4개 서브셋 중 운전조건 6가지·고장 모드 2가지로 가장 복잡. 시뮬레이션 데이터.",
         "② 전처리 4단계. ① 점검: FD004 train·test 모두 결측값 0, 중복 행 0, 엔진별 사이클이 1씩 이어짐 → 채우거나 지울 것이 없음. ② 정답 만들기: 데이터에 남은 수명(RUL) 열이 없어 '엔진의 마지막 사이클 − 현재 사이클'로 계산하고, 가장 짧은 수명(128)보다 작은 125에서 자름. ③ 운전조건 6가지별로 따로 표준화(Z-score)(조건 변화가 열화로 보이지 않게). ④ 엔진 단위 200/49 분할, 표준화 기준(평균·표준편차)은 학습 엔진만으로 계산(누수 방지), 공식 test는 마지막에 한 번. 센서 15개를 고른 이유는 앞 슬라이드(데이터 이해)에서 설명.",
-        "② 표준화 방식 비교. 운전조건별 표준화·min-max·전체 표준화·적용 안 함 5가지를 Ridge·MLP·RandomForest 3개 모델로 같은 분할에서 비교(validation 49대, 시드 42, 분할·모델 1회). 결과: 운전조건별 처리가 세 모델 모두에서 확실히 낫다(RF 14.38→11.82, Ridge 19.14→14.67, MLP 24.29→11.28). 전체 값으로 처리하면 RF는 변화 없고(트리 모델은 스케일 불변) Ridge는 오히려 악화. 표준화 vs min-max는 차이가 작음(MLP는 min-max 11.03이 표준화 11.28보다 근소하게 낮음). 한계: 시드·분할 1회라 작은 차이는 우열을 가리기 어렵고, GRU로는 이 비교를 하지 않았다.",
-        "③ 시계열 패턴 분석. 그래프 중심. 운전조건 보정 후 센서가 서서히 한 방향으로 이동, 엔진마다 속도가 다름. 그래서 평균 수명 기반 기준 모델은 오차 47.4. '상태 변화 구간'을 지목: 위험 구간 진입 전후로 센서가 가속적으로 벗어남.",
-        "③ 특성과 중요도. 최근 15사이클 평균·표준편차·기울기 + 현재값 = 특성 60개. 모델 중요도와 독립적 추세성 랭킹이 8개 중 5개 겹침 → 실제 열화 신호. s3, s17, s8. 15사이클 창의 근거는 약함(5/10/15/20 비교는 못 함) — 질문 시 솔직히.",
+        "③ 시계열 패턴 분석. 핵심 메시지: 직선 추세만으로는 열화 패턴을 잡을 수 없다. 추세성 상위 센서도 사이클과의 직선 상관이 0.51~0.57에 그침. 그림에서 ① 초반에는 엔진 3대 값이 겹쳐 구분 불가(→ RUL을 125에서 자른 이유와 연결), ② 상승 시점·기울기가 엔진마다 다름(#60은 약 150부터, #1은 200 이후, #25는 뚜렷한 상승 없이 150에서 고장), ③ 그래서 평균 수명 − 현재 사이클 기준 모델은 평균 오차 47.4. 결론: 평평하다가 고장 직전에 가속하는 비선형 패턴이라, 현재값 하나가 아니라 최근 변화를 담은 특성(다음 슬라이드)이 필요. 모델은 그 뒤 슬라이드(모델 설계)에서 선택.",
+        "③ 특성과 중요도. 발표 순서: ① 특성 만들기 — 센서의 최근 15사이클에서 현재값·평균·표준편차(흔들림)·기울기 4가지를 계산(그림은 엔진 #1 고장 직전 80사이클의 s9 실제 값: 평균 8,570, 표준편차 6.2, 기울기 +1.3/사이클). 센서 15개 × 4 = 특성 60개(15는 서로 다른 숫자: 센서 수, 구간 길이). ② 구간 길이 정하기 — 5·10·15·20·30을 RandomForest로 비교(분할 2가지 평균): 5~20은 차이 거의 없어 15 유지, 30은 고장 직전 오차가 커서 제외. 15가 최적이라고 증명한 것은 아님. ③ 중요한 센서 확인 — 모델 중요도 상위 8개 중 5개가 추세성 상위 8개와 겹침(s8·s11·s13·s14·s17) → 노이즈가 아니라 실제 열화 신호. 1위 s3(고압 압축기 출구 온도), 팬 속도 s8도 상위 → 고장 부위 2곳 반영.",
         "④ 모델 설계. 필수: Z-score 기준 → RandomForest 분류. 선택: 평균수명 기준 → RF 회귀 → GRU 회귀. 공통 조건(같은 분할·특성·지표·시드). 후보 8종 비교. 머신러닝 최대 3종 규칙: RF 분류, RF 회귀, GRU 회귀.",
         "④ 분류 결과. validation F1 0.58 → 0.86, test 0.59 → 0.92. 혼동행렬은 그림 참고. 확률 기준 0.36 이유(놓침이 더 비쌈). 정확도 안 쓰는 이유(위험 시점 16%). 위험 69대 중 65대 탐지.",
         "④ 회귀 결과. MAE 47.4 → 21.8 → 17.3(GRU). 오차 63.5% 감소. 후보 8종 그래프: MAE가 작을수록 미탐도 낮음(r=0.87), 오탐은 무관. validation 기준 그림임을 말하기.",
