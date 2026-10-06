@@ -1,679 +1,2771 @@
 <!doctype html>
 <html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sentinel — 터보팬 엔진 고장 임박 예측 (5조 감시자들) 발표 초안</title>
-<style>
-:root{
-  --bg:#fcfcfb; --surface:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --muted:#8a8985; --line:#e4e3df;
-  --blue:#2a78d6; --orange:#eb6834; --lblue:#7aa7e0; --gray:#8a8985; --lgray:#c9c8c3;
-  --red:#d6453d; --amber:#e0a22c; --green:#2e9e63; --navy:#13233f;
-  --ease:cubic-bezier(.2,.7,.2,1);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#1a1a19;overflow:hidden;font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--ink);word-break:keep-all}
-#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-#deck{position:relative;width:1920px;height:1080px;transform-origin:center center;flex:none;background:var(--bg);overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,.5)}
-.slide{position:absolute;inset:0;padding:96px 120px 90px;display:none;background:var(--bg)}
-.slide.active{display:block}
-.chap{position:absolute;left:120px;top:48px;font-size:22px;font-weight:700;letter-spacing:.02em;color:var(--blue);display:flex;align-items:center;gap:12px}
-.chap::before{content:"";width:34px;height:4px;border-radius:2px;background:var(--blue)}
-.foot{position:absolute;left:120px;bottom:34px;font-size:20px;color:var(--muted)}
-.pg{position:absolute;right:120px;bottom:34px;font-size:20px;color:var(--muted);font-variant-numeric:tabular-nums}
-h1{font-size:104px;line-height:1.08;font-weight:800;letter-spacing:-.02em}
-h2{font-size:60px;line-height:1.15;font-weight:800;letter-spacing:-.015em;margin-top:26px}
-h2 em{font-style:normal;color:var(--blue)}
-.lead{font-size:30px;color:var(--ink2);margin-top:14px;line-height:1.5}
-p,li{font-size:30px;line-height:1.55;color:var(--ink)}
-ul{list-style:none}
-ul.b li{position:relative;padding-left:34px;margin:10px 0}
-ul.b li::before{content:"";position:absolute;left:4px;top:.62em;width:12px;height:12px;border-radius:50%;background:var(--blue)}
-.sm{font-size:24px;color:var(--ink2)}
-.xs{font-size:21px;color:var(--muted)}
-b,strong{font-weight:800}
-.hl{color:var(--orange);font-weight:800}
-.hb{color:var(--blue);font-weight:800}
-.grid{display:grid;gap:32px}
-.card{background:var(--surface);border:1.5px solid var(--line);border-radius:22px;padding:30px 34px}
-.card h3{font-size:31px;font-weight:800;margin-bottom:12px}
-.pill{display:inline-block;padding:6px 16px;border-radius:999px;font-size:22px;font-weight:700;background:#eaf1fb;color:var(--blue);margin-right:8px}
-.pill.o{background:#fdeee7;color:var(--orange)}
-.pill.g{background:#eeeeec;color:var(--ink2)}
-.fig{border:1.5px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.06);display:block}
-.cap{font-size:21px;color:var(--muted);margin-top:10px}
-table{border-collapse:collapse;width:100%}
-th,td{font-size:25px;padding:12px 16px;text-align:left;border-bottom:1.5px solid var(--line)}
-th{font-size:21px;color:var(--muted);font-weight:700;letter-spacing:.02em}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tr.sel td{background:#eaf1fb;font-weight:800}
-.kpi{display:flex;flex-direction:column}
-.kpi .v{font-size:84px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
-.kpi .l{font-size:22px;color:var(--ink2);margin-top:8px}
-.warn{border-left:8px solid var(--orange);background:#fdf3ee;border-radius:0 16px 16px 0;padding:18px 26px;font-size:25px;color:var(--ink);line-height:1.5}
-.note{border-left:8px solid var(--blue);background:#eef4fc;border-radius:0 16px 16px 0;padding:18px 26px;font-size:25px;line-height:1.5}
-/* bars */
-.bars{display:flex;flex-direction:column;gap:16px}
-.bar{display:grid;grid-template-columns:330px 1fr 120px;align-items:center;gap:18px}
-.bar .lab{font-size:25px;text-align:right;color:var(--ink)}
-.bar .trk{height:34px;background:#f1f0ee;border-radius:8px;overflow:hidden}
-.bar .trk i{display:block;height:100%;width:0;border-radius:8px;background:var(--gray)}
-.bar .val{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
-.slide.active .bar .trk i{width:var(--w);transition:width 1.1s var(--ease) var(--bd,.5s)}
-.axis{font-size:21px;color:var(--muted);margin-top:12px}
-/* reveal animations */
-.r{opacity:0}
-.slide.active .r{animation:rise .75s var(--ease) both;animation-delay:calc(var(--d,0) * 1ms)}
-.slide.active .r.fade{animation-name:fadein}
-.slide.active .r.pop{animation-name:pop}
-@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
-@keyframes fadein{from{opacity:0}to{opacity:1}}
-@keyframes pop{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
-@keyframes pulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.4);opacity:0}}
-@keyframes drift{0%{background-position:0 0}100%{background-position:-400px 0}}
-/* cover */
-.cover{background:linear-gradient(135deg,#0f1d36 0%,#13233f 55%,#1b3a6b 100%)!important;color:#fff;padding-top:200px}
-.cover h1{color:#fff}
-.cover .lead{color:#c8d5ea;font-size:36px}
-.cover .chap,.cover .foot,.cover .pg{color:#9fb4d6}
-.cover .chap::before{background:#9fb4d6}
-.ecg{position:absolute;left:0;right:0;bottom:150px;height:160px;opacity:.9}
-.ecg path{fill:none;stroke:#5aa0ff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
-.slide.active .ecg path{animation:draw 3.2s ease-out .6s forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.tag{position:absolute;right:120px;top:50px;font-size:20px;font-weight:700;color:#9fb4d6;border:1.5px solid #4a6592;border-radius:999px;padding:6px 18px}
-/* life bar */
-.life{position:relative;height:128px;border-radius:20px;overflow:hidden;background:#eee;display:flex}
-.life div{height:100%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;transform-origin:left;transform:scaleX(0)}
-.slide.active .life div{animation:grow .9s var(--ease) both}
-.life .z1{background:var(--green);flex:5.5;animation-delay:.6s!important}
-.life .z2{background:var(--amber);flex:2.2;animation-delay:1.4s!important}
-.life .z3{background:var(--red);flex:1.6;animation-delay:2.0s!important}
-.life .z4{background:#4a4a48;flex:.7;animation-delay:2.6s!important}
-@keyframes grow{to{transform:scaleX(1)}}
-/* flow */
-.flow{display:flex;align-items:stretch;gap:0}
-.node{background:#fff;border:2px solid var(--line);border-radius:20px;padding:26px 30px;min-width:320px}
-.node h4{font-size:30px;font-weight:800;margin-bottom:6px}
-.node p{font-size:25px;line-height:1.4;color:var(--ink2)}
-.node.b{border-color:var(--blue);background:#f2f7fd}
-.node.o{border-color:var(--orange);background:#fef6f2}
-.arrow{align-self:center;font-size:44px;color:var(--muted);padding:0 14px}
-/* signal */
-.sig{width:22px;height:22px;border-radius:50%;display:inline-block;position:relative;flex:none}
-.sig.R{background:var(--red)}.sig.Y{background:var(--amber)}.sig.G{background:var(--green)}
-.sig.R::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--red);animation:pulse 1.6s ease-out infinite}
-.fleet{display:flex;flex-direction:column;gap:7px}
-.eng{display:grid;grid-template-columns:30px 190px 1fr 100px;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:7px 16px;font-size:22px}
-.eng .mini{height:12px;border-radius:6px;background:#f1f0ee;overflow:hidden}
-.eng .mini i{display:block;height:100%;width:0;border-radius:6px}
-.slide.active .eng .mini i{width:var(--w);transition:width 1s var(--ease) var(--bd,.8s)}
-.eng.feat{border-color:var(--blue);box-shadow:0 0 0 3px #d8e6f8}
-.eng .rv{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
-/* svg chart */
-svg text{font-family:inherit}
-.ln{fill:none;stroke:var(--blue);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
-.slide.active .ln{animation:draw 2.6s ease-out .8s forwards}
-.ci line.rng{stroke-dasharray:1;stroke-dashoffset:1}
-.slide.active .ci line.rng{animation:draw 1s ease-out var(--cd,.8s) forwards}
-.ci .dot{opacity:0}
-.slide.active .ci .dot{animation:fadein .5s ease-out calc(var(--cd,.8s) + .7s) forwards}
-.dots{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-/* ui overlays */
-#progress{position:fixed;left:0;top:0;height:5px;background:var(--blue);width:0;z-index:20;transition:width .4s var(--ease)}
-#hud{position:fixed;right:18px;bottom:14px;z-index:30;display:flex;gap:8px;opacity:.0;transition:opacity .3s}
-body:hover #hud{opacity:.9}
-#hud button{background:#2b2b2a;color:#ddd;border:1px solid #444;border-radius:8px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:inherit}
-#hud button:hover{background:#3a3a38}
-#notes{position:fixed;left:0;right:0;bottom:0;max-height:34vh;overflow:auto;background:rgba(18,18,17,.96);color:#eee;padding:18px 28px;z-index:40;display:none;font-size:20px;line-height:1.55;border-top:2px solid var(--blue)}
-#notes.on{display:block}
-#notes h5{font-size:15px;color:#9fb4d6;letter-spacing:.06em;margin-bottom:6px}
-#notes .t{color:#ffcf8a;font-weight:700}
-#timer{position:fixed;left:18px;top:14px;z-index:30;font-size:18px;color:#ddd;background:rgba(0,0,0,.55);padding:6px 14px;border-radius:999px;display:none;font-variant-numeric:tabular-nums}
-#timer.on{display:block}
-#overview{position:fixed;inset:0;background:rgba(14,14,13,.97);z-index:50;display:none;padding:40px 60px;overflow:auto}
-#overview.on{display:block}
-#overview h4{color:#9fb4d6;font-size:16px;letter-spacing:.08em;margin-bottom:18px}
-#overview .it{display:flex;gap:14px;align-items:baseline;color:#eee;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:20px}
-#overview .it:hover,#overview .it.cur{background:#26334a}
-#overview .it span{color:#7f93b5;width:60px;flex:none;text-align:right;font-variant-numeric:tabular-nums}
-#overview .it em{color:#ffcf8a;font-style:normal;margin-left:auto;font-size:16px}
-/* OS의 '움직임 줄이기' 설정과 무관하게 발표에서는 애니메이션을 항상 켠다(아래 블록은 일부러 비활성) */
-@media not all{
-  .slide.active .r{animation:none;opacity:1}
-  .slide.active .bar .trk i,.slide.active .eng .mini i{transition:none}
-  .life div{transform:none!important;animation:none!important}
-  .ln,.ci line.rng,.ecg path{stroke-dashoffset:0!important;animation:none!important}
-  .ci .dot{opacity:1!important;animation:none!important}
-}
-@media print{
-  @page{size:1920px 1080px;margin:0}
-  html,body{overflow:visible;background:#fff;height:auto}
-  #stage{position:static;display:block}
-  #deck{transform:none!important;width:1920px;height:auto;box-shadow:none;overflow:visible}
-  .slide{display:block!important;position:relative;height:1080px;page-break-after:always;break-after:page}
-  .r{opacity:1!important;animation:none!important}
-  .bar .trk i,.eng .mini i{width:var(--w)!important;transition:none!important}
-  .life div{transform:none!important;animation:none!important}
-  .ln,.ci line.rng,.ecg path{stroke-dashoffset:0!important;animation:none!important}
-  .ci .dot{opacity:1!important}
-  #progress,#hud,#notes,#timer,#overview{display:none!important}
-}
-</style>
-</head>
-<body>
-<div id="progress"></div>
-<div id="timer"></div>
-<div id="stage"><div id="deck">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Sentinel — 터보팬 엔진 고장 임박 예측 (5조 감시자들) 발표 초안
+    </title>
+    <style>
+      :root {
+        --bg: #fcfcfb;
+        --surface: #ffffff;
+        --ink: #0b0b0b;
+        --ink2: #4b5151;
+        --muted: #8b9190;
+        --line: #e4e3df;
+        --blue: #05507d;
+        --orange: #84754e;
+        --lblue: #00a5e5;
+        --gray: #8b9190;
+        --lgray: #bdbdba;
+        --red: #d6453d;
+        --amber: #e0a22c;
+        --green: #2e9e63;
+        --navy: #05507d;
+        --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        background: #1a1a19;
+        overflow: hidden;
+        font-family:
+          "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR",
+          system-ui, sans-serif;
+        color: var(--ink);
+        word-break: keep-all;
+      }
+      #stage {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #deck {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        transform-origin: center center;
+        flex: none;
+        background: var(--bg);
+        overflow: hidden;
+        box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        padding: 96px 120px 90px;
+        display: none;
+        background: var(--bg);
+      }
+      .slide.active {
+        display: block;
+      }
+      .slide::after {
+        content: "";
+        position: absolute;
+        right: 120px;
+        top: 38px;
+        width: 150px;
+        height: 43px;
+        background: url(assets/posco_logo.png) right center / contain no-repeat;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .slide.cover::after {
+        right: auto;
+        left: 120px;
+        top: 46px;
+        width: 210px;
+        height: 60px;
+        background-position: left center;
+        filter: brightness(0) invert(1);
+      }
+      .slide.cover .chap {
+        top: 128px;
+      }
+      .chap {
+        position: absolute;
+        left: 120px;
+        top: 48px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: var(--blue);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .chap::before {
+        content: "";
+        width: 34px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--blue);
+      }
+      .foot {
+        position: absolute;
+        left: 120px;
+        bottom: 34px;
+        font-size: 20px;
+        color: var(--muted);
+      }
+      .pg {
+        position: absolute;
+        right: 120px;
+        bottom: 34px;
+        font-size: 20px;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      h1 {
+        font-size: 104px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: 60px;
+        line-height: 1.15;
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        margin-top: 26px;
+      }
+      h2 em {
+        font-style: normal;
+        color: var(--blue);
+      }
+      .lead {
+        font-size: 30px;
+        color: var(--ink2);
+        margin-top: 14px;
+        line-height: 1.5;
+      }
+      p,
+      li {
+        font-size: 30px;
+        line-height: 1.55;
+        color: var(--ink);
+      }
+      ul {
+        list-style: none;
+      }
+      ul.b li {
+        position: relative;
+        padding-left: 34px;
+        margin: 10px 0;
+      }
+      ul.b li::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 0.62em;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--blue);
+      }
+      .sm {
+        font-size: 24px;
+        color: var(--ink2);
+      }
+      .xs {
+        font-size: 21px;
+        color: var(--muted);
+      }
+      b,
+      strong {
+        font-weight: 800;
+      }
+      .hl {
+        color: var(--orange);
+        font-weight: 800;
+      }
+      .hb {
+        color: var(--blue);
+        font-weight: 800;
+      }
+      .grid {
+        display: grid;
+        gap: 32px;
+      }
+      .card {
+        background: var(--surface);
+        border: 2.5px solid var(--line);
+        border-radius: 22px;
+        padding: 30px 34px;
+        box-shadow:
+          0 4px 0 #d5d4cf,
+          0 14px 28px rgba(0, 0, 0, 0.12);
+      }
+      .card h3 {
+        font-size: 31px;
+        font-weight: 800;
+        margin-bottom: 12px;
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 22px;
+        font-weight: 700;
+        background: #e3eef6;
+        color: var(--blue);
+        margin-right: 8px;
+      }
+      .pill.o {
+        background: #f1ebdd;
+        color: var(--orange);
+      }
+      .pill.g {
+        background: #eeeeec;
+        color: var(--ink2);
+      }
+      .ref{font-size:.6em;font-weight:800;color:var(--blue);margin-left:2px}
+      .srcbox{display:flex;align-items:flex-start;gap:12px;margin-top:14px;padding:0 4px}
+      .srclab{flex:none;font-size:20px;font-weight:800;color:var(--muted);letter-spacing:.04em}
+      .srcbox ol{margin:0;padding:0;list-style:none;counter-reset:s;font-size:20px;line-height:1.4;color:var(--muted)}
+      .srcbox li{counter-increment:s;padding-left:22px;position:relative;font-size:20px;line-height:1.4;color:var(--muted);margin:0}
+      .srcbox li::before{content:counter(s) ".";position:absolute;left:0;font-weight:700}
+      .srcbox em{font-style:normal}
+      .team{display:flex;align-items:stretch;justify-content:space-between;gap:26px;margin-top:34px}
+      .badge{position:relative;flex:1;background:#fff;border-radius:26px;border:2px solid #d3dbe2;padding:0;display:flex;flex-direction:column;text-align:center;box-shadow:0 4px 0 #cfd6dc,0 18px 32px rgba(5,80,125,.16);overflow:hidden;margin-top:34px}
+      .badge::before{content:"";position:absolute;left:50%;top:14px;width:84px;height:14px;margin-left:-42px;border-radius:999px;background:#e6ebef;box-shadow:inset 0 2px 4px rgba(0,0,0,.25);z-index:2}
+      .strap{position:absolute;left:50%;top:-52px;width:26px;height:70px;margin-left:-13px;background:var(--blue);border-radius:4px 4px 0 0;z-index:3}
+      .badge .hd{background:var(--blue);height:92px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px}
+      .badge .hd img{height:30px;filter:brightness(0) invert(1)}
+      .badge .ph{width:176px;height:234px;border-radius:12px;object-fit:cover;display:block;margin:22px auto 0;border:3px solid #e6ebef;position:relative}
+      .badge h3{font-family:inherit;font-size:38px;font-weight:800;margin-top:18px}
+      .badge .role{display:inline-block;align-self:center;font-size:23px;font-weight:700;color:#fff;background:var(--blue);border-radius:999px;padding:3px 18px;margin:8px 0 12px}
+      .badge p{font-size:22px;line-height:1.5;color:var(--ink2);padding:0 14px;flex:1;margin-bottom:14px}
+      .badge .ft{margin:0 20px;padding:20px 0;border-top:2px dashed #cfd6dc;font-size:17px;font-weight:700;color:var(--muted);letter-spacing:.06em}
+      .badge.lead .role{background:var(--orange)}
+      .ag{display:grid;grid-template-columns:520px 1fr;gap:90px;margin-top:20px;align-items:stretch}
+      .ag-left{position:relative;background:linear-gradient(160deg,#04405f 0%,#05507d 100%);color:#fff;border-radius:30px;padding:56px 48px;min-height:760px;overflow:hidden;box-shadow:0 18px 40px rgba(5,80,125,.28)}
+      .ag-k{font-size:22px;font-weight:800;letter-spacing:.2em;color:#9cc9e3}
+      .ag-left h2{color:#fff;font-size:84px;margin:18px 0 28px;line-height:1.1}
+      .ag-left p{font-size:30px;line-height:1.6;color:#cfe3f0}
+      .ag-ecg{position:absolute;left:0;bottom:70px;width:520px;height:120px;opacity:.95;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 40%,rgba(0,0,0,.5) 78%,#000 100%);mask-image:linear-gradient(90deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 40%,rgba(0,0,0,.5) 78%,#000 100%);-webkit-mask-size:520px 100%;mask-size:520px 100%;-webkit-mask-repeat:repeat-x;mask-repeat:repeat-x;animation:sweep2 3s linear infinite;filter:drop-shadow(0 0 6px rgba(0,165,229,.8))}
+      .ag-ecg path{fill:none;stroke:#00a5e5;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+      .ag-list{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:6px 0}
+      .ag-list::before{content:"";position:absolute;left:37px;top:44px;bottom:44px;width:4px;background:linear-gradient(#05507d,#00a5e5);opacity:.25;border-radius:2px}
+      .ag-it{position:relative;display:flex;align-items:center;gap:36px}
+      .ag-n{flex:none;width:78px;height:78px;border-radius:50%;background:#fff;border:4px solid var(--blue);color:var(--blue);font-size:38px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(5,80,125,.18);position:relative;z-index:1}
+      .ag-it h3{font-size:40px;font-weight:800;margin-bottom:4px}
+      .ag-it p{font-size:26px;color:var(--ink2)}
+      .fig {
+        border: 1.5px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+        display: block;
+      }
+      .cap {
+        font-size: 21px;
+        color: var(--muted);
+        margin-top: 10px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        font-size: 25px;
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1.5px solid var(--line);
+      }
+      th {
+        font-size: 21px;
+        color: var(--muted);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      td.n,
+      th.n {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      tr.sel td {
+        background: #e3eef6;
+        font-weight: 800;
+      }
+      .kpi {
+        display: flex;
+        flex-direction: column;
+      }
+      .kpi .v {
+        font-size: 84px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .kpi .l {
+        font-size: 22px;
+        color: var(--ink2);
+        margin-top: 8px;
+      }
+      .warn {
+        border-left: 8px solid var(--orange);
+        background: #f6f2e8;
+        border-radius: 0 16px 16px 0;
+        padding: 18px 26px;
+        font-size: 25px;
+        color: var(--ink);
+        line-height: 1.5;
+      }
+      .note {
+        border-left: 8px solid var(--blue);
+        background: #e9f2f8;
+        border-radius: 0 16px 16px 0;
+        padding: 18px 26px;
+        font-size: 25px;
+        line-height: 1.5;
+      }
+      /* bars */
+      .bars {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .bar {
+        display: grid;
+        grid-template-columns: 330px 1fr 120px;
+        align-items: center;
+        gap: 18px;
+      }
+      .bar .lab {
+        font-size: 25px;
+        text-align: right;
+        color: var(--ink);
+      }
+      .bar .trk {
+        height: 34px;
+        background: #f1f0ee;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .bar .trk i {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: 8px;
+        background: var(--gray);
+      }
+      .bar .val {
+        font-size: 26px;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+      }
+      .slide.active .bar .trk i {
+        width: var(--w);
+        transition: width 1.1s var(--ease) var(--bd, 0.5s);
+      }
+      .axis {
+        font-size: 21px;
+        color: var(--muted);
+        margin-top: 12px;
+      }
+      /* reveal animations */
+      .r {
+        opacity: 0;
+      }
+      .slide.active .r {
+        animation: rise 0.75s var(--ease) both;
+        animation-delay: calc(var(--d, 0) * 1ms);
+      }
+      .slide.active .r.fade {
+        animation-name: fadein;
+      }
+      .slide.active .r.pop {
+        animation-name: pop;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: scale(0.88);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(0.6);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(2.4);
+          opacity: 0;
+        }
+      }
+      @keyframes drift {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -400px 0;
+        }
+      }
+      /* cover */
+      .cover {
+        background: linear-gradient(
+          135deg,
+          #032e48 0%,
+          #04405f 55%,
+          #05507d 100%
+        ) !important;
+        color: #fff;
+        padding-top: 300px;
+      }
+      .cover h1 {
+        color: #fff;
+      }
+      .cover .lead {
+        color: #cfe3f0;
+        font-size: 36px;
+      }
+      .cover .chap,
+      .cover .foot,
+      .cover .pg {
+        color: #9cc9e3;
+      }
+      .cover .chap::before {
+        background: #9cc9e3;
+      }
+      .ecg {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 60px;
+        height: 160px;
+        opacity: 0.95;
+        -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0.06) 0, rgba(0,0,0,0.06) 40%, rgba(0,0,0,0.5) 78%, #000 100%);
+        mask-image: linear-gradient(90deg, rgba(0,0,0,0.06) 0, rgba(0,0,0,0.06) 40%, rgba(0,0,0,0.5) 78%, #000 100%);
+        -webkit-mask-size: 1920px 100%;
+        mask-size: 1920px 100%;
+        -webkit-mask-repeat: repeat-x;
+        mask-repeat: repeat-x;
+        animation: sweep 4s linear infinite;
+        filter: drop-shadow(0 0 8px rgba(0, 165, 229, 0.8));
+      }
+      .ecg path {
+        fill: none;
+        stroke: #00a5e5;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      @keyframes sweep {
+        from {
+          -webkit-mask-position: 0 0;
+          mask-position: 0 0;
+        }
+        to {
+          -webkit-mask-position: 1920px 0;
+          mask-position: 1920px 0;
+        }
+      }
+      @keyframes sweep2 {
+        from {
+          -webkit-mask-position: 0 0;
+          mask-position: 0 0;
+        }
+        to {
+          -webkit-mask-position: 520px 0;
+          mask-position: 520px 0;
+        }
+      }
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      .hero3d {
+        position: absolute;
+        right: 0;
+        top: 120px;
+        width: 900px;
+        height: 720px;
+        border: 0;
+        pointer-events: none;
+        z-index: 0;
+        -webkit-mask-image:
+          linear-gradient(to right, transparent 0, #000 22%),
+          linear-gradient(
+            to bottom,
+            transparent 0,
+            #000 14%,
+            #000 86%,
+            transparent 100%
+          );
+        -webkit-mask-composite: source-in;
+        mask-image:
+          linear-gradient(to right, transparent 0, #000 22%),
+          linear-gradient(
+            to bottom,
+            transparent 0,
+            #000 14%,
+            #000 86%,
+            transparent 100%
+          );
+        mask-composite: intersect;
+      }
+      .cover .lead {
+        max-width: 880px;
+      }
+      .tag {
+        position: absolute;
+        right: 120px;
+        top: 50px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #9cc9e3;
+        border: 1.5px solid #3f86ad;
+        border-radius: 999px;
+        padding: 6px 18px;
+      }
+      /* life bar */
+      .life {
+        position: relative;
+        height: 128px;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #eee;
+        display: flex;
+      }
+      .life div {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: #fff;
+        transform-origin: left;
+        transform: scaleX(0);
+      }
+      .slide.active .life div {
+        animation: grow 0.9s var(--ease) both;
+      }
+      .life .z1 {
+        background: var(--green);
+        flex: 5.5;
+        animation-delay: 0.6s !important;
+      }
+      .life .z2 {
+        background: var(--amber);
+        flex: 2.2;
+        animation-delay: 1.4s !important;
+      }
+      .life .z3 {
+        background: var(--red);
+        flex: 1.6;
+        animation-delay: 2s !important;
+      }
+      .life .z4 {
+        background: #4a4a48;
+        flex: 0.7;
+        animation-delay: 2.6s !important;
+      }
+      @keyframes grow {
+        to {
+          transform: scaleX(1);
+        }
+      }
+      /* flow */
+      .flow {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+      }
+      .node {
+        background: #fff;
+        border: 2px solid var(--line);
+        border-radius: 20px;
+        padding: 26px 30px;
+        min-width: 320px;
+      }
+      .node h4 {
+        font-size: 30px;
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+      .node p {
+        font-size: 25px;
+        line-height: 1.4;
+        color: var(--ink2);
+      }
+      .node.b {
+        border-color: var(--blue);
+        background: #eef5fa;
+      }
+      .node.o {
+        border-color: var(--orange);
+        background: #f8f5ee;
+      }
+      .arrow {
+        align-self: center;
+        font-size: 44px;
+        color: var(--muted);
+        padding: 0 14px;
+      }
+      /* signal */
+      .sig {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        flex: none;
+      }
+      .sig.R {
+        background: var(--red);
+      }
+      .sig.Y {
+        background: var(--amber);
+      }
+      .sig.G {
+        background: var(--green);
+      }
+      .sig.R::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: var(--red);
+        animation: pulse 1.6s ease-out infinite;
+      }
+      .fleet {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .eng {
+        display: grid;
+        grid-template-columns: 30px 190px 1fr 100px;
+        align-items: center;
+        gap: 14px;
+        background: #fff;
+        border: 1.5px solid var(--line);
+        border-radius: 12px;
+        padding: 7px 16px;
+        font-size: 22px;
+      }
+      .eng .mini {
+        height: 12px;
+        border-radius: 6px;
+        background: #f1f0ee;
+        overflow: hidden;
+      }
+      .eng .mini i {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: 6px;
+      }
+      .slide.active .eng .mini i {
+        width: var(--w);
+        transition: width 1s var(--ease) var(--bd, 0.8s);
+      }
+      .eng.feat {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px #c9deec;
+      }
+      .eng .rv {
+        text-align: right;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+      }
+      /* svg chart */
+      svg text {
+        font-family: inherit;
+      }
+      .ln {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+      }
+      .slide.active .ln {
+        animation: draw 2.6s ease-out 0.8s forwards;
+      }
+      .ci line.rng {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+      }
+      .slide.active .ci line.rng {
+        animation: draw 1s ease-out var(--cd, 0.8s) forwards;
+      }
+      .ci .dot {
+        opacity: 0;
+      }
+      .slide.active .ci .dot {
+        animation: fadein 0.5s ease-out calc(var(--cd, 0.8s) + 0.7s) forwards;
+      }
+      .dots {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      /* ui overlays */
+      #progress {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 5px;
+        background: var(--blue);
+        width: 0;
+        z-index: 20;
+        transition: width 0.4s var(--ease);
+      }
+      #hud {
+        position: fixed;
+        right: 18px;
+        bottom: 14px;
+        z-index: 30;
+        display: flex;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      body:hover #hud {
+        opacity: 0.9;
+      }
+      #hud button {
+        background: #2b2b2a;
+        color: #ddd;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      #hud button:hover {
+        background: #3a3a38;
+      }
+      #notes {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-height: 34vh;
+        overflow: auto;
+        background: rgba(18, 18, 17, 0.96);
+        color: #eee;
+        padding: 18px 28px;
+        z-index: 40;
+        display: none;
+        font-size: 20px;
+        line-height: 1.55;
+        border-top: 2px solid var(--blue);
+      }
+      #notes.on {
+        display: block;
+      }
+      #notes h5 {
+        font-size: 15px;
+        color: #9cc9e3;
+        letter-spacing: 0.06em;
+        margin-bottom: 6px;
+      }
+      #notes .t {
+        color: #ffcf8a;
+        font-weight: 700;
+      }
+      #timer {
+        position: fixed;
+        left: 18px;
+        top: 14px;
+        z-index: 30;
+        font-size: 18px;
+        color: #ddd;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 6px 14px;
+        border-radius: 999px;
+        display: none;
+        font-variant-numeric: tabular-nums;
+      }
+      #timer.on {
+        display: block;
+      }
+      #overview {
+        position: fixed;
+        inset: 0;
+        background: rgba(14, 14, 13, 0.97);
+        z-index: 50;
+        display: none;
+        padding: 40px 60px;
+        overflow: auto;
+      }
+      #overview.on {
+        display: block;
+      }
+      #overview h4 {
+        color: #9cc9e3;
+        font-size: 16px;
+        letter-spacing: 0.08em;
+        margin-bottom: 18px;
+      }
+      #overview .it {
+        display: flex;
+        gap: 14px;
+        align-items: baseline;
+        color: #eee;
+        padding: 8px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      #overview .it:hover,
+      #overview .it.cur {
+        background: #1f3a4d;
+      }
+      #overview .it span {
+        color: #7fa6bf;
+        width: 60px;
+        flex: none;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      #overview .it em {
+        color: #ffcf8a;
+        font-style: normal;
+        margin-left: auto;
+        font-size: 16px;
+      }
+      /* OS의 '움직임 줄이기' 설정과 무관하게 발표에서는 애니메이션을 항상 켠다(아래 블록은 일부러 비활성) */
+      @media not all {
+        .slide.active .r {
+          animation: none;
+          opacity: 1;
+        }
+        .slide.active .bar .trk i,
+        .slide.active .eng .mini i {
+          transition: none;
+        }
+        .life div {
+          transform: none !important;
+          animation: none !important;
+        }
+        .ln,
+        .ci line.rng,
+        .ecg path {
+          stroke-dashoffset: 0 !important;
+          animation: none !important;
+        }
+        .ci .dot {
+          opacity: 1 !important;
+          animation: none !important;
+        }
+      }
+      .toc {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 40px;
+        max-width: 1300px;
+      }
+      .toc .it {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        background: #fff;
+        border: 2px solid var(--line);
+        border-radius: 20px;
+        padding: 12px 32px;
+      }
+      .toc .n {
+        flex: none;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: #fff;
+        font-size: 40px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .toc h3 {
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 2px;
+      }
+      .toc p {
+        font-size: 24px;
+        color: var(--ink2);
+        line-height: 1.4;
+      }
+      @media print {
+        @page {
+          size: 1920px 1080px;
+          margin: 0;
+        }
+        html,
+        body {
+          overflow: visible;
+          background: #fff;
+          height: auto;
+        }
+        #stage {
+          position: static;
+          display: block;
+        }
+        #deck {
+          transform: none !important;
+          width: 1920px;
+          height: auto;
+          box-shadow: none;
+          overflow: visible;
+        }
+        .slide {
+          display: block !important;
+          position: relative;
+          height: 1080px;
+          page-break-after: always;
+          break-after: page;
+        }
+        .r {
+          opacity: 1 !important;
+          animation: none !important;
+        }
+        .bar .trk i,
+        .eng .mini i {
+          width: var(--w) !important;
+          transition: none !important;
+        }
+        .life div {
+          transform: none !important;
+          animation: none !important;
+        }
+        .ln,
+        .ci line.rng,
+        .ecg path {
+          stroke-dashoffset: 0 !important;
+          animation: none !important;
+        }
+        .ci .dot {
+          opacity: 1 !important;
+        }
+        #progress,
+        #hud,
+        #notes,
+        #timer,
+        #overview {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progress"></div>
+    <div id="timer"></div>
+    <div id="stage">
+      <div id="deck">
+        <!-- 1 표지 -->
+        <section class="slide cover" data-title="표지" data-sec="" data-t="30">
+          <iframe
+            class="hero3d r fade"
+            style="--d: 300"
+            src="assets/turbofan_3d.html?bg=transparent"
+            title="터보팬 엔진 3D"
+            loading="eager"
+          ></iframe>
+          <div class="chap r" style="--d: 0">
+            설비 고장을 예측하는 AI 데이터 분석 1기 · 통합 프로젝트
+          </div>
+          <h1 class="r" style="--d: 200">Sentinels</h1>
+          <!-- <p class="r" style="--d: 300; font-size: 52px; color: #fff">
+            <잠들지 않는 눈>
+          </p> -->
 
-<!-- 1 표지 -->
-<section class="slide cover" data-title="표지" data-sec="" data-t="30">
-  <div class="tag">DRAFT v0.1</div>
-  <div class="chap r" style="--d:0">설비 고장을 예측하는 AI 데이터 분석 · 통합 프로젝트</div>
-  <h1 class="r" style="--d:200">Sentinel</h1>
-  <p class="lead r" style="--d:450;margin-top:28px">센서 기록으로 터보팬 엔진의 <b style="color:#fff">고장 임박</b>을 미리 알리고<br>정비 시점을 계획한다</p>
-  <p class="lead r" style="--d:700;margin-top:56px;font-size:30px">5조 · 감시자들 &nbsp;|&nbsp; NASA C-MAPSS FD004</p>
-  <svg class="ecg" viewBox="0 0 1920 160" preserveAspectRatio="none"><path pathLength="1" d="M0 90 L260 90 L300 90 L330 50 L360 120 L395 20 L430 140 L460 90 L760 90 L800 90 L830 62 L860 112 L890 90 L1180 90 L1220 90 L1250 40 L1285 130 L1320 10 L1360 150 L1395 90 L1920 90"/></svg>
-  <div class="foot">포스코 K-뉴딜 아카데미</div><div class="pg"></div>
-</section>
+          <!-- <p class="lead r" style="--d: 450; margin-top: 63px">
+            센서 기록으로 터보팬 엔진의 고장 임박 여부와 남은 수명을 예측하고,
+            정비 준비 시간과 비용을 고려해 고장 위험과 불필요한 정비를 줄인다.
+          </p> -->
+          <p class="lead r" style="--d: 450; margin-top: 28px">
+            항공기 터보팬 엔진 고장 예측 프로젝트
+          </p>
+          <p class="lead r" style="--d: 700; margin-top: 56px; font-size: 30px">
+            5조 · 감시자들 &nbsp;|&nbsp; NASA C-MAPSS FD004
+          </p>
+          <svg class="ecg" viewBox="0 0 1920 160" preserveAspectRatio="none">
+            <path pathLength="1" d="M0 90 L260 90 L300 90 L330 50 L360 120 L395 20 L430 140 L460 90 L760 90 L800 90 L830 62 L860 112 L890 90 L1180 90 L1220 90 L1250 40 L1285 130 L1320 10 L1360 150 L1395 90 L1920 90" />
+          </svg>
+          <div class="foot">포스코 K-뉴딜 아카데미</div>
+          <div class="pg"></div>
+        </section>
 
-<!-- 2 문제 -->
-<section class="slide" data-title="문제 정의: 무엇을 위험으로 볼 것인가" data-sec="① 문제" data-t="70">
-  <div class="chap">① 문제</div>
-  <h2 class="r" style="--d:0">엔진이 <em>고장 나기 전에</em>, 정비 시점을 알 수 있을까?</h2>
-  <p class="lead r" style="--d:200">항공기 터보팬 엔진 센서(온도·압력·회전속도) 기록 → 그 엔진이 <b>앞으로 몇 번 더 비행할 수 있는지</b>(남은 수명, RUL)를 예측</p>
-  <div style="margin-top:64px" class="r">
-    <div class="life" style="--d:400">
-      <div class="z1">정상 (80사이클 이상 남음)</div><div class="z2">주의 (40~80)</div><div class="z3">위험 (40 이하)</div><div class="z4">고장</div>
-    </div>
-    <div class="axis">엔진 한 대의 수명 흐름 (왼쪽 → 오른쪽 = 운행 사이클이 쌓임). 남은 수명 40 이하를 <b>위험</b>으로 정의</div>
-  </div>
-  <div class="grid" style="grid-template-columns:1.2fr 1fr 1fr;margin-top:60px">
-    <div class="card r" style="--d:900"><h3>왜 중요한가</h3><p class="sm" style="font-size:28px">고장 나서 하는 <b>긴급 정비</b>는 계획 정비보다 <b class="hl">2~5배</b> 비쌉니다 (문헌 비용 비율 1:2, 1:5). 미리 알면 계획 정비로 바꿀 수 있습니다.</p></div>
-    <div class="card r" style="--d:1100"><h3>필수 과제</h3><p class="sm" style="font-size:28px"><span class="pill">이진 분류</span>지금 위험한가? 예 / 아니오</p></div>
-    <div class="card r" style="--d:1300"><h3>선택 과제</h3><p class="sm" style="font-size:28px"><span class="pill o">RUL 회귀</span>몇 사이클 남았나? 숫자로</p></div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+        <!-- 팀 -->
+        <section class="slide" data-title="조원별 역할" data-sec="" data-t="40">
+          <div class="chap">팀 소개</div>
+          <h2 class="r" style="--d: 0">5조 <em>감시자들</em> — 조원별 역할</h2>
+          
+          <div class="team">
+            <div class="badge lead r" style="--d: 350">
+              
+              <div class="hd"><img src="assets/posco_logo.png" alt="POSCO" /></div>
+              <img class="ph" src="assets/team_cyj.jpg" alt="최영준" />
+              <h3>최영준</h3>
+              <div class="role">팀장 (PM)</div>
+              <p>문제 정의<br />도메인 해석·대시보드 연동<br />문서화·발표 총괄</p>
+              <div class="ft">SENTINEL · 5조 감시자들</div>
+            </div>
+            <div class="badge r" style="--d: 500">
+              
+              <div class="hd"><img src="assets/posco_logo.png" alt="POSCO" /></div>
+              <img class="ph" src="assets/team_hhh.jpg" alt="한형희" />
+              <h3>한형희</h3>
+              <div class="role">데이터</div>
+              <p>데이터 이해<br />전처리·기초 분석</p>
+              <div class="ft">SENTINEL · 5조 감시자들</div>
+            </div>
+            <div class="badge r" style="--d: 650">
+              
+              <div class="hd"><img src="assets/posco_logo.png" alt="POSCO" /></div>
+              <img class="ph" src="assets/team_cgi.jpg" alt="최규인" />
+              <h3>최규인</h3>
+              <div class="role">시계열·특성</div>
+              <p>전처리·기초 분석<br />시계열 분석·특성 생성</p>
+              <div class="ft">SENTINEL · 5조 감시자들</div>
+            </div>
+            <div class="badge r" style="--d: 800">
+              
+              <div class="hd"><img src="assets/posco_logo.png" alt="POSCO" /></div>
+              <img class="ph" src="assets/team_cmw.jpg" alt="조민우" />
+              <h3>조민우</h3>
+              <div class="role">모델링</div>
+              <p>모델링<br />평가·오류 분석</p>
+              <div class="ft">SENTINEL · 5조 감시자들</div>
+            </div>
+            <div class="badge r" style="--d: 950">
+              
+              <div class="hd"><img src="assets/posco_logo.png" alt="POSCO" /></div>
+              <img class="ph" src="assets/team_lmy.jpg" alt="이문용" />
+              <h3>이문용</h3>
+              <div class="role">해석·문서</div>
+              <p>평가·오류 분석<br />도메인 해석(비용 시뮬레이션)</p>
+              <div class="ft">SENTINEL · 5조 감시자들</div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
 
-<!-- 3 기준 40 -->
-<section class="slide" data-title="위험 기준 40의 근거: 정비 비용 시뮬레이션" data-sec="① 문제" data-t="70">
-  <div class="chap">① 문제</div>
-  <h2 class="r" style="--d:0">왜 <em>40</em>인가 — 정비 비용으로 정했습니다</h2>
-  <p class="lead r" style="--d:150">경보가 울려도 정비는 바로 못 합니다 (준비 최소 7일 + 정비 가능한 날 10~20일 간격 + 주간 계획) → 경보 후 정비까지 평균 <b>17사이클</b></p>
-  <img class="fig r" style="--d:350;margin-top:24px;width:1540px" src="assets/threshold_cost.png" alt="위험 기준 N별 정비 비용과 정비 전 고장 비율">
-  <div class="cap r" style="--d:400">FD004, validation 엔진 49대, 정비 비용 시뮬레이션 (de Pater 외 2022 운영 조건 · 비용 1:5, 1:2 모두 최적 N = 40)</div>
-  <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:26px">
-    <div class="kpi r" style="--d:700"><span class="v" style="color:var(--red)"><span class="count" data-to="14.3" data-dec="1">0</span>%</span><span class="l">기준 30이면 정비 전에 고장 나는 엔진 (비용 +48%)</span></div>
-    <div class="kpi r" style="--d:850"><span class="v" style="color:var(--green)"><span class="count" data-to="0.2" data-dec="1">0</span>%</span><span class="l"><b>기준 40</b>: 비용 최저</span></div>
-    <div class="kpi r" style="--d:1000"><span class="v">+2%<span style="font-size:36px;color:var(--muted)"> / +5%</span></span><span class="l">기준 45 / 50: 완만히 늘어남 (너무 일찍 정비)</span></div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+        <!-- 목차 -->
+        <section class="slide" data-title="목차" data-sec="" data-t="30">
+          <div class="chap">목차</div>
+          <div class="ag">
+            <div class="ag-left r fade" style="--d: 0">
+              <div class="ag-k">CONTENTS</div>
+              <h2>발표 순서</h2>
+              <p>문제에서 시작해<br />현장 활용까지<br />6단계로 설명합니다</p>
+              <svg class="ag-ecg" viewBox="0 0 520 120" preserveAspectRatio="none"><path pathLength="1" d="M0 70 L120 70 L140 70 L160 38 L180 92 L205 14 L228 104 L248 70 L330 70 L350 70 L368 50 L388 86 L406 70 L520 70"/></svg>
+            </div>
+            <div class="ag-list">
+              <div class="ag-it r" style="--d: 300">
+                <div class="ag-n">1</div>
+                <div><h3>문제 정의</h3><p>무엇을, 왜, 어느 수준까지 맞혀야 하는가</p></div>
+              </div>
+              <div class="ag-it r" style="--d: 440">
+                <div class="ag-n">2</div>
+                <div><h3>데이터 이해 · 전처리</h3><p>FD004 선택과 4가지 전처리 원칙</p></div>
+              </div>
+              <div class="ag-it r" style="--d: 580">
+                <div class="ag-n">3</div>
+                <div><h3>시계열 패턴 분석</h3><p>센서 추이와 열화 신호</p></div>
+              </div>
+              <div class="ag-it r" style="--d: 720">
+                <div class="ag-n">4</div>
+                <div><h3>기준 모델 · 머신러닝</h3><p>기준 모델 대비 분류·회귀 결과</p></div>
+              </div>
+              <div class="ag-it r" style="--d: 860">
+                <div class="ag-n">5</div>
+                <div><h3>평가 · 오류 분석</h3><p>위험 기준 40, 모델 선정, 신뢰도, 오탐·미탐 사례</p></div>
+              </div>
+              <div class="ag-it r" style="--d: 1000">
+                <div class="ag-n">6</div>
+                <div><h3>현장 활용 · 한계 · 개선</h3><p>보전 담당자가 이 결과를 어떻게 쓰는가</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
 
-<!-- 4 데이터 -->
-<section class="slide" data-title="데이터: FD004를 중심으로 — 교차 검증" data-sec="② 데이터·전처리" data-t="70">
-  <div class="chap">② 데이터 · 전처리</div>
-  <h2 class="r" style="--d:0">가장 <em>어려운 서브셋(FD004)</em>을 중심으로</h2>
-  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:34px;gap:44px">
-    <div>
-      <table class="r" style="--d:200">
-        <tr><th></th><th>FD004 (주)</th><th>FD001 (비교)</th></tr>
-        <tr><td>운전조건</td><td><b>6가지</b>가 계속 바뀜</td><td>1가지</td></tr>
-        <tr><td>고장 모드</td><td><b>2가지</b> (압축기·팬)</td><td>1가지</td></tr>
-        <tr><td>train / test 엔진</td><td>249 / 248대</td><td>100 / 100대</td></tr>
-        <tr><td>엔진 수명</td><td>128 ~ 543사이클</td><td>128 ~ 362</td></tr>
-        <tr><td>사용 센서</td><td>21개 중 15개</td><td>14개</td></tr>
-      </table>
-      <div class="warn r" style="--d:700;margin-top:26px">실제 항공기가 아니라 NASA가 만든 <b>시뮬레이션 데이터</b>입니다. 한 줄 = 엔진의 한 비행 사이클.</div>
-      <img class="fig r" style="--d:900;margin-top:18px;width:430px" src="assets/engine_life_distribution.png" alt="엔진 수명 분포">
-    </div>
-    <div class="card r" style="--d:500">
-      <h3>교차 검증 — 어려운 데이터로 학습하면 쉬운 데이터도 통한다</h3>
-      <p class="sm">GRU, 공식 test 오차 (MAE, 사이클 · 낮을수록 좋음)</p>
-      <div class="bars" style="margin-top:18px">
-        <div class="bar" style="--bd:.9s"><span class="lab">FD004 → FD004</span><div class="trk"><i style="--w:30.9%;background:var(--blue)"></i></div><span class="val">17.3</span></div>
-        <div class="bar" style="--bd:1.1s"><span class="lab">FD004 → FD001</span><div class="trk"><i style="--w:19.9%;background:var(--blue)"></i></div><span class="val">11.2</span></div>
-        <div class="bar" style="--bd:1.3s"><span class="lab">FD001 → FD001</span><div class="trk"><i style="--w:17.2%;background:var(--lblue)"></i></div><span class="val">9.6</span></div>
-        <div class="bar" style="--bd:1.5s"><span class="lab">FD001 → FD004</span><div class="trk"><i style="--w:100%;background:var(--red)"></i></div><span class="val">55.8</span></div>
+        <!-- 2 문제 -->
+        <section
+          class="slide"
+          data-title="문제 정의: 무엇을 위험으로 볼 것인가"
+          data-sec="① 문제 정의"
+          data-t="70"
+        >
+          <div class="chap">① 문제 정의</div>
+          <h2 class="r" style="--d: 0">
+            엔진이 <em>고장 나기 전에</em>, 정비 시점을 알 수 있을까?
+          </h2>
+          <p class="lead r" style="--d: 200">
+            항공기 터보팬 엔진 센서(온도·압력·회전속도) 기록 → 그 엔진이
+            <b>앞으로 몇 번 더 비행할 수 있는지</b>(남은 수명, RUL)를 예측하고, 고장 전에 정비해 <b>긴급 정비 비용</b>을 줄일 수 있는지까지 판단
+          </p>
+          <div style="margin-top: 40px" class="r">
+            <div class="life" style="--d: 400">
+              <div class="z1">정상 (80사이클 이상 남음)</div>
+              <div class="z2">주의 (40~80)</div>
+              <div class="z3">위험 (40 이하)</div>
+              <div class="z4">고장</div>
+            </div>
+            <div class="axis">
+              1사이클은 엔진의 1회 운행 단위이며, 데이터의 각 행에는 해당 시점의 운전조건과 센서 측정값이 기록
+            </div>
+            <div class="axis" style="margin-top: 6px">
+              엔진 한 대의 수명 흐름 (왼쪽 → 오른쪽 = 운행 사이클이 쌓임). 남은
+              수명 40 이하를 <b>위험</b>으로 정의
+            </div>
+          </div>
+          <div
+            class="grid"
+            style="grid-template-columns: 1.2fr 1fr 1fr; margin-top: 34px"
+          >
+            <div class="card r" style="--d: 900">
+              <h3>왜 중요한가</h3>
+              <p class="sm" style="font-size: 28px">
+                고장 나서 하는 <b>긴급 정비</b>는 계획 정비보다
+                <b class="hl">2~5배</b> 비쌉니다 <span style="white-space:nowrap">(문헌 비용 비율</span> <span style="white-space:nowrap">1:5<sup class="ref">1</sup>, 1:2<sup class="ref">2</sup>)</span>. 미리
+                알면 계획 정비로 바꿀 수 있습니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 1100">
+              <h3>필수 과제</h3>
+              <p class="sm" style="font-size: 28px">
+                <span class="pill">이진 분류</span><br /><span style="display:inline-block;margin-top:10px">지금 위험한가?<br />남은 수명 40 이하면 경보</span>
+              </p>
+            </div>
+            <div class="card r" style="--d: 1300">
+              <h3>선택 과제</h3>
+              <p class="sm" style="font-size: 28px">
+                <span class="pill o">RUL 회귀</span><br /><span style="font-size:26px">몇 사이클 남았나? 숫자로 예측</span><br /><span class="pill o" style="margin-top:12px">비용 환산</span><br /><span style="font-size:26px">예측을 정비 비용으로 바꿔 비교</span>
+              </p>
+            </div>
+          </div>
+          <div class="srcbox r" style="--d: 1400">
+            <span class="srclab">출처</span>
+            <ol>
+              <li>de Pater, Reijns &amp; Mitici (2022). <i>Reliability Engineering &amp; System Safety</i> 221, 108341 <em>— 비용 1:5</em></li>
+              <li>Lee &amp; Mitici (2023). <i>Reliability Engineering &amp; System Safety</i> 230, 108908 <em>— 비용 1:2</em></li>
+            </ol>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 4 데이터 -->
+        <section
+          class="slide"
+          data-title="데이터: FD004를 중심으로 — 교차 검증"
+          data-sec="② 데이터 이해 · 전처리"
+          data-t="70"
+        >
+          <div class="chap">② 데이터 이해 · 전처리</div>
+          <h2 class="r" style="--d: 0">
+            가장 <em>어려운 서브셋(FD004)</em>을 중심으로
+          </h2>
+          <div
+            class="grid"
+            style="grid-template-columns: 1fr 1fr; margin-top: 34px; gap: 44px"
+          >
+            <div>
+              <table class="r" style="--d: 200">
+                <tr>
+                  <th></th>
+                  <th>FD004 (주)</th>
+                  <th>FD001 (비교)</th>
+                </tr>
+                <tr>
+                  <td>운전조건</td>
+                  <td><b>6가지</b>가 계속 바뀜</td>
+                  <td>1가지</td>
+                </tr>
+                <tr>
+                  <td>고장 모드</td>
+                  <td><b>2가지</b> (압축기·팬)</td>
+                  <td>1가지</td>
+                </tr>
+                <tr>
+                  <td>train / test 엔진</td>
+                  <td>249 / 248대</td>
+                  <td>100 / 100대</td>
+                </tr>
+                <tr>
+                  <td>엔진 수명</td>
+                  <td>128 ~ 543사이클</td>
+                  <td>128 ~ 362</td>
+                </tr>
+                <tr>
+                  <td>사용 센서</td>
+                  <td>21개 중 15개</td>
+                  <td>14개</td>
+                </tr>
+              </table>
+              <div class="warn r" style="--d: 700; margin-top: 26px">
+                실제 항공기가 아니라 NASA가 만든 <b>시뮬레이션 데이터</b>입니다.
+                한 줄 = 엔진의 한 비행 사이클.
+              </div>
+              <img
+                class="fig r"
+                style="--d: 900; margin-top: 18px; width: 430px"
+                src="assets/engine_life_distribution.png"
+                alt="엔진 수명 분포"
+              />
+            </div>
+            <div class="card r" style="--d: 500">
+              <h3>교차 검증 — 어려운 데이터로 학습하면 쉬운 데이터도 통한다</h3>
+              <p class="sm">
+                GRU, 공식 test 오차 (MAE, 사이클 · 낮을수록 좋음)
+              </p>
+              <div class="bars" style="margin-top: 18px">
+                <div class="bar" style="--bd: 0.9s">
+                  <span class="lab">FD004 → FD004</span>
+                  <div class="trk">
+                    <i style="--w: 30.9%; background: var(--blue)"></i>
+                  </div>
+                  <span class="val">17.3</span>
+                </div>
+                <div class="bar" style="--bd: 1.1s">
+                  <span class="lab">FD004 → FD001</span>
+                  <div class="trk">
+                    <i style="--w: 19.9%; background: var(--blue)"></i>
+                  </div>
+                  <span class="val">11.2</span>
+                </div>
+                <div class="bar" style="--bd: 1.3s">
+                  <span class="lab">FD001 → FD001</span>
+                  <div class="trk">
+                    <i style="--w: 17.2%; background: var(--lblue)"></i>
+                  </div>
+                  <span class="val">9.6</span>
+                </div>
+                <div class="bar" style="--bd: 1.5s">
+                  <span class="lab">FD001 → FD004</span>
+                  <div class="trk">
+                    <i style="--w: 100%; background: var(--red)"></i>
+                  </div>
+                  <span class="val">55.8</span>
+                </div>
+              </div>
+              <div class="axis">학습 데이터 → 평가 데이터 · MAE (사이클)</div>
+              <div class="note" style="margin-top: 20px; font-size: 24px">
+                FD004로 배우면 FD001에도 통합니다. 반대(FD001 → FD004)는
+                <b>실패</b> — 55.8은 센서를 안 쓰는 베이스라인(47.4)보다
+                나쁩니다.
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 5 전처리 -->
+        <section
+          class="slide"
+          data-title="전처리: 4가지 원칙"
+          data-sec="② 데이터 이해 · 전처리"
+          data-t="60"
+        >
+          <div class="chap">② 데이터 이해 · 전처리</div>
+          <h2 class="r" style="--d: 0">
+            비행 조건 차이는 빼고, <em>미래 정보는 섞지 않습니다</em>
+          </h2>
+          <div
+            class="grid"
+            style="grid-template-columns: 1fr 1fr; margin-top: 38px; gap: 26px"
+          >
+            <div class="card r" style="--d: 250">
+              <h3>① 운전조건별 정규화</h3>
+              <p class="sm" style="font-size: 26px">
+                고도·속도가 6가지로 바뀌면 센서값이 크게 뜁니다.
+                <b>조건별로 따로 표준화</b>해 "조건 변화"가 "엔진 열화"로 보이지
+                않게 합니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 450">
+              <h3>② 변하지 않는 센서 제거</h3>
+              <p class="sm" style="font-size: 26px">
+                같은 조건 안에서 값이 거의 안 변하는 센서 6개 + 운전 설정 3개
+                제거 → <b>센서 15개</b> 사용.
+              </p>
+            </div>
+            <div class="card r" style="--d: 650">
+              <h3>③ RUL 정답은 125에서 자름</h3>
+              <p class="sm" style="font-size: 26px">
+                새 엔진은 센서가 다 건강해 보여 구분이 안 됩니다. 가장 짧은
+                수명(128)보다 작은 <b>125</b>로 한계를 둡니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 850">
+              <h3>④ 엔진 단위 분할 · 누수 방지</h3>
+              <p class="sm" style="font-size: 26px">
+                엔진을 통째로 <b>200대 학습 / 49대 검증</b>(시드 42). 정규화
+                기준은 학습 엔진만으로 계산, 공식 test는 마지막에 한 번.
+              </p>
+            </div>
+          </div>
+          <div
+            class="r"
+            style="
+              --d: 1050;
+              margin-top: 30px;
+              display: flex;
+              gap: 30px;
+              align-items: flex-end;
+            "
+          >
+            <img
+              class="fig"
+              style="width: 500px"
+              src="assets/rul_label_shape.png"
+              alt="RUL 라벨 모양"
+            />
+            <div class="sm" style="padding-bottom: 6px">
+              그림: 엔진 3대의 RUL 라벨. 평평하다가(125) 고장 직전에 직선으로
+              떨어집니다.
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 6 시계열 -->
+        <section
+          class="slide"
+          data-title="시계열 분석: 센서 추이"
+          data-sec="③ 시계열 패턴 분석"
+          data-t="55"
+        >
+          <div class="chap">③ 시계열 패턴 분석</div>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.08fr 1fr;
+              gap: 56px;
+              margin-top: 6px;
+            "
+          >
+            <div>
+              <h2 class="r" style="--d: 0">
+                센서는 엔진마다 <em>서서히, 다른 속도로</em> 변합니다
+              </h2>
+              <ul class="b" style="margin-top: 28px">
+                <li class="r" style="--d: 300">
+                  비행 조건 차이를 뺀(운전조건 보정) 값으로 보면 센서가
+                  <b>한 방향으로 서서히 이동</b>합니다.
+                </li>
+                <li class="r" style="--d: 500">
+                  추세성 상위: 코어 속도(s9), 보정 코어 속도(s14), 팬 속도(s8),
+                  보정 팬 속도(s13)
+                </li>
+                <li class="r" style="--d: 700">
+                  같은 센서도 엔진마다 열화 속도가 다름 → 수명이 128 ~
+                  543사이클로 벌어짐
+                </li>
+              </ul>
+              <div class="warn r" style="--d: 950; margin-top: 34px">
+                그래서 "평균 수명 − 현재 사이클"만으로는 한계가 큽니다. 기준
+                모델의 평균 오차는 <b>47.4사이클</b>.
+              </div>
+            </div>
+            <div class="r" style="--d: 400; text-align: center">
+              <img
+                class="fig"
+                style="height: 800px; margin: 0 auto"
+                src="assets/sensor_trends.png"
+                alt="추세성 상위 센서 4개의 시계열"
+              />
+              <div class="cap">
+                추세성 상위 센서 4개 (엔진 3대, 운전조건 보정값)
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 7 특성 -->
+        <section
+          class="slide"
+          data-title="시계열 특성과 센서 중요도"
+          data-sec="③ 시계열 패턴 분석"
+          data-t="55"
+        >
+          <div class="chap">③ 시계열 패턴 분석</div>
+          <h2 class="r" style="--d: 0">
+            최근 15사이클의 <em>평균 · 흔들림 · 기울기</em>를 특성으로
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1fr 1.05fr;
+              gap: 50px;
+              margin-top: 34px;
+            "
+          >
+            <div>
+              <div class="flow r" style="--d: 250">
+                <div class="node">
+                  <h4>센서 15개</h4>
+                  <p>현재값</p>
+                </div>
+                <div class="arrow">+</div>
+                <div class="node b">
+                  <h4>최근 15사이클</h4>
+                  <p>평균 · 표준편차 · 기울기</p>
+                </div>
+                <div class="arrow">=</div>
+                <div class="node o">
+                  <h4>특성 60개</h4>
+                  <p>15 × 4</p>
+                </div>
+              </div>
+              <ul class="b" style="margin-top: 36px">
+                <li class="r" style="--d: 600">
+                  모델이 <b>모델과 무관하게</b> 뽑은 추세성 상위 8개 센서와
+                  비교했더니
+                </li>
+                <li class="r" style="--d: 800">
+                  모델 중요도 상위 8개 중
+                  <b class="hl">5개가 겹침</b> (s8·s11·s13·s14·s17) → 노이즈가
+                  아니라 <b>실제 열화 신호</b>를 보고 판단
+                </li>
+                <li class="r" style="--d: 1000">
+                  1위 s3 고압압축기 출구 온도 (0.50), 팬 속도 s8도 상위 → 고장
+                  모드 2종(압축기·팬) 반영
+                </li>
+              </ul>
+            </div>
+            <div class="r" style="--d: 500">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/feature_importance_top8.png"
+                alt="센서 중요도 상위 8개"
+              />
+              <div class="cap">
+                RandomForest 센서 중요도 (센서별 특성 4개 합산, 전체 합 = 1)
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 8 모델 설계 -->
+        <section
+          class="slide"
+          data-title="모델 설계: 기준 모델 vs 머신러닝"
+          data-sec="④ 기준 모델 · 머신러닝"
+          data-t="55"
+        >
+          <div class="chap">④ 기준 모델 · 머신러닝</div>
+          <h2 class="r" style="--d: 0">
+            단순한 기준 모델부터 만들고, <em>같은 조건</em>에서 비교
+          </h2>
+          <div style="margin-top: 60px">
+            <div class="sm r" style="--d: 200; margin-bottom: 12px">
+              <span class="pill">필수 과제 · 위험 분류</span>
+            </div>
+            <div class="flow r" style="--d: 300">
+              <div class="node">
+                <h4>기준 모델</h4>
+                <p>
+                  이동 Z-score 건강지표<br />정상(처음 30사이클) 대비 얼마나
+                  벗어났나
+                </p>
+              </div>
+              <div class="arrow">→</div>
+              <div class="node o">
+                <h4>RandomForest 분류</h4>
+                <p>위험 확률 0.36 이상이면 경보<br />(0.5에서 낮춤)</p>
+              </div>
+            </div>
+            <div class="sm r" style="--d: 600; margin: 34px 0 10px">
+              <span class="pill o">선택 과제 · 남은 수명(RUL)</span>
+            </div>
+            <div class="flow r" style="--d: 700">
+              <div class="node">
+                <h4>기준 모델</h4>
+                <p>평균 수명 − 현재 사이클<br />(센서 미사용)</p>
+              </div>
+              <div class="arrow">→</div>
+              <div class="node">
+                <h4>RandomForest 회귀</h4>
+                <p>같은 특성 60개</p>
+              </div>
+              <div class="arrow">→</div>
+              <div class="node b">
+                <h4>GRU 회귀</h4>
+                <p>엔진의 전체 이력을 차례로 읽는 신경망</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="r"
+            style="
+              --d: 1100;
+              margin-top: 44px;
+              display: flex;
+              gap: 14px;
+              flex-wrap: wrap;
+              align-items: center;
+            "
+          >
+            <span class="sm" style="margin-right: 6px">모든 모델 공통:</span>
+            <span class="pill g">같은 엔진 분할 (200 / 49)</span
+            ><span class="pill g">같은 특성</span
+            ><span class="pill g">같은 지표</span
+            ><span class="pill g">시드 42 고정</span>
+          </div>
+          <p class="sm r" style="--d: 1250; margin-top: 22px">
+            후보 8종(Ridge · RandomForest · ExtraTrees · HistGB · MLP · 1D-CNN ·
+            LSTM · GRU)을 같은 조건으로 비교해 최종 모델을 골랐습니다.
+          </p>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 9 분류 결과 -->
+        <section
+          class="slide"
+          data-title="분류 결과: 혼동행렬 · Precision · Recall · F1"
+          data-sec="④ 기준 모델 · 머신러닝"
+          data-t="70"
+        >
+          <div class="chap">④ 기준 모델 · 머신러닝</div>
+          <h2 class="r" style="--d: 0">
+            기준 모델 F1 <em>0.58 → 0.86</em>: 머신러닝이 필요한 이유
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 0.95fr 1.05fr;
+              gap: 44px;
+              margin-top: 30px;
+            "
+          >
+            <div>
+              <div class="card r" style="--d: 250">
+                <h3>validation F1 (49대, 모든 운행 시점)</h3>
+                <div class="bars" style="margin-top: 14px">
+                  <div
+                    class="bar"
+                    style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s"
+                  >
+                    <span class="lab">기준 (Z-score)</span>
+                    <div class="trk">
+                      <i style="--w: 58.3%; background: var(--lgray)"></i>
+                    </div>
+                    <span class="val">0.58</span>
+                  </div>
+                  <div
+                    class="bar"
+                    style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s"
+                  >
+                    <span class="lab">RandomForest</span>
+                    <div class="trk">
+                      <i style="--w: 86.3%; background: var(--orange)"></i>
+                    </div>
+                    <span class="val">0.86</span>
+                  </div>
+                  <div
+                    class="bar"
+                    style="grid-template-columns: 260px 1fr 90px; --bd: 1.1s"
+                  >
+                    <span class="lab">GRU 회귀→분류</span>
+                    <div class="trk">
+                      <i style="--w: 91.5%; background: var(--blue)"></i>
+                    </div>
+                    <span class="val">0.92</span>
+                  </div>
+                </div>
+                <div class="axis">F1 (0~1, 높을수록 좋음)</div>
+              </div>
+              <table class="r" style="--d: 600; margin-top: 22px">
+                <tr>
+                  <th>공식 test (248대)</th>
+                  <th class="n">정밀도</th>
+                  <th class="n">재현율</th>
+                  <th class="n">F1</th>
+                </tr>
+                <tr>
+                  <td>기준 모델</td>
+                  <td class="n">0.63</td>
+                  <td class="n">0.55</td>
+                  <td class="n">0.59</td>
+                </tr>
+                <tr class="sel">
+                  <td>RandomForest (0.36)</td>
+                  <td class="n">0.89</td>
+                  <td class="n">0.94</td>
+                  <td class="n">0.92</td>
+                </tr>
+              </table>
+              <ul class="b" style="margin-top: 18px">
+                <li class="r" style="--d: 900; font-size: 26px">
+                  위험 69대 중 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8
+                </li>
+                <li class="r" style="--d: 1050; font-size: 26px">
+                  확률 기준 0.5 → <b>0.36</b>: 재현율 0.83 → 0.89 (놓침이 더
+                  비싸서)
+                </li>
+                <li class="r" style="--d: 1200; font-size: 26px">
+                  정확도는 쓰지 않음 — 위험 시점이 16%뿐이라 "항상 정상"도 84%
+                </li>
+              </ul>
+            </div>
+            <div class="r" style="--d: 500">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/cls_confusion_matrix.png"
+                alt="혼동행렬: 기준 모델 vs RandomForest"
+              />
+              <div class="cap">
+                혼동행렬 (validation 49대의 모든 사이클, 위험 = 남은 수명 ≤ 40)
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 10 회귀 결과 -->
+        <section
+          class="slide"
+          data-title="회귀 결과: 남은 수명 예측 오차"
+          data-sec="④ 기준 모델 · 머신러닝"
+          data-t="60"
+        >
+          <div class="chap">④ 기준 모델 · 머신러닝</div>
+          <h2 class="r" style="--d: 0">
+            남은 수명 예측 오차 <em>47 → 17 사이클</em>
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 0.9fr 1.1fr;
+              gap: 44px;
+              margin-top: 30px;
+            "
+          >
+            <div class="card r" style="--d: 250">
+              <h3>공식 test 평균 오차 (MAE)</h3>
+              <div class="bars" style="margin-top: 16px">
+                <div
+                  class="bar"
+                  style="grid-template-columns: 270px 1fr 100px; --bd: 0.7s"
+                >
+                  <span class="lab">베이스라인</span>
+                  <div class="trk">
+                    <i style="--w: 100%; background: var(--lgray)"></i>
+                  </div>
+                  <span class="val">47.4</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 270px 1fr 100px; --bd: 0.9s"
+                >
+                  <span class="lab">RandomForest</span>
+                  <div class="trk">
+                    <i style="--w: 46%; background: var(--orange)"></i>
+                  </div>
+                  <span class="val">21.8</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 270px 1fr 100px; --bd: 1.1s"
+                >
+                  <span class="lab">LSTM</span>
+                  <div class="trk">
+                    <i style="--w: 39.4%; background: var(--lblue)"></i>
+                  </div>
+                  <span class="val">18.7</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 270px 1fr 100px; --bd: 1.3s"
+                >
+                  <span class="lab"><b>GRU (최종)</b></span>
+                  <div class="trk">
+                    <i style="--w: 36.5%; background: var(--blue)"></i>
+                  </div>
+                  <span class="val" style="color: var(--blue)">17.3</span>
+                </div>
+              </div>
+              <div class="axis">
+                MAE (사이클, 낮을수록 좋음) · 베이스라인 = 평균 수명 − 현재
+                사이클
+              </div>
+              <div
+                class="grid"
+                style="grid-template-columns: 1fr 1fr; margin-top: 26px"
+              >
+                <div class="kpi">
+                  <span class="v" style="color: var(--blue)"
+                    ><span class="count" data-to="63.5" data-dec="1">0</span
+                    >%</span
+                  ><span class="l">베이스라인 대비 오차 감소</span>
+                </div>
+                <div class="kpi">
+                  <span class="v">25.2</span
+                  ><span class="l">RMSE · NASA 점수 4,165</span>
+                </div>
+              </div>
+            </div>
+            <div class="r" style="--d: 600">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/model_alarm_rates.png"
+                alt="후보 모델별 MAE, 미탐율, 오탐율"
+              />
+              <div class="cap">
+                후보 8종 비교 (validation): 평균 오차(MAE) · 미탐율 · 오탐율
+              </div>
+              <p class="sm" style="margin-top: 14px">
+                오차가 작은 모델일수록 <b>미탐율도 낮습니다</b> (상관 0.87).
+                반면 오탐율은 오차와 거의 무관.
+              </p>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 3 기준 40 -->
+        <section
+          class="slide"
+          data-title="위험 기준 40의 근거: 정비 비용 시뮬레이션"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="70"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            왜 위험 기준 사이클을 <em>40</em>으로 정했을까?
+          </h2>
+          <p class="lead r" style="--d: 150">
+            경보가 울려도 정비는 바로 못 합니다 (준비 최소 7일 + 정비 가능한 날
+            10~20일 간격 + 주간 계획) → 경보 후 정비까지 평균 <b>17사이클</b>
+          </p>
+          <img
+            class="fig r"
+            style="--d: 350; margin-top: 24px; width: 1540px"
+            src="assets/threshold_cost.png"
+            alt="위험 기준 N별 정비 비용과 정비 전 고장 비율"
+          />
+          <div class="cap r" style="--d: 400">
+            FD004, validation 엔진 49대, 정비 비용 시뮬레이션 (de Pater 외 2022
+            운영 조건 · 비용 1:5, 1:2 모두 최적 N = 40)
+          </div>
+          <div
+            class="grid"
+            style="grid-template-columns: repeat(3, 1fr); margin-top: 26px"
+          >
+            <div class="kpi r" style="--d: 700">
+              <span class="v" style="color: var(--red)"
+                ><span class="count" data-to="14.3" data-dec="1">0</span>%</span
+              ><span class="l"
+                >기준 30이면 정비 전에 고장 나는 엔진 (비용 +48%)</span
+              >
+            </div>
+            <div class="kpi r" style="--d: 850">
+              <span class="v" style="color: var(--green)"
+                ><span class="count" data-to="0.2" data-dec="1">0</span>%</span
+              ><span class="l"><b>기준 40</b>: 비용 최저</span>
+            </div>
+            <div class="kpi r" style="--d: 1000">
+              <span class="v"
+                >+2%<span style="font-size: 36px; color: var(--muted)">
+                  / +5%</span
+                ></span
+              ><span class="l"
+                >기준 45 / 50: 완만히 늘어남 (너무 일찍 정비)</span
+              >
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 11 모델 선정 -->
+        <section
+          class="slide"
+          data-title="최종 모델 선정: 우선순위와 정비 비용"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="70"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            GRU 선정: <em>놓침 → 헛경보 → 오차</em> 순서, 비용으로 확인
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.15fr 0.85fr;
+              gap: 44px;
+              margin-top: 26px;
+            "
+          >
+            <div class="card r" style="--d: 250">
+              <h3>정비 비용 (위험 기준 40, 1:5 · validation)</h3>
+              <div class="bars" style="gap: 10px; margin-top: 10px">
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 0.6s"
+                >
+                  <span class="lab"><b>GRU</b></span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 33.3%; background: var(--blue)"></i>
+                  </div>
+                  <span class="val">4.47</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s"
+                >
+                  <span class="lab">LSTM</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 34.1%; background: var(--lblue)"></i>
+                  </div>
+                  <span class="val">4.57</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 0.8s"
+                >
+                  <span class="lab">MLP</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 38.4%"></i>
+                  </div>
+                  <span class="val">5.15</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s"
+                >
+                  <span class="lab">HistGradientBoosting</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 38.5%"></i>
+                  </div>
+                  <span class="val">5.17</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 1s"
+                >
+                  <span class="lab">RandomForest</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 41.3%; background: var(--orange)"></i>
+                  </div>
+                  <span class="val">5.54</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 1.1s"
+                >
+                  <span class="lab">ExtraTrees</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 41.3%"></i>
+                  </div>
+                  <span class="val">5.54</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 1.2s"
+                >
+                  <span class="lab">1D-CNN</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 42.8%"></i>
+                  </div>
+                  <span class="val">5.74</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 1.3s"
+                >
+                  <span class="lab">Ridge</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 68%"></i>
+                  </div>
+                  <span class="val">9.12</span>
+                </div>
+                <div
+                  class="bar"
+                  style="grid-template-columns: 260px 1fr 90px; --bd: 1.4s"
+                >
+                  <span class="lab">베이스라인</span>
+                  <div class="trk" style="height: 28px">
+                    <i style="--w: 100%; background: var(--lgray)"></i>
+                  </div>
+                  <span class="val">13.42</span>
+                </div>
+              </div>
+              <div class="axis">
+                운행 1,000사이클당 정비 비용 (계획 정비 1회 = 1, 낮을수록 좋음)
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 20px">
+              <div class="card r" style="--d: 500">
+                <h3>왜 이 순서인가</h3>
+                <p class="sm" style="font-size: 28px; line-height: 1.5">
+                  고장(긴급 정비)이 계획 정비보다 <b>2~5배</b> 비싸므로
+                  <b>위험을 놓치지 않는 것</b>이 먼저. 비교는 비용
+                  시뮬레이션으로.
+                </p>
+              </div>
+              <div class="card r" style="--d: 700">
+                <h3>시드 3개 반복 (test MAE)</h3>
+                <p class="sm" style="font-size: 28px; line-height: 1.5">
+                  <b style="color: var(--blue)">GRU 17.0 ± 0.7</b> vs LSTM 19.4
+                  ± 1.4<br />GRU의 가장 나쁜 값이 LSTM의 가장 좋은 값보다
+                  낫습니다.
+                </p>
+              </div>
+              <div class="warn r" style="--d: 900">
+                <b>GRU의 약점</b>도 있습니다 — 학습 약 12분, 설명이 어렵고,
+                test에서 놓친 위험 엔진은 MLP(5대)가 GRU(8대)보다 적었습니다.
+                LSTM과 정비 비용은 1~2% 차이(동률).
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 12 신뢰도 -->
+        <section
+          class="slide"
+          data-title="숫자를 얼마나 믿을 수 있나: 신뢰구간"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="55"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            차이가 크면 <em>확실</em>, 작으면 <em>조심</em>해서 읽습니다
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.25fr 0.75fr;
+              gap: 44px;
+              margin-top: 26px;
+            "
+          >
+            <div class="card r" style="--d: 250">
+              <h3>공식 test 재현율의 95% 구간 (위험 엔진 69대)</h3>
+              <svg id="ciChart" viewBox="0 0 1000 380" width="100%"></svg>
+              <div class="axis">
+                재현율 (0~1) · 점 = 측정값, 선 = 95% 신뢰구간 (Wilson)
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 18px">
+              <div class="note r" style="--d: 700; font-size: 24px">
+                <b>확실한 차이</b><br />기준 모델과 머신러닝은 구간이 겹치지
+                않음
+              </div>
+              <div class="warn r" style="--d: 900; font-size: 24px">
+                <b>조심할 차이</b><br />RandomForest vs GRU는 겹침 → test만으로
+                우열 불가. 엔진 단위 validation은 GRU가 조금 낫다 (F1 +0.05)
+              </div>
+              <div class="card r" style="--d: 1100">
+                <p class="sm" style="font-size: 24px">
+                  안전 구간에서 <b>한 번이라도</b> 경보를 받은 엔진<br />(49대
+                  중) <b class="hl">RandomForest 25대</b> ·
+                  <b class="hb">GRU 10대</b>
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="xs r" style="--d: 1300; margin-top: 20px">
+            validation 49대 · 분할 1회 · 경보 지표는 시드 42 한 번의 결과 — 한계
+            슬라이드에서 다시 다룹니다.
+          </p>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 13 오탐 -->
+        <section
+          class="slide"
+          data-title="오탐 사례: 엔진 #179"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="55"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em>
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.3fr 1fr;
+              gap: 44px;
+              margin-top: 26px;
+            "
+          >
+            <div class="r" style="--d: 250">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/cls_error_case_false_alarm.png"
+                alt="오탐 사례 시계열"
+              />
+              <div class="cap">
+                validation 엔진 #179 (수명 435사이클): 센서 추이와 모델의 위험
+                확률
+              </div>
+            </div>
+            <div>
+              <ul class="b">
+                <li class="r" style="--d: 500">
+                  실제 남은 수명 194~245(안전)에서 <b>45사이클</b> 경보
+                </li>
+                <li class="r" style="--d: 700">
+                  운행 241번째 전후로
+                  <b>모든 센서가 한꺼번에 정상 수준으로 되돌아감</b> — 중간
+                  정비로 "보이는" 모양 (가설)
+                </li>
+                <li class="r" style="--d: 900">
+                  되돌아가기 전까지는 온도가 실제로 위험 엔진 수준 → 모델
+                  입장에서는 <b>합리적인 경보</b>
+                </li>
+                <li class="r" style="--d: 1100">
+                  같은 모양의 엔진이 train에 3대 (#71·#179·#185)
+                </li>
+              </ul>
+              <div class="note r" style="--d: 1300; margin-top: 20px">
+                시사점: 현장에서는 <b>정비 이력 데이터</b>가 있어야 구분할 수
+                있습니다.
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 14 미탐 -->
+        <section
+          class="slide"
+          data-title="미탐 사례: 엔진 #245"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="50"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em>
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.3fr 1fr;
+              gap: 44px;
+              margin-top: 26px;
+            "
+          >
+            <div class="r" style="--d: 250">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/cls_error_case_missed.png"
+                alt="미탐 사례 시계열"
+              />
+              <div class="cap">
+                validation 엔진 #245 (수명 205사이클): 센서 추이와 모델의 위험
+                확률
+              </div>
+            </div>
+            <div>
+              <ul class="b">
+                <li class="r" style="--d: 500">
+                  남은 수명 40~21(위험)인 <b>19사이클</b> 동안 경보 거의 없음
+                </li>
+                <li class="r" style="--d: 700">
+                  위험 구간 진입 때 s3 온도가 다른 엔진 평균(1,422°R)보다
+                  <b>낮았음</b> → "낮은 온도에서 고장 나는 개체"
+                </li>
+                <li class="r" style="--d: 900">
+                  고장 약 20사이클 전에는 경보가 울려 완전 누락은 아니지만, 정비
+                  준비(7~32사이클)에는 <b>늦을 수 있음</b>
+                </li>
+              </ul>
+              <div class="note r" style="--d: 1150; margin-top: 20px">
+                개선 방향: 센서의 절대값 대신
+                <b>엔진별 초기 상태 대비 변화량</b>을 특성으로.
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 15 현장 활용 -->
+        <section
+          class="slide"
+          data-title="현장 활용: 대시보드와 보전 시나리오"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="80"
+        >
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0; margin-top: 20px; font-size: 54px">
+            정비 담당자의 월요일 아침: <em>신호등을 보고 일정을 잡는다</em>
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 0.9fr 1.1fr;
+              gap: 40px;
+              margin-top: 16px;
+            "
+          >
+            <div>
+              <div
+                class="sm r"
+                style="--d: 200; margin-bottom: 8px; font-size: 22px"
+              >
+                <b>엔진 플릿 현황</b> (test 248대 중 9대, 예측 남은 수명) ·
+                대시보드 화면 요약
+              </div>
+              <div class="fleet" id="fleet"></div>
+            </div>
+            <div class="card r" style="--d: 400">
+              <h3>Engine #198 — 예측 남은 수명이 떨어지는 과정</h3>
+              <svg id="rulChart" viewBox="0 0 900 400" width="100%"></svg>
+              <div class="axis">
+                운행 사이클 (cycle #91 ~ #115) · 예측 남은 수명 (사이클) · 빨간
+                띠 = 위험 (40 이하)
+              </div>
+            </div>
+          </div>
+          <ul class="b" style="margin-top: 6px">
+            <li class="r" style="--d: 1300; margin: 4px 0">
+              <span style="font-size: 25px"
+                ><b>비행을 마친 뒤</b> 데이터가 들어오면 갱신되는
+                <b>예지보전</b> 도구 — 몇 주 단위 정비 계획용 (비행 중 즉시 안전
+                경보는 별개 시스템)</span
+              >
+            </li>
+            <li class="r" style="--d: 1500; margin: 4px 0">
+              <span style="font-size: 25px"
+                >빨간불 → 다음 정비 슬롯에 배정, 부품·인력 준비(최소 7일). 이번
+                test 결과: 탐지 <b>61</b> / 놓침 <b>8</b> / 헛경보 <b>1</b> (F1
+                0.93)</span
+              >
+            </li>
+          </ul>
+          <div class="foot">
+            Sentinel · 5조 감시자들 · 화면의 금액·절감률은 가정값입니다
+          </div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 16 한계 -->
+        <section
+          class="slide"
+          data-title="한계"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="50"
+        >
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0">이 분석이 <em>못 하는 것</em></h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: repeat(3, 1fr);
+              gap: 28px;
+              margin-top: 44px;
+            "
+          >
+            <div class="card r" style="--d: 250">
+              <h3>시뮬레이션 데이터</h3>
+              <p class="sm" style="font-size: 28px; line-height: 1.5">
+                실제 항공기 데이터가 아닙니다. 비용·정비 기간도
+                <b>논문의 가정값</b> — 실제 값으로 기준을 다시 정해야 합니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 420">
+              <h3>정비 이력 없음</h3>
+              <p class="sm" style="font-size: 28px; line-height: 1.5">
+                중간에 센서가 초기화되는 엔진(#179 등)을
+                <b>구분할 수 없습니다</b>.
+              </p>
+            </div>
+            <div class="card r" style="--d: 590">
+              <h3>작은 표본</h3>
+              <p class="sm" style="font-size: 28px; line-height: 1.5">
+                test 위험 엔진 69대, validation 49대 → 구간이 넓고, 작은 차이는
+                우열을 가리지 못합니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 760">
+              <h3>서서히 진행되는 마모만</h3>
+              <p class="sm" style="font-size: 28px; line-height: 1.5">
+                갑작스러운 이상이나 비행 중 즉시 경보는
+                <b>대상이 아닙니다</b> (별도 시스템의 영역).
+              </p>
+            </div>
+            <div class="card r" style="--d: 930">
+              <h3>검증의 한계</h3>
+              <p class="sm" style="font-size: 28px; line-height: 1.5">
+                경보 지표(미탐·오탐)는 시드 1회, RF 외 후보는 튜닝하지 않았고
+                GRU는 전체 이력, RF는 15사이클만 입력으로 받습니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 1100">
+              <h3>오류 사례</h3>
+              <p class="sm" style="font-size: 28px; line-height: 1.5">
+                가장 오류가 많은 엔진을 골랐습니다. 고장 모드 2종별 성능은
+                분석하지 못했습니다.
+              </p>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 17 다음 + 요약 -->
+        <section
+          class="slide"
+          data-title="다음 단계와 요약"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="45"
+        >
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0">
+            다음에 필요한 것, 그리고 <em>세 줄 요약</em>
+          </h2>
+          <div
+            class="grid"
+            style="grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 36px"
+          >
+            <div>
+              <div class="sm" style="margin-bottom: 10px">
+                <span class="pill g">다음 단계</span>
+              </div>
+              <ul class="b" style="font-size: 32px">
+                <li class="r" style="--d: 250">
+                  정비 이력 + 실제 비용·정비 기간 → 위험 기준 재산정
+                </li>
+                <li class="r" style="--d: 420">
+                  예측 수명이 준비 기간보다 짧으면 <b>긴급 등급</b> 추가 (예: 10
+                  이하)
+                </li>
+                <li class="r" style="--d: 590">
+                  엔진별 초기 대비 변화량 특성, 교차 검증·시드 반복
+                </li>
+                <li class="r" style="--d: 760">
+                  비행 데이터 자동 수집과 연동해 매 비행 후 갱신
+                </li>
+              </ul>
+            </div>
+            <div
+              class="card r"
+              style="--d: 500; background: #eef5fa; border-color: var(--blue)"
+            >
+              <h3 style="color: var(--blue)">요약</h3>
+              <ol style="padding-left: 34px">
+                <li style="margin: 12px 0">
+                  <b>위험 = 남은 수명 40 이하</b> — 정비 비용 시뮬레이션이 근거
+                </li>
+                <li style="margin: 12px 0">
+                  기준 모델 F1 <b>0.59 → 0.92</b> (test), 남은 수명 오차
+                  <b>47 → 17사이클</b>
+                </li>
+                <li style="margin: 12px 0">
+                  한계와 불확실성을 <b>숫자로 함께</b> 제시 — 정비 계획 도구로
+                  쓸 수 있는 수준
+                </li>
+              </ol>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
+        <!-- 18 Q&A -->
+        <section class="slide cover" data-title="Q&A" data-sec="" data-t="0">
+          <div class="chap r" style="--d: 0">감사합니다</div>
+          <h1 class="r" style="--d: 200">Q &amp; A</h1>
+          <p class="lead r" style="--d: 500; margin-top: 30px">
+            Sentinel — 센서로 고장 임박을 알리고, 정비 시점을 계획한다
+          </p>
+          <p class="lead r" style="--d: 700; margin-top: 50px; font-size: 28px">
+            github.com/posco-knda/5_Sentinel_python<br />github.com/posco-knda/5_Sentinel_dashboard
+          </p>
+          <svg class="ecg" viewBox="0 0 1920 160" preserveAspectRatio="none">
+            <path pathLength="1" d="M0 90 L260 90 L300 90 L330 50 L360 120 L395 20 L430 140 L460 90 L760 90 L800 90 L830 62 L860 112 L890 90 L1180 90 L1220 90 L1250 40 L1285 130 L1320 10 L1360 150 L1395 90 L1920 90" />
+          </svg>
+          <div class="foot">포스코 K-뉴딜 아카데미 · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
       </div>
-      <div class="axis">학습 데이터 → 평가 데이터 · MAE (사이클)</div>
-      <div class="note" style="margin-top:20px;font-size:24px">FD004로 배우면 FD001에도 통합니다. 반대(FD001 → FD004)는 <b>실패</b> — 55.8은 센서를 안 쓰는 베이스라인(47.4)보다 나쁩니다.</div>
     </div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
 
-<!-- 5 전처리 -->
-<section class="slide" data-title="전처리: 4가지 원칙" data-sec="② 데이터·전처리" data-t="60">
-  <div class="chap">② 데이터 · 전처리</div>
-  <h2 class="r" style="--d:0">비행 조건 차이는 빼고, <em>미래 정보는 섞지 않습니다</em></h2>
-  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:38px;gap:26px">
-    <div class="card r" style="--d:250"><h3>① 운전조건별 정규화</h3><p class="sm" style="font-size:26px">고도·속도가 6가지로 바뀌면 센서값이 크게 뜁니다. <b>조건별로 따로 표준화</b>해 "조건 변화"가 "엔진 열화"로 보이지 않게 합니다.</p></div>
-    <div class="card r" style="--d:450"><h3>② 변하지 않는 센서 제거</h3><p class="sm" style="font-size:26px">같은 조건 안에서 값이 거의 안 변하는 센서 6개 + 운전 설정 3개 제거 → <b>센서 15개</b> 사용.</p></div>
-    <div class="card r" style="--d:650"><h3>③ RUL 정답은 125에서 자름</h3><p class="sm" style="font-size:26px">새 엔진은 센서가 다 건강해 보여 구분이 안 됩니다. 가장 짧은 수명(128)보다 작은 <b>125</b>로 한계를 둡니다.</p></div>
-    <div class="card r" style="--d:850"><h3>④ 엔진 단위 분할 · 누수 방지</h3><p class="sm" style="font-size:26px">엔진을 통째로 <b>200대 학습 / 49대 검증</b>(시드 42). 정규화 기준은 학습 엔진만으로 계산, 공식 test는 마지막에 한 번.</p></div>
-  </div>
-  <div class="r" style="--d:1050;margin-top:30px;display:flex;gap:30px;align-items:flex-end">
-    <img class="fig" style="width:500px" src="assets/rul_label_shape.png" alt="RUL 라벨 모양">
-    <div class="sm" style="padding-bottom:6px">그림: 엔진 3대의 RUL 라벨. 평평하다가(125) 고장 직전에 직선으로 떨어집니다.</div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-<!-- 6 시계열 -->
-<section class="slide" data-title="시계열 분석: 센서 추이" data-sec="③ 시계열 분석" data-t="55">
-  <div class="chap">③ 시계열 분석</div>
-  <div class="grid" style="grid-template-columns:1.08fr 1fr;gap:56px;margin-top:6px">
-    <div>
-      <h2 class="r" style="--d:0">센서는 엔진마다 <em>서서히, 다른 속도로</em> 변합니다</h2>
-      <ul class="b" style="margin-top:28px">
-        <li class="r" style="--d:300">비행 조건 차이를 뺀(운전조건 보정) 값으로 보면 센서가 <b>한 방향으로 서서히 이동</b>합니다.</li>
-        <li class="r" style="--d:500">추세성 상위: 코어 속도(s9), 보정 코어 속도(s14), 팬 속도(s8), 보정 팬 속도(s13)</li>
-        <li class="r" style="--d:700">같은 센서도 엔진마다 열화 속도가 다름 → 수명이 128 ~ 543사이클로 벌어짐</li>
-      </ul>
-      <div class="warn r" style="--d:950;margin-top:34px">그래서 "평균 수명 − 현재 사이클"만으로는 한계가 큽니다. 기준 모델의 평균 오차는 <b>47.4사이클</b>.</div>
+    <div id="overview">
+      <h4>슬라이드 목록 — 클릭하면 이동 · Esc로 닫기</h4>
+      <div id="ovList"></div>
     </div>
-    <div class="r" style="--d:400;text-align:center">
-      <img class="fig" style="height:800px;margin:0 auto" src="assets/sensor_trends.png" alt="추세성 상위 센서 4개의 시계열">
-      <div class="cap">추세성 상위 센서 4개 (엔진 3대, 운전조건 보정값)</div>
+    <div id="notes">
+      <h5>발표자 노트</h5>
+      <div id="notesBody"></div>
     </div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-<!-- 7 특성 -->
-<section class="slide" data-title="시계열 특성과 센서 중요도" data-sec="③ 시계열 분석" data-t="55">
-  <div class="chap">③ 시계열 분석</div>
-  <h2 class="r" style="--d:0">최근 15사이클의 <em>평균 · 흔들림 · 기울기</em>를 특성으로</h2>
-  <div class="grid" style="grid-template-columns:1fr 1.05fr;gap:50px;margin-top:34px">
-    <div>
-      <div class="flow r" style="--d:250">
-        <div class="node"><h4>센서 15개</h4><p>현재값</p></div><div class="arrow">+</div>
-        <div class="node b"><h4>최근 15사이클</h4><p>평균 · 표준편차 · 기울기</p></div><div class="arrow">=</div>
-        <div class="node o"><h4>특성 60개</h4><p>15 × 4</p></div>
-      </div>
-      <ul class="b" style="margin-top:36px">
-        <li class="r" style="--d:600">모델이 <b>모델과 무관하게</b> 뽑은 추세성 상위 8개 센서와 비교했더니</li>
-        <li class="r" style="--d:800">모델 중요도 상위 8개 중 <b class="hl">5개가 겹침</b> (s8·s11·s13·s14·s17) → 노이즈가 아니라 <b>실제 열화 신호</b>를 보고 판단</li>
-        <li class="r" style="--d:1000">1위 s3 고압압축기 출구 온도 (0.50), 팬 속도 s8도 상위 → 고장 모드 2종(압축기·팬) 반영</li>
-      </ul>
+    <div id="hud">
+      <button onclick="go(-1)">◀</button><button onclick="go(1)">▶</button>
+      <button onclick="toggleOverview()">목록 O</button
+      ><button onclick="toggleNotes()">노트 N</button>
+      <button onclick="toggleTimer()">타이머 T</button
+      ><button onclick="toggleFS()">전체화면 F</button>
     </div>
-    <div class="r" style="--d:500"><img class="fig" style="width:100%" src="assets/feature_importance_top8.png" alt="센서 중요도 상위 8개"><div class="cap">RandomForest 센서 중요도 (센서별 특성 4개 합산, 전체 합 = 1)</div></div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
 
-<!-- 8 모델 설계 -->
-<section class="slide" data-title="모델 설계: 기준 모델 vs 머신러닝" data-sec="④ 모델과 결과" data-t="55">
-  <div class="chap">④ 모델과 결과</div>
-  <h2 class="r" style="--d:0">단순한 기준 모델부터 만들고, <em>같은 조건</em>에서 비교</h2>
-  <div style="margin-top:60px">
-    <div class="sm r" style="--d:200;margin-bottom:12px"><span class="pill">필수 과제 · 위험 분류</span></div>
-    <div class="flow r" style="--d:300">
-      <div class="node"><h4>기준 모델</h4><p>이동 Z-score 건강지표<br>정상(처음 30사이클) 대비 얼마나 벗어났나</p></div>
-      <div class="arrow">→</div>
-      <div class="node o"><h4>RandomForest 분류</h4><p>위험 확률 0.36 이상이면 경보<br>(0.5에서 낮춤)</p></div>
-    </div>
-    <div class="sm r" style="--d:600;margin:34px 0 10px"><span class="pill o">선택 과제 · 남은 수명(RUL)</span></div>
-    <div class="flow r" style="--d:700">
-      <div class="node"><h4>기준 모델</h4><p>평균 수명 − 현재 사이클<br>(센서 미사용)</p></div>
-      <div class="arrow">→</div>
-      <div class="node"><h4>RandomForest 회귀</h4><p>같은 특성 60개</p></div>
-      <div class="arrow">→</div>
-      <div class="node b"><h4>GRU 회귀</h4><p>엔진의 전체 이력을 차례로 읽는 신경망</p></div>
-    </div>
-  </div>
-  <div class="r" style="--d:1100;margin-top:44px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-    <span class="sm" style="margin-right:6px">모든 모델 공통:</span>
-    <span class="pill g">같은 엔진 분할 (200 / 49)</span><span class="pill g">같은 특성</span><span class="pill g">같은 지표</span><span class="pill g">시드 42 고정</span>
-  </div>
-  <p class="sm r" style="--d:1250;margin-top:22px">후보 8종(Ridge · RandomForest · ExtraTrees · HistGB · MLP · 1D-CNN · LSTM · GRU)을 같은 조건으로 비교해 최종 모델을 골랐습니다.</p>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+    <script>
+      const NOTES = [
+        "표지. 인사, 팀 소개, 주제 한 줄: '센서 기록으로 엔진 고장 임박을 미리 알려 정비 시점을 계획하는 프로젝트'. 데이터는 NASA 시뮬레이션 데이터라는 점을 첫 장에서 짧게 언급.",
+        "조원별 역할. 이름과 담당만 짧게 소개하고 넘어간다. 코드 작성은 전원이 함께 했다는 점을 한 번 언급.",
+        "목차. 여섯 단계로 진행한다고 한 문장으로 안내. 1분 이내.",
+        "① 문제 정의. 한 문장: 어떤 설비의 무엇을, 왜, 어느 수준까지 맞히면 성공인가. 설비=터보팬 엔진, 예측 대상=남은 비행 횟수(RUL). 이상 정의=남은 수명 40 이하. 중요한 이유=긴급 정비는 계획 정비보다 2~5배 비쌈(문헌 비율 1:2, 1:5). 필수=이진 분류, 선택=RUL 회귀. 성공 기준=혼동행렬과 정밀도·재현율·F1, 놓치지 않기(재현율) 우선.",
+        "② 데이터 이해. FD004를 주로 쓴 이유=가장 현실에 가까움(운전조건 6, 고장모드 2). 교차 검증: FD004로 학습하면 FD001에도 통함(11.2), 반대는 실패(55.8 > 베이스라인 47.4). 시뮬레이션 데이터, 한 줄=한 비행. 수명 128~543.",
+        "② 전처리 4원칙. 운전조건별 정규화, 상수 센서 제거(15개 사용), RUL 125 클리핑(최소 수명 128보다 작게), 엔진 단위 200/49 분할과 누수 방지(train 통계만). 가이드의 필수 요건(시간 순서 유지·fit은 학습만)과 연결.",
+        "③ 시계열 패턴 분석. 그래프 중심. 운전조건 보정 후 센서가 서서히 한 방향으로 이동, 엔진마다 속도가 다름. 그래서 평균 수명 기반 기준 모델은 오차 47.4. '상태 변화 구간'을 지목: 위험 구간 진입 전후로 센서가 가속적으로 벗어남.",
+        "③ 특성과 중요도. 최근 15사이클 평균·표준편차·기울기 + 현재값 = 특성 60개. 모델 중요도와 독립적 추세성 랭킹이 8개 중 5개 겹침 → 실제 열화 신호. s3, s17, s8. 15사이클 창의 근거는 약함(5/10/15/20 비교는 못 함) — 질문 시 솔직히.",
+        "④ 모델 설계. 필수: Z-score 기준 → RandomForest 분류. 선택: 평균수명 기준 → RF 회귀 → GRU 회귀. 공통 조건(같은 분할·특성·지표·시드). 후보 8종 비교. 머신러닝 최대 3종 규칙: RF 분류, RF 회귀, GRU 회귀.",
+        "④ 분류 결과. validation F1 0.58 → 0.86, test 0.59 → 0.92. 혼동행렬은 그림 참고. 확률 기준 0.36 이유(놓침이 더 비쌈). 정확도 안 쓰는 이유(위험 시점 16%). 위험 69대 중 65대 탐지.",
+        "④ 회귀 결과. MAE 47.4 → 21.8 → 17.3(GRU). 오차 63.5% 감소. 후보 8종 그래프: MAE가 작을수록 미탐도 낮음(r=0.87), 오탐은 무관. validation 기준 그림임을 말하기.",
+        "⑤ 위험 기준 40의 근거. 과제 예시값 30에서 바꾼 이유를 설명: 정비는 경보 즉시 못 함(준비 7일, 슬롯 10~20일, 주간 계획 → 평균 17사이클). 논문 운영 조건으로 비용 시뮬레이션 → 최적 40. 30이면 정비 전 고장 14.3%, 비용 +48%. 비용 비율 1:5와 1:2 둘 다 40. 질문 대비: 시뮬레이션이며 실제 항공사 값이 아니라는 점, 강사님 확인 사항.",
+        "⑤ 모델 선정. 우선순위(놓침 → 헛경보 → 오차)는 비용 비율로 정당화, 비교는 비용 시뮬레이션. GRU가 가장 쌈. 시드 3개 반복(17.0±0.7 vs 19.4±1.4). 정직하게 약점: 학습 12분, 설명 어려움, test 미탐은 MLP가 적음, LSTM과 비용 동률. 합격선(15%/20%)은 근거 없어 쓰지 않았다는 점은 질문 시 설명.",
+        "⑤ 숫자 신뢰도. 재현율의 95% 구간 그림. 기준 모델 vs ML은 확실한 차이, RF vs GRU는 test만으로 못 가림. 엔진 단위: 안전 구간에서 한 번이라도 경보받은 엔진 RF 25, GRU 10(49대 중). 표본이 작다는 한계를 먼저 인정.",
+        "⑤ 오탐 사례 #179. 안전 구간에서 45사이클 경보. 모든 센서가 한꺼번에 정상 수준으로 되돌아감 → 중간 정비로 보이는 모양(가설, 확정 아님). 정비 이력이 있어야 구분 가능. train에 같은 모양 3대.",
+        "⑤ 미탐 사례 #245. 위험 구간 19사이클 경보 거의 없음. 위험 진입 때 s3가 평균보다 낮음. 완전 누락은 아니지만 정비 준비 기간에 늦을 수 있음. 개선: 엔진별 초기 대비 변화량.",
+        "⑥ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 가능하면 여기서 실제 대시보드 2분 데모(홈 → 설비 상세 → 시나리오). 금액·절감률은 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
+        "⑥ 한계. 시뮬레이션 데이터·가정 비용, 정비 이력 없음, 작은 표본, 서서히 진행되는 마모만 대상, 검증의 한계(시드 1회·튜닝 안 함·입력 정보 차이), 오류 사례 선택 방식. 한계를 먼저 말하는 편이 신뢰를 얻는다.",
+        "⑥ 다음 단계와 요약. 정비 이력·실제 비용으로 기준 재산정, 긴급 등급, 초기 대비 변화량 특성, 자동 수집 연동. 세 줄 요약으로 마무리.",
+        "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?",
+      ];
+      const deck = document.getElementById("deck"),
+        slides = [...document.querySelectorAll(".slide")];
+      const N = slides.length;
+      let cur = 0,
+        timerOn = false,
+        t0 = null,
+        tick = null;
+      const cum = [];
+      slides.reduce((a, s, i) => {
+        a += +s.dataset.t || 0;
+        cum[i] = a;
+        return a;
+      }, 0);
 
-<!-- 9 분류 결과 -->
-<section class="slide" data-title="분류 결과: 혼동행렬 · Precision · Recall · F1" data-sec="④ 모델과 결과" data-t="70">
-  <div class="chap">④ 모델과 결과</div>
-  <h2 class="r" style="--d:0">기준 모델 F1 <em>0.58 → 0.86</em>: 머신러닝이 필요한 이유</h2>
-  <div class="grid" style="grid-template-columns:.95fr 1.05fr;gap:44px;margin-top:30px">
-    <div>
-      <div class="card r" style="--d:250">
-        <h3>validation F1 (49대, 모든 운행 시점)</h3>
-        <div class="bars" style="margin-top:14px">
-          <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:.7s"><span class="lab">기준 (Z-score)</span><div class="trk"><i style="--w:58.3%;background:var(--lgray)"></i></div><span class="val">0.58</span></div>
-          <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:.9s"><span class="lab">RandomForest</span><div class="trk"><i style="--w:86.3%;background:var(--orange)"></i></div><span class="val">0.86</span></div>
-          <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:1.1s"><span class="lab">GRU 회귀→분류</span><div class="trk"><i style="--w:91.5%;background:var(--blue)"></i></div><span class="val">0.92</span></div>
-        </div>
-        <div class="axis">F1 (0~1, 높을수록 좋음)</div>
-      </div>
-      <table class="r" style="--d:600;margin-top:22px">
-        <tr><th>공식 test (248대)</th><th class="n">정밀도</th><th class="n">재현율</th><th class="n">F1</th></tr>
-        <tr><td>기준 모델</td><td class="n">0.63</td><td class="n">0.55</td><td class="n">0.59</td></tr>
-        <tr class="sel"><td>RandomForest (0.36)</td><td class="n">0.89</td><td class="n">0.94</td><td class="n">0.92</td></tr>
-      </table>
-      <ul class="b" style="margin-top:18px">
-        <li class="r" style="--d:900;font-size:26px">위험 69대 중 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8</li>
-        <li class="r" style="--d:1050;font-size:26px">확률 기준 0.5 → <b>0.36</b>: 재현율 0.83 → 0.89 (놓침이 더 비싸서)</li>
-        <li class="r" style="--d:1200;font-size:26px">정확도는 쓰지 않음 — 위험 시점이 16%뿐이라 "항상 정상"도 84%</li>
-      </ul>
-    </div>
-    <div class="r" style="--d:500"><img class="fig" style="width:100%" src="assets/cls_confusion_matrix.png" alt="혼동행렬: 기준 모델 vs RandomForest"><div class="cap">혼동행렬 (validation 49대의 모든 사이클, 위험 = 남은 수명 ≤ 40)</div></div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+      function fit() {
+        const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+        deck.style.transform = "scale(" + s + ")";
+      }
+      addEventListener("resize", fit);
+      fit();
+      if (window.ResizeObserver)
+        new ResizeObserver(fit).observe(document.documentElement);
+      setInterval(fit, 700); // 일부 환경에서 resize 이벤트가 오지 않을 때를 대비
 
-<!-- 10 회귀 결과 -->
-<section class="slide" data-title="회귀 결과: 남은 수명 예측 오차" data-sec="④ 모델과 결과" data-t="60">
-  <div class="chap">④ 모델과 결과</div>
-  <h2 class="r" style="--d:0">남은 수명 예측 오차 <em>47 → 17 사이클</em></h2>
-  <div class="grid" style="grid-template-columns:.9fr 1.1fr;gap:44px;margin-top:30px">
-    <div class="card r" style="--d:250">
-      <h3>공식 test 평균 오차 (MAE)</h3>
-      <div class="bars" style="margin-top:16px">
-        <div class="bar" style="grid-template-columns:270px 1fr 100px;--bd:.7s"><span class="lab">베이스라인</span><div class="trk"><i style="--w:100%;background:var(--lgray)"></i></div><span class="val">47.4</span></div>
-        <div class="bar" style="grid-template-columns:270px 1fr 100px;--bd:.9s"><span class="lab">RandomForest</span><div class="trk"><i style="--w:46%;background:var(--orange)"></i></div><span class="val">21.8</span></div>
-        <div class="bar" style="grid-template-columns:270px 1fr 100px;--bd:1.1s"><span class="lab">LSTM</span><div class="trk"><i style="--w:39.4%;background:var(--lblue)"></i></div><span class="val">18.7</span></div>
-        <div class="bar" style="grid-template-columns:270px 1fr 100px;--bd:1.3s"><span class="lab"><b>GRU (최종)</b></span><div class="trk"><i style="--w:36.5%;background:var(--blue)"></i></div><span class="val" style="color:var(--blue)">17.3</span></div>
-      </div>
-      <div class="axis">MAE (사이클, 낮을수록 좋음) · 베이스라인 = 평균 수명 − 현재 사이클</div>
-      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:26px">
-        <div class="kpi"><span class="v" style="color:var(--blue)"><span class="count" data-to="63.5" data-dec="1">0</span>%</span><span class="l">베이스라인 대비 오차 감소</span></div>
-        <div class="kpi"><span class="v">25.2</span><span class="l">RMSE · NASA 점수 4,165</span></div>
-      </div>
-    </div>
-    <div class="r" style="--d:600"><img class="fig" style="width:100%" src="assets/model_alarm_rates.png" alt="후보 모델별 MAE, 미탐율, 오탐율"><div class="cap">후보 8종 비교 (validation): 평균 오차(MAE) · 미탐율 · 오탐율</div>
-      <p class="sm" style="margin-top:14px">오차가 작은 모델일수록 <b>미탐율도 낮습니다</b> (상관 0.87). 반면 오탐율은 오차와 거의 무관.</p></div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+      function countUp(root) {
+        root.querySelectorAll(".count").forEach((el) => {
+          const to = +el.dataset.to,
+            dec = +(el.dataset.dec || 0),
+            dur = 1400,
+            st = performance.now();
+          const step = (now) => {
+            const p = Math.min(1, (now - st - 500) / dur);
+            const e = p <= 0 ? 0 : 1 - Math.pow(1 - p, 3);
+            el.textContent = (to * e).toFixed(dec);
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = to.toFixed(dec);
+          };
+          requestAnimationFrame(step);
+        });
+      }
+      function show(i) {
+        i = Math.max(0, Math.min(N - 1, i));
+        cur = i;
+        slides.forEach((s, k) => s.classList.toggle("active", k === i));
+        // 애니메이션 재생을 위해 활성 슬라이드를 다시 그린다
+        const s = slides[i];
+        s.style.display = "none";
+        void s.offsetHeight;
+        s.style.display = "";
+        s.querySelectorAll(".pg").forEach(
+          (p) => (p.textContent = i + 1 + " / " + N),
+        );
+        document.getElementById("progress").style.width =
+          ((i + 1) / N) * 100 + "%";
+        countUp(s);
+        location.hash = "#" + (i + 1);
+        renderNotes();
+        document.title =
+          "Sentinel 발표 — " + (i + 1) + "/" + N + " " + s.dataset.title;
+      }
+      function go(d) {
+        show(cur + d);
+      }
+      function renderNotes() {
+        const t = +slides[cur].dataset.t || 0;
+        document.getElementById("notesBody").innerHTML =
+          '<span class="t">' +
+          (cur + 1) +
+          "/" +
+          N +
+          " · " +
+          slides[cur].dataset.title +
+          " · 권장 " +
+          (t ? t + "초" : "질의응답") +
+          " · 누적 목표 " +
+          fmt(cum[cur]) +
+          "</span><br>" +
+          (NOTES[cur] || "");
+      }
+      const fmt = (s) =>
+        String(Math.floor(s / 60)).padStart(2, "0") +
+        ":" +
+        String(s % 60).padStart(2, "0");
+      function toggleNotes() {
+        document.getElementById("notes").classList.toggle("on");
+      }
+      function toggleTimer() {
+        const el = document.getElementById("timer");
+        timerOn = !timerOn;
+        el.classList.toggle("on", timerOn);
+        if (timerOn) {
+          t0 = Date.now();
+          tick = setInterval(() => {
+            const e = Math.floor((Date.now() - t0) / 1000);
+            el.textContent =
+              "경과 " +
+              fmt(e) +
+              " / 목표 " +
+              fmt(cum[N - 1]) +
+              " (이 슬라이드 목표 누적 " +
+              fmt(cum[cur]) +
+              ")";
+          }, 500);
+        } else clearInterval(tick);
+      }
+      function toggleFS() {
+        document.fullscreenElement
+          ? document.exitFullscreen()
+          : document.documentElement.requestFullscreen();
+      }
+      function toggleOverview() {
+        const o = document.getElementById("overview");
+        o.classList.toggle("on");
+        if (o.classList.contains("on")) {
+          document.getElementById("ovList").innerHTML = slides
+            .map(
+              (s, i) =>
+                '<div class="it' +
+                (i === cur ? " cur" : "") +
+                '" onclick="show(' +
+                i +
+                ');toggleOverview()"><span>' +
+                (i + 1) +
+                "</span>" +
+                s.dataset.title +
+                "<em>" +
+                (s.dataset.sec || "") +
+                "</em></div>",
+            )
+            .join("");
+        }
+      }
+      addEventListener("keydown", (e) => {
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const k = e.key;
+        if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(k)) {
+          e.preventDefault();
+          go(1);
+        } else if (
+          ["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(k)
+        ) {
+          e.preventDefault();
+          go(-1);
+        } else if (k === "Home") show(0);
+        else if (k === "End") show(N - 1);
+        else if (k === "n" || k === "N") toggleNotes();
+        else if (k === "t" || k === "T") toggleTimer();
+        else if (k === "f" || k === "F") toggleFS();
+        else if (k === "o" || k === "O") toggleOverview();
+        else if (k === "Escape")
+          document.getElementById("overview").classList.remove("on");
+      });
+      deck.addEventListener("click", (e) => {
+        if (e.clientX < innerWidth * 0.28) go(-1);
+        else go(1);
+      });
 
-<!-- 11 모델 선정 -->
-<section class="slide" data-title="최종 모델 선정: 우선순위와 정비 비용" data-sec="④ 모델과 결과" data-t="70">
-  <div class="chap">④ 모델과 결과</div>
-  <h2 class="r" style="--d:0">GRU 선정: <em>놓침 → 헛경보 → 오차</em> 순서, 비용으로 확인</h2>
-  <div class="grid" style="grid-template-columns:1.15fr .85fr;gap:44px;margin-top:26px">
-    <div class="card r" style="--d:250">
-      <h3>정비 비용 (위험 기준 40, 1:5 · validation)</h3>
-      <div class="bars" style="gap:10px;margin-top:10px">
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:.6s"><span class="lab"><b>GRU</b></span><div class="trk" style="height:28px"><i style="--w:33.3%;background:var(--blue)"></i></div><span class="val">4.47</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:.7s"><span class="lab">LSTM</span><div class="trk" style="height:28px"><i style="--w:34.1%;background:var(--lblue)"></i></div><span class="val">4.57</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:.8s"><span class="lab">MLP</span><div class="trk" style="height:28px"><i style="--w:38.4%"></i></div><span class="val">5.15</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:.9s"><span class="lab">HistGradientBoosting</span><div class="trk" style="height:28px"><i style="--w:38.5%"></i></div><span class="val">5.17</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:1s"><span class="lab">RandomForest</span><div class="trk" style="height:28px"><i style="--w:41.3%;background:var(--orange)"></i></div><span class="val">5.54</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:1.1s"><span class="lab">ExtraTrees</span><div class="trk" style="height:28px"><i style="--w:41.3%"></i></div><span class="val">5.54</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:1.2s"><span class="lab">1D-CNN</span><div class="trk" style="height:28px"><i style="--w:42.8%"></i></div><span class="val">5.74</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:1.3s"><span class="lab">Ridge</span><div class="trk" style="height:28px"><i style="--w:68%"></i></div><span class="val">9.12</span></div>
-        <div class="bar" style="grid-template-columns:260px 1fr 90px;--bd:1.4s"><span class="lab">베이스라인</span><div class="trk" style="height:28px"><i style="--w:100%;background:var(--lgray)"></i></div><span class="val">13.42</span></div>
-      </div>
-      <div class="axis">운행 1,000사이클당 정비 비용 (계획 정비 1회 = 1, 낮을수록 좋음)</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:20px">
-      <div class="card r" style="--d:500"><h3>왜 이 순서인가</h3><p class="sm" style="font-size:28px;line-height:1.5">고장(긴급 정비)이 계획 정비보다 <b>2~5배</b> 비싸므로 <b>위험을 놓치지 않는 것</b>이 먼저. 비교는 비용 시뮬레이션으로.</p></div>
-      <div class="card r" style="--d:700"><h3>시드 3개 반복 (test MAE)</h3><p class="sm" style="font-size:28px;line-height:1.5"><b style="color:var(--blue)">GRU 17.0 ± 0.7</b> vs LSTM 19.4 ± 1.4<br>GRU의 가장 나쁜 값이 LSTM의 가장 좋은 값보다 낫습니다.</p></div>
-      <div class="warn r" style="--d:900"><b>GRU의 약점</b>도 있습니다 — 학습 약 12분, 설명이 어렵고, test에서 놓친 위험 엔진은 MLP(5대)가 GRU(8대)보다 적었습니다. LSTM과 정비 비용은 1~2% 차이(동률).</div>
-    </div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+      /* ---- 신뢰구간 차트 ---- */
+      (function () {
+        const data = [
+          {
+            n: "기준 모델 (Z-score)",
+            v: 0.551,
+            lo: 0.434,
+            hi: 0.662,
+            c: "#8a8985",
+          },
+          {
+            n: "RandomForest 분류",
+            v: 0.942,
+            lo: 0.86,
+            hi: 0.977,
+            c: "#84754e",
+          },
+          { n: "GRU 회귀 → 분류", v: 0.884, lo: 0.788, hi: 0.94, c: "#05507d" },
+        ];
+        const svg = document.getElementById("ciChart"),
+          L = 290,
+          R = 960,
+          x = (v) => L + ((v - 0.3) / (1.0 - 0.3)) * (R - L);
+        let h = "";
+        for (let t = 0.3; t <= 1.0001; t += 0.1) {
+          h +=
+            '<line x1="' +
+            x(t) +
+            '" x2="' +
+            x(t) +
+            '" y1="20" y2="300" stroke="#e4e3df" stroke-width="2"/><text x="' +
+            x(t) +
+            '" y="335" text-anchor="middle" font-size="22" fill="#8a8985">' +
+            t.toFixed(1) +
+            "</text>";
+        }
+        data.forEach((d, i) => {
+          const y = 70 + i * 95,
+            cd = 0.8 + i * 0.35 + "s";
+          h +=
+            '<text x="' +
+            (L - 22) +
+            '" y="' +
+            (y + 8) +
+            '" text-anchor="end" font-size="26" fill="#0b0b0b">' +
+            d.n +
+            "</text>" +
+            '<g class="ci" style="--cd:' +
+            cd +
+            '"><line class="rng" pathLength="1" x1="' +
+            x(d.lo) +
+            '" x2="' +
+            x(d.hi) +
+            '" y1="' +
+            y +
+            '" y2="' +
+            y +
+            '" stroke="' +
+            d.c +
+            '" stroke-width="10" stroke-linecap="round"/>' +
+            '<circle class="dot" cx="' +
+            x(d.v) +
+            '" cy="' +
+            y +
+            '" r="15" fill="' +
+            d.c +
+            '" stroke="#fff" stroke-width="3"/>' +
+            '<text class="dot" x="' +
+            x(d.v) +
+            '" y="' +
+            (y - 26) +
+            '" text-anchor="middle" font-size="24" font-weight="800" fill="#0b0b0b">' +
+            d.v.toFixed(2) +
+            "</text>" +
+            '<text class="dot" x="' +
+            x(d.hi) +
+            '" y="' +
+            (y + 46) +
+            '" text-anchor="end" font-size="22" fill="#52514e">' +
+            d.lo.toFixed(2) +
+            " – " +
+            d.hi.toFixed(2) +
+            "</text></g>";
+        });
+        svg.innerHTML = h;
+      })();
 
-<!-- 12 신뢰도 -->
-<section class="slide" data-title="숫자를 얼마나 믿을 수 있나: 신뢰구간" data-sec="④ 모델과 결과" data-t="55">
-  <div class="chap">④ 모델과 결과</div>
-  <h2 class="r" style="--d:0">차이가 크면 <em>확실</em>, 작으면 <em>조심</em>해서 읽습니다</h2>
-  <div class="grid" style="grid-template-columns:1.25fr .75fr;gap:44px;margin-top:26px">
-    <div class="card r" style="--d:250">
-      <h3>공식 test 재현율의 95% 구간 (위험 엔진 69대)</h3>
-      <svg id="ciChart" viewBox="0 0 1000 380" width="100%"></svg>
-      <div class="axis">재현율 (0~1) · 점 = 측정값, 선 = 95% 신뢰구간 (Wilson)</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:18px">
-      <div class="note r" style="--d:700;font-size:24px"><b>확실한 차이</b><br>기준 모델과 머신러닝은 구간이 겹치지 않음</div>
-      <div class="warn r" style="--d:900;font-size:24px"><b>조심할 차이</b><br>RandomForest vs GRU는 겹침 → test만으로 우열 불가. 엔진 단위 validation은 GRU가 조금 낫다 (F1 +0.05)</div>
-      <div class="card r" style="--d:1100"><p class="sm" style="font-size:24px">안전 구간에서 <b>한 번이라도</b> 경보를 받은 엔진<br>(49대 중) <b class="hl">RandomForest 25대</b> · <b class="hb">GRU 10대</b></p></div>
-    </div>
-  </div>
-  <p class="xs r" style="--d:1300;margin-top:20px">validation 49대 · 분할 1회 · 경보 지표는 시드 42 한 번의 결과 — 한계 슬라이드에서 다시 다룹니다.</p>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
+      /* ---- 대시보드 요약: 플릿 + #198 선 ---- */
+      (function () {
+        const E = [
+          [31, 8.9],
+          [103, 9.0],
+          [158, 10.1],
+          [58, 11.2],
+          [198, 17.4],
+          [70, 40.5],
+          [185, 40.7],
+          [221, 80.5],
+          [10, 125.0],
+        ];
+        const f = document.getElementById("fleet");
+        f.innerHTML = E.map((e, i) => {
+          const lv = e[1] <= 40 ? "R" : e[1] < 80 ? "Y" : "G",
+            col =
+              lv === "R"
+                ? "var(--red)"
+                : lv === "Y"
+                  ? "var(--amber)"
+                  : "var(--green)";
+          return (
+            '<div class="eng r' +
+            (e[0] === 198 ? " feat" : "") +
+            '" style="--d:' +
+            (350 + i * 110) +
+            '"><span class="sig ' +
+            lv +
+            '"></span><span>Engine #' +
+            e[0] +
+            '</span><div class="mini"><i style="--w:' +
+            Math.min(100, (e[1] / 125) * 100) +
+            "%;--bd:" +
+            (0.9 + i * 0.1) +
+            "s;background:" +
+            col +
+            '"></i></div><span class="rv">' +
+            e[1].toFixed(1) +
+            "</span></div>"
+          );
+        }).join("");
+        const v = [
+          57.97, 58.55, 53.5, 50.31, 46.92, 45.75, 43.18, 40.62, 38.95, 37.27,
+          36.65, 35.62, 35.2, 32.89, 34.58, 35.31, 32.54, 31.92, 28.51, 27.11,
+          25.2, 22.84, 20.58, 19.67, 17.41,
+        ];
+        const W = 900,
+          H = 400,
+          L = 80,
+          R = 870,
+          T = 20,
+          B = 330,
+          ymax = 65;
+        const x = (i) => L + (i / (v.length - 1)) * (R - L),
+          y = (val) => B - (val / ymax) * (B - T);
+        let s = "";
+        s +=
+          '<rect x="' +
+          L +
+          '" y="' +
+          y(40) +
+          '" width="' +
+          (R - L) +
+          '" height="' +
+          (B - y(40)) +
+          '" fill="#d6453d" opacity=".10"/>';
+        [0, 20, 40, 60].forEach((t) => {
+          s +=
+            '<line x1="' +
+            L +
+            '" x2="' +
+            R +
+            '" y1="' +
+            y(t) +
+            '" y2="' +
+            y(t) +
+            '" stroke="#e4e3df" stroke-width="2"/><text x="' +
+            (L - 14) +
+            '" y="' +
+            (y(t) + 7) +
+            '" text-anchor="end" font-size="20" fill="#8a8985">' +
+            t +
+            "</text>";
+        });
+        s +=
+          '<line x1="' +
+          L +
+          '" x2="' +
+          R +
+          '" y1="' +
+          y(40) +
+          '" y2="' +
+          y(40) +
+          '" stroke="#d6453d" stroke-width="3" stroke-dasharray="10 8"/><text x="' +
+          (R - 8) +
+          '" y="' +
+          (y(40) - 10) +
+          '" text-anchor="end" font-size="21" font-weight="700" fill="#d6453d">위험 기준 40</text>';
+        [0, 8, 16, 24].forEach((i) => {
+          s +=
+            '<text x="' +
+            x(i) +
+            '" y="360" text-anchor="middle" font-size="19" fill="#8a8985">#' +
+            (91 + i) +
+            "</text>";
+        });
+        s +=
+          '<path class="ln" pathLength="1" d="' +
+          v
+            .map(
+              (p, i) =>
+                (i ? "L" : "M") + x(i).toFixed(1) + " " + y(p).toFixed(1),
+            )
+            .join(" ") +
+          '"/>';
+        s +=
+          '<g class="ci" style="--cd:3s"><circle class="dot" cx="' +
+          x(8) +
+          '" cy="' +
+          y(v[8]) +
+          '" r="13" fill="#d6453d" stroke="#fff" stroke-width="3"/><text class="dot" x="' +
+          (x(8) + 18) +
+          '" y="' +
+          (y(v[8]) - 22) +
+          '" font-size="22" font-weight="800" fill="#d6453d">#99 위험 진입 (38.95)</text>';
+        s +=
+          '<circle class="dot" cx="' +
+          x(24) +
+          '" cy="' +
+          y(v[24]) +
+          '" r="11" fill="#05507d" stroke="#fff" stroke-width="3"/><text class="dot" x="' +
+          (x(24) - 14) +
+          '" y="' +
+          (y(v[24]) - 44) +
+          '" text-anchor="end" font-size="22" font-weight="800" fill="#05507d">17.4 (90% 구간 2–26)</text></g>';
+        document.getElementById("rulChart").innerHTML = s;
+      })();
 
-<!-- 13 오탐 -->
-<section class="slide" data-title="오탐 사례: 엔진 #179" data-sec="⑤ 오류와 해석" data-t="55">
-  <div class="chap">⑤ 오류와 해석</div>
-  <h2 class="r" style="--d:0">오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em></h2>
-  <div class="grid" style="grid-template-columns:1.3fr 1fr;gap:44px;margin-top:26px">
-    <div class="r" style="--d:250"><img class="fig" style="width:100%" src="assets/cls_error_case_false_alarm.png" alt="오탐 사례 시계열"><div class="cap">validation 엔진 #179 (수명 435사이클): 센서 추이와 모델의 위험 확률</div></div>
-    <div>
-      <ul class="b">
-        <li class="r" style="--d:500">실제 남은 수명 194~245(안전)에서 <b>45사이클</b> 경보</li>
-        <li class="r" style="--d:700">운행 241번째 전후로 <b>모든 센서가 한꺼번에 정상 수준으로 되돌아감</b> — 중간 정비로 "보이는" 모양 (가설)</li>
-        <li class="r" style="--d:900">되돌아가기 전까지는 온도가 실제로 위험 엔진 수준 → 모델 입장에서는 <b>합리적인 경보</b></li>
-        <li class="r" style="--d:1100">같은 모양의 엔진이 train에 3대 (#71·#179·#185)</li>
-      </ul>
-      <div class="note r" style="--d:1300;margin-top:20px">시사점: 현장에서는 <b>정비 이력 데이터</b>가 있어야 구분할 수 있습니다.</div>
-    </div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-<!-- 14 미탐 -->
-<section class="slide" data-title="미탐 사례: 엔진 #245" data-sec="⑤ 오류와 해석" data-t="50">
-  <div class="chap">⑤ 오류와 해석</div>
-  <h2 class="r" style="--d:0">미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em></h2>
-  <div class="grid" style="grid-template-columns:1.3fr 1fr;gap:44px;margin-top:26px">
-    <div class="r" style="--d:250"><img class="fig" style="width:100%" src="assets/cls_error_case_missed.png" alt="미탐 사례 시계열"><div class="cap">validation 엔진 #245 (수명 205사이클): 센서 추이와 모델의 위험 확률</div></div>
-    <div>
-      <ul class="b">
-        <li class="r" style="--d:500">남은 수명 40~21(위험)인 <b>19사이클</b> 동안 경보 거의 없음</li>
-        <li class="r" style="--d:700">위험 구간 진입 때 s3 온도가 다른 엔진 평균(1,422°R)보다 <b>낮았음</b> → "낮은 온도에서 고장 나는 개체"</li>
-        <li class="r" style="--d:900">고장 약 20사이클 전에는 경보가 울려 완전 누락은 아니지만, 정비 준비(7~32사이클)에는 <b>늦을 수 있음</b></li>
-      </ul>
-      <div class="note r" style="--d:1150;margin-top:20px">개선 방향: 센서의 절대값 대신 <b>엔진별 초기 상태 대비 변화량</b>을 특성으로.</div>
-    </div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-<!-- 15 현장 활용 -->
-<section class="slide" data-title="현장 활용: 대시보드와 보전 시나리오" data-sec="⑤ 오류와 해석" data-t="80">
-  <div class="chap">⑤ 오류와 해석</div>
-  <h2 class="r" style="--d:0;margin-top:20px;font-size:54px">정비 담당자의 월요일 아침: <em>신호등을 보고 일정을 잡는다</em></h2>
-  <div class="grid" style="grid-template-columns:.9fr 1.1fr;gap:40px;margin-top:16px">
-    <div>
-      <div class="sm r" style="--d:200;margin-bottom:8px;font-size:22px"><b>엔진 플릿 현황</b> (test 248대 중 9대, 예측 남은 수명) · 대시보드 화면 요약</div>
-      <div class="fleet" id="fleet"></div>
-    </div>
-    <div class="card r" style="--d:400">
-      <h3>Engine #198 — 예측 남은 수명이 떨어지는 과정</h3>
-      <svg id="rulChart" viewBox="0 0 900 400" width="100%"></svg>
-      <div class="axis">운행 사이클 (cycle #91 ~ #115) · 예측 남은 수명 (사이클) · 빨간 띠 = 위험 (40 이하)</div>
-    </div>
-  </div>
-  <ul class="b" style="margin-top:6px">
-    <li class="r" style="--d:1300;margin:4px 0"><span style="font-size:25px"><b>비행을 마친 뒤</b> 데이터가 들어오면 갱신되는 <b>예지보전</b> 도구 — 몇 주 단위 정비 계획용 (비행 중 즉시 안전 경보는 별개 시스템)</span></li>
-    <li class="r" style="--d:1500;margin:4px 0"><span style="font-size:25px">빨간불 → 다음 정비 슬롯에 배정, 부품·인력 준비(최소 7일). 이번 test 결과: 탐지 <b>61</b> / 놓침 <b>8</b> / 헛경보 <b>1</b> (F1 0.93)</span></li>
-  </ul>
-  <div class="foot">Sentinel · 5조 감시자들 · 화면의 금액·절감률은 가정값입니다</div><div class="pg"></div>
-</section>
-
-<!-- 16 한계 -->
-<section class="slide" data-title="한계" data-sec="⑥ 한계와 다음" data-t="50">
-  <div class="chap">⑥ 한계와 다음</div>
-  <h2 class="r" style="--d:0">이 분석이 <em>못 하는 것</em></h2>
-  <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px">
-    <div class="card r" style="--d:250"><h3>시뮬레이션 데이터</h3><p class="sm" style="font-size:28px;line-height:1.5">실제 항공기 데이터가 아닙니다. 비용·정비 기간도 <b>논문의 가정값</b> — 실제 값으로 기준을 다시 정해야 합니다.</p></div>
-    <div class="card r" style="--d:420"><h3>정비 이력 없음</h3><p class="sm" style="font-size:28px;line-height:1.5">중간에 센서가 초기화되는 엔진(#179 등)을 <b>구분할 수 없습니다</b>.</p></div>
-    <div class="card r" style="--d:590"><h3>작은 표본</h3><p class="sm" style="font-size:28px;line-height:1.5">test 위험 엔진 69대, validation 49대 → 구간이 넓고, 작은 차이는 우열을 가리지 못합니다.</p></div>
-    <div class="card r" style="--d:760"><h3>서서히 진행되는 마모만</h3><p class="sm" style="font-size:28px;line-height:1.5">갑작스러운 이상이나 비행 중 즉시 경보는 <b>대상이 아닙니다</b> (별도 시스템의 영역).</p></div>
-    <div class="card r" style="--d:930"><h3>검증의 한계</h3><p class="sm" style="font-size:28px;line-height:1.5">경보 지표(미탐·오탐)는 시드 1회, RF 외 후보는 튜닝하지 않았고 GRU는 전체 이력, RF는 15사이클만 입력으로 받습니다.</p></div>
-    <div class="card r" style="--d:1100"><h3>오류 사례</h3><p class="sm" style="font-size:28px;line-height:1.5">가장 오류가 많은 엔진을 골랐습니다. 고장 모드 2종별 성능은 분석하지 못했습니다.</p></div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-<!-- 17 다음 + 요약 -->
-<section class="slide" data-title="다음 단계와 요약" data-sec="⑥ 한계와 다음" data-t="45">
-  <div class="chap">⑥ 한계와 다음</div>
-  <h2 class="r" style="--d:0">다음에 필요한 것, 그리고 <em>세 줄 요약</em></h2>
-  <div class="grid" style="grid-template-columns:1fr 1fr;gap:44px;margin-top:36px">
-    <div>
-      <div class="sm" style="margin-bottom:10px"><span class="pill g">다음 단계</span></div>
-      <ul class="b" style="font-size:32px">
-        <li class="r" style="--d:250">정비 이력 + 실제 비용·정비 기간 → 위험 기준 재산정</li>
-        <li class="r" style="--d:420">예측 수명이 준비 기간보다 짧으면 <b>긴급 등급</b> 추가 (예: 10 이하)</li>
-        <li class="r" style="--d:590">엔진별 초기 대비 변화량 특성, 교차 검증·시드 반복</li>
-        <li class="r" style="--d:760">비행 데이터 자동 수집과 연동해 매 비행 후 갱신</li>
-      </ul>
-    </div>
-    <div class="card r" style="--d:500;background:#f2f7fd;border-color:var(--blue)">
-      <h3 style="color:var(--blue)">요약</h3>
-      <ol style="padding-left:34px">
-        <li style="margin:12px 0"><b>위험 = 남은 수명 40 이하</b> — 정비 비용 시뮬레이션이 근거</li>
-        <li style="margin:12px 0">기준 모델 F1 <b>0.59 → 0.92</b> (test), 남은 수명 오차 <b>47 → 17사이클</b></li>
-        <li style="margin:12px 0">한계와 불확실성을 <b>숫자로 함께</b> 제시 — 정비 계획 도구로 쓸 수 있는 수준</li>
-      </ol>
-    </div>
-  </div>
-  <div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-<!-- 18 Q&A -->
-<section class="slide cover" data-title="Q&A" data-sec="" data-t="0">
-  <div class="chap r" style="--d:0">감사합니다</div>
-  <h1 class="r" style="--d:200">Q &amp; A</h1>
-  <p class="lead r" style="--d:500;margin-top:30px">Sentinel — 센서로 고장 임박을 알리고, 정비 시점을 계획한다</p>
-  <p class="lead r" style="--d:700;margin-top:50px;font-size:28px">github.com/posco-knda/5_Sentinel_python<br>github.com/posco-knda/5_Sentinel_dashboard</p>
-  <svg class="ecg" viewBox="0 0 1920 160" preserveAspectRatio="none"><path pathLength="1" d="M0 90 L260 90 L300 90 L330 50 L360 120 L395 20 L430 140 L460 90 L760 90 L800 90 L830 62 L860 112 L890 90 L1180 90 L1220 90 L1250 40 L1285 130 L1320 10 L1360 150 L1395 90 L1920 90"/></svg>
-  <div class="foot">포스코 K-뉴딜 아카데미 · 5조 감시자들</div><div class="pg"></div>
-</section>
-
-</div></div>
-
-<div id="overview"><h4>슬라이드 목록 — 클릭하면 이동 · Esc로 닫기</h4><div id="ovList"></div></div>
-<div id="notes"><h5>발표자 노트</h5><div id="notesBody"></div></div>
-<div id="hud">
-  <button onclick="go(-1)">◀</button><button onclick="go(1)">▶</button>
-  <button onclick="toggleOverview()">목록 O</button><button onclick="toggleNotes()">노트 N</button>
-  <button onclick="toggleTimer()">타이머 T</button><button onclick="toggleFS()">전체화면 F</button>
-</div>
-
-<script>
-const NOTES = [
- "표지. 인사, 팀 소개, 주제 한 줄: '센서 기록으로 엔진 고장 임박을 미리 알려 정비 시점을 계획하는 프로젝트'. 데이터는 NASA 시뮬레이션 데이터라는 점을 첫 장에서 짧게 언급.",
- "① 문제. 한 문장: 어떤 설비의 무엇을, 왜, 어느 수준까지 맞히면 성공인가. 설비=터보팬 엔진, 예측 대상=남은 비행 횟수(RUL). 이상 정의=남은 수명 40 이하. 중요한 이유=긴급 정비는 계획 정비보다 2~5배 비쌈(문헌 비율 1:2, 1:5). 필수=이진 분류, 선택=RUL 회귀. 성공 기준=혼동행렬과 정밀도·재현율·F1, 놓치지 않기(재현율) 우선.",
- "① 위험 기준 40의 근거. 과제 예시값 30에서 바꾼 이유를 설명: 정비는 경보 즉시 못 함(준비 7일, 슬롯 10~20일, 주간 계획 → 평균 17사이클). 논문 운영 조건으로 비용 시뮬레이션 → 최적 40. 30이면 정비 전 고장 14.3%, 비용 +48%. 비용 비율 1:5와 1:2 둘 다 40. 질문 대비: 시뮬레이션이며 실제 항공사 값이 아니라는 점, 강사님 확인 사항.",
- "② 데이터. FD004를 주로 쓴 이유=가장 현실에 가까움(운전조건 6, 고장모드 2). 교차 검증: FD004로 학습하면 FD001에도 통함(11.2), 반대는 실패(55.8 > 베이스라인 47.4). 시뮬레이션 데이터, 한 줄=한 비행. 수명 128~543.",
- "② 전처리 4원칙. 운전조건별 정규화, 상수 센서 제거(15개 사용), RUL 125 클리핑(최소 수명 128보다 작게), 엔진 단위 200/49 분할과 누수 방지(train 통계만). 가이드의 필수 요건(시간 순서 유지·fit은 학습만)과 연결.",
- "③ 시계열 분석. 그래프 중심. 운전조건 보정 후 센서가 서서히 한 방향으로 이동, 엔진마다 속도가 다름. 그래서 평균 수명 기반 기준 모델은 오차 47.4. '상태 변화 구간'을 지목: 위험 구간 진입 전후로 센서가 가속적으로 벗어남.",
- "③ 특성과 중요도. 최근 15사이클 평균·표준편차·기울기 + 현재값 = 특성 60개. 모델 중요도와 독립적 추세성 랭킹이 8개 중 5개 겹침 → 실제 열화 신호. s3, s17, s8. 15사이클 창의 근거는 약함(5/10/15/20 비교는 못 함) — 질문 시 솔직히.",
- "④ 모델 설계. 필수: Z-score 기준 → RandomForest 분류. 선택: 평균수명 기준 → RF 회귀 → GRU 회귀. 공통 조건(같은 분할·특성·지표·시드). 후보 8종 비교. 머신러닝 최대 3종 규칙: RF 분류, RF 회귀, GRU 회귀.",
- "④ 분류 결과. validation F1 0.58 → 0.86, test 0.59 → 0.92. 혼동행렬은 그림 참고. 확률 기준 0.36 이유(놓침이 더 비쌈). 정확도 안 쓰는 이유(위험 시점 16%). 위험 69대 중 65대 탐지.",
- "④ 회귀 결과. MAE 47.4 → 21.8 → 17.3(GRU). 오차 63.5% 감소. 후보 8종 그래프: MAE가 작을수록 미탐도 낮음(r=0.87), 오탐은 무관. validation 기준 그림임을 말하기.",
- "④ 모델 선정. 우선순위(놓침 → 헛경보 → 오차)는 비용 비율로 정당화, 비교는 비용 시뮬레이션. GRU가 가장 쌈. 시드 3개 반복(17.0±0.7 vs 19.4±1.4). 정직하게 약점: 학습 12분, 설명 어려움, test 미탐은 MLP가 적음, LSTM과 비용 동률. 합격선(15%/20%)은 근거 없어 쓰지 않았다는 점은 질문 시 설명.",
- "④ 숫자 신뢰도. 재현율의 95% 구간 그림. 기준 모델 vs ML은 확실한 차이, RF vs GRU는 test만으로 못 가림. 엔진 단위: 안전 구간에서 한 번이라도 경보받은 엔진 RF 25, GRU 10(49대 중). 표본이 작다는 한계를 먼저 인정.",
- "⑤ 오탐 사례 #179. 안전 구간에서 45사이클 경보. 모든 센서가 한꺼번에 정상 수준으로 되돌아감 → 중간 정비로 보이는 모양(가설, 확정 아님). 정비 이력이 있어야 구분 가능. train에 같은 모양 3대.",
- "⑤ 미탐 사례 #245. 위험 구간 19사이클 경보 거의 없음. 위험 진입 때 s3가 평균보다 낮음. 완전 누락은 아니지만 정비 준비 기간에 늦을 수 있음. 개선: 엔진별 초기 대비 변화량.",
- "⑤ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 가능하면 여기서 실제 대시보드 2분 데모(홈 → 설비 상세 → 시나리오). 금액·절감률은 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
- "⑥ 한계. 시뮬레이션 데이터·가정 비용, 정비 이력 없음, 작은 표본, 서서히 진행되는 마모만 대상, 검증의 한계(시드 1회·튜닝 안 함·입력 정보 차이), 오류 사례 선택 방식. 한계를 먼저 말하는 편이 신뢰를 얻는다.",
- "⑥ 다음 단계와 요약. 정비 이력·실제 비용으로 기준 재산정, 긴급 등급, 초기 대비 변화량 특성, 자동 수집 연동. 세 줄 요약으로 마무리.",
- "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"
-];
-const deck=document.getElementById('deck'), slides=[...document.querySelectorAll('.slide')];
-const N=slides.length; let cur=0, timerOn=false, t0=null, tick=null;
-const cum=[]; slides.reduce((a,s,i)=>{a+=+s.dataset.t||0;cum[i]=a;return a},0);
-
-function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+s+')';}
-addEventListener('resize',fit); fit();
-if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
-setInterval(fit,700); // 일부 환경에서 resize 이벤트가 오지 않을 때를 대비
-
-function countUp(root){
-  root.querySelectorAll('.count').forEach(el=>{
-    const to=+el.dataset.to, dec=+(el.dataset.dec||0), dur=1400, st=performance.now();
-    const step=now=>{const p=Math.min(1,(now-st-500)/dur); const e=p<=0?0:1-Math.pow(1-p,3);
-      el.textContent=(to*e).toFixed(dec); if(p<1) requestAnimationFrame(step); else el.textContent=to.toFixed(dec);};
-    requestAnimationFrame(step);
-  });
-}
-function show(i){
-  i=Math.max(0,Math.min(N-1,i)); cur=i;
-  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
-  // 애니메이션 재생을 위해 활성 슬라이드를 다시 그린다
-  const s=slides[i]; s.style.display='none'; void s.offsetHeight; s.style.display='';
-  s.querySelectorAll('.pg').forEach(p=>p.textContent=(i+1)+' / '+N);
-  document.getElementById('progress').style.width=((i+1)/N*100)+'%';
-  countUp(s); location.hash='#'+(i+1);
-  renderNotes(); document.title='Sentinel 발표 — '+(i+1)+'/'+N+' '+s.dataset.title;
-}
-function go(d){show(cur+d)}
-function renderNotes(){
-  const t=+slides[cur].dataset.t||0;
-  document.getElementById('notesBody').innerHTML='<span class="t">'+(cur+1)+'/'+N+' · '+slides[cur].dataset.title+' · 권장 '+(t?t+'초':'질의응답')+' · 누적 목표 '+fmt(cum[cur])+'</span><br>'+(NOTES[cur]||'');
-}
-const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
-function toggleNotes(){document.getElementById('notes').classList.toggle('on')}
-function toggleTimer(){
-  const el=document.getElementById('timer'); timerOn=!timerOn; el.classList.toggle('on',timerOn);
-  if(timerOn){t0=Date.now();tick=setInterval(()=>{const e=Math.floor((Date.now()-t0)/1000);el.textContent='경과 '+fmt(e)+' / 목표 '+fmt(cum[N-1])+' (이 슬라이드 목표 누적 '+fmt(cum[cur])+')'},500)}else clearInterval(tick);
-}
-function toggleFS(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
-function toggleOverview(){
-  const o=document.getElementById('overview'); o.classList.toggle('on');
-  if(o.classList.contains('on')){
-    document.getElementById('ovList').innerHTML=slides.map((s,i)=>'<div class="it'+(i===cur?' cur':'')+'" onclick="show('+i+');toggleOverview()"><span>'+(i+1)+'</span>'+s.dataset.title+'<em>'+(s.dataset.sec||'')+'</em></div>').join('');
-  }
-}
-addEventListener('keydown',e=>{
-  if(e.metaKey||e.ctrlKey||e.altKey) return;
-  const k=e.key;
-  if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(k)){e.preventDefault();go(1)}
-  else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(k)){e.preventDefault();go(-1)}
-  else if(k==='Home')show(0); else if(k==='End')show(N-1);
-  else if(k==='n'||k==='N')toggleNotes(); else if(k==='t'||k==='T')toggleTimer();
-  else if(k==='f'||k==='F')toggleFS(); else if(k==='o'||k==='O')toggleOverview();
-  else if(k==='Escape')document.getElementById('overview').classList.remove('on');
-});
-deck.addEventListener('click',e=>{ if(e.clientX<innerWidth*0.28) go(-1); else go(1); });
-
-/* ---- 신뢰구간 차트 ---- */
-(function(){
-  const data=[
-    {n:'기준 모델 (Z-score)',v:.551,lo:.434,hi:.662,c:'#8a8985'},
-    {n:'RandomForest 분류',v:.942,lo:.860,hi:.977,c:'#eb6834'},
-    {n:'GRU 회귀 → 분류',v:.884,lo:.788,hi:.940,c:'#2a78d6'}];
-  const svg=document.getElementById('ciChart'), L=290,R=960,x=v=>L+(v-0.3)/(1.0-0.3)*(R-L);
-  let h='';
-  for(let t=0.3;t<=1.0001;t+=0.1){h+='<line x1="'+x(t)+'" x2="'+x(t)+'" y1="20" y2="300" stroke="#e4e3df" stroke-width="2"/><text x="'+x(t)+'" y="335" text-anchor="middle" font-size="22" fill="#8a8985">'+t.toFixed(1)+'</text>';}
-  data.forEach((d,i)=>{const y=70+i*95, cd=(0.8+i*0.35)+'s';
-    h+='<text x="'+(L-22)+'" y="'+(y+8)+'" text-anchor="end" font-size="26" fill="#0b0b0b">'+d.n+'</text>'+
-       '<g class="ci" style="--cd:'+cd+'"><line class="rng" pathLength="1" x1="'+x(d.lo)+'" x2="'+x(d.hi)+'" y1="'+y+'" y2="'+y+'" stroke="'+d.c+'" stroke-width="10" stroke-linecap="round"/>'+
-       '<circle class="dot" cx="'+x(d.v)+'" cy="'+y+'" r="15" fill="'+d.c+'" stroke="#fff" stroke-width="3"/>'+
-       '<text class="dot" x="'+x(d.v)+'" y="'+(y-26)+'" text-anchor="middle" font-size="24" font-weight="800" fill="#0b0b0b">'+d.v.toFixed(2)+'</text>'+
-       '<text class="dot" x="'+x(d.hi)+'" y="'+(y+46)+'" text-anchor="end" font-size="22" fill="#52514e">'+d.lo.toFixed(2)+' – '+d.hi.toFixed(2)+'</text></g>';});
-  svg.innerHTML=h;
-})();
-
-/* ---- 대시보드 요약: 플릿 + #198 선 ---- */
-(function(){
-  const E=[[31,8.9],[103,9.0],[158,10.1],[58,11.2],[198,17.4],[70,40.5],[185,40.7],[221,80.5],[10,125.0]];
-  const f=document.getElementById('fleet');
-  f.innerHTML=E.map((e,i)=>{const lv=e[1]<=40?'R':(e[1]<80?'Y':'G'), col=lv==='R'?'var(--red)':(lv==='Y'?'var(--amber)':'var(--green)');
-    return '<div class="eng r'+(e[0]===198?' feat':'')+'" style="--d:'+(350+i*110)+'"><span class="sig '+lv+'"></span><span>Engine #'+e[0]+'</span><div class="mini"><i style="--w:'+Math.min(100,e[1]/125*100)+'%;--bd:'+(0.9+i*0.1)+'s;background:'+col+'"></i></div><span class="rv">'+e[1].toFixed(1)+'</span></div>';}).join('');
-  const v=[57.97,58.55,53.5,50.31,46.92,45.75,43.18,40.62,38.95,37.27,36.65,35.62,35.2,32.89,34.58,35.31,32.54,31.92,28.51,27.11,25.2,22.84,20.58,19.67,17.41];
-  const W=900,H=400,L=80,R=870,T=20,B=330,ymax=65;
-  const x=i=>L+i/(v.length-1)*(R-L), y=val=>B-(val/ymax)*(B-T);
-  let s='';
-  s+='<rect x="'+L+'" y="'+y(40)+'" width="'+(R-L)+'" height="'+(B-y(40))+'" fill="#d6453d" opacity=".10"/>';
-  [0,20,40,60].forEach(t=>{s+='<line x1="'+L+'" x2="'+R+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="#e4e3df" stroke-width="2"/><text x="'+(L-14)+'" y="'+(y(t)+7)+'" text-anchor="end" font-size="20" fill="#8a8985">'+t+'</text>';});
-  s+='<line x1="'+L+'" x2="'+R+'" y1="'+y(40)+'" y2="'+y(40)+'" stroke="#d6453d" stroke-width="3" stroke-dasharray="10 8"/><text x="'+(R-8)+'" y="'+(y(40)-10)+'" text-anchor="end" font-size="21" font-weight="700" fill="#d6453d">위험 기준 40</text>';
-  [0,8,16,24].forEach(i=>{s+='<text x="'+x(i)+'" y="360" text-anchor="middle" font-size="19" fill="#8a8985">#'+(91+i)+'</text>';});
-  s+='<path class="ln" pathLength="1" d="'+v.map((p,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(p).toFixed(1)).join(' ')+'"/>';
-  s+='<g class="ci" style="--cd:3s"><circle class="dot" cx="'+x(8)+'" cy="'+y(v[8])+'" r="13" fill="#d6453d" stroke="#fff" stroke-width="3"/><text class="dot" x="'+(x(8)+18)+'" y="'+(y(v[8])-22)+'" font-size="22" font-weight="800" fill="#d6453d">#99 위험 진입 (38.95)</text>';
-  s+='<circle class="dot" cx="'+x(24)+'" cy="'+y(v[24])+'" r="11" fill="#2a78d6" stroke="#fff" stroke-width="3"/><text class="dot" x="'+(x(24)-14)+'" y="'+(y(v[24])-44)+'" text-anchor="end" font-size="22" font-weight="800" fill="#2a78d6">17.4 (90% 구간 2–26)</text></g>';
-  document.getElementById('rulChart').innerHTML=s;
-})();
-
-const h=parseInt(location.hash.slice(1)); show(isNaN(h)?0:h-1);
-</script>
-</body>
+      const h = parseInt(location.hash.slice(1));
+      show(isNaN(h) ? 0 : h - 1);
+    </script>
+  </body>
 </html>

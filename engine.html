@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>엔진에서 우리가 다루는 부분</title>
+<style>
+:root{--ink:#1f1f1e;--ink2:#555;--blue:#2a78d6;--red:#d9382c;--bg:#f6f5f2;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--ink)}
+body{display:flex;align-items:center;justify-content:center}
+svg{width:100vw;max-height:100vh;height:auto;display:block}
+text{font-family:inherit}
+.card rect{fill:#fff;stroke:var(--blue);stroke-width:3;rx:16}
+.card.f rect{stroke:var(--red);fill:#fff6f4}
+.card .t{font-size:38px;font-weight:800;fill:var(--ink)}
+.card .s{font-size:29px;fill:var(--ink2)}
+.card .tag{font-size:26px;font-weight:800;fill:var(--red)}
+.lead{stroke:var(--blue);stroke-width:3;fill:none;stroke-dasharray:1;stroke-dashoffset:1}
+.lead.f{stroke:var(--red)}
+.hl{fill:rgba(42,120,214,.16);stroke:var(--blue);stroke-width:5}
+.hl.f{fill:rgba(217,56,44,.2);stroke:var(--red);stroke-dasharray:14 9}
+.pulse{fill:none;stroke:var(--red);stroke-width:4;transform-box:fill-box;transform-origin:center;animation:pulse 2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+.hl,.card,.dot{opacity:0;animation:fadein .7s var(--ease) forwards;animation-delay:calc(var(--d) * 1ms)}
+.lead{animation:draw .8s ease-out forwards;animation-delay:calc(var(--d) * 1ms)}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.dot{fill:var(--blue)}.dot.f{fill:var(--red)}
+.hl.n{fill:rgba(120,120,120,.18);stroke:#777;stroke-dasharray:4 8}
+.lead.n{stroke:#777}
+.card.n rect{stroke:#888;fill:#f1f1ef;stroke-dasharray:8 6}
+.card.n .t{fill:#555}
+.ttl{font-size:50px;font-weight:800;fill:var(--ink)}
+.sub{font-size:30px;fill:var(--ink2)}
+</style>
+</head>
+<body>
+<svg viewBox="0 0 2000 1610" xmlns="http://www.w3.org/2000/svg">
+  <text class="ttl" x="60" y="80">터보팬 엔진에서 우리가 다루는 부분</text>
+  <text class="sub" x="60" y="128">센서 21개가 엔진 곳곳의 온도·압력·회전수를 측정한다 (C-MAPSS) · 빨강 = 고장 부위 · 파랑 = 센서 있음 · 회색 점선 = 센서 없음</text>
+
+  <image href="assets/engine_cutaway.webp" x="0" y="300" width="2000" height="1032"/>
+
+  <!-- 강조 영역 -->
+  <g class="hl f" style="--d:300"><ellipse cx="615" cy="820" rx="85" ry="290"/></g>
+  <ellipse class="pulse" cx="615" cy="820" rx="85" ry="290"/>
+  <g class="hl" style="--d:900"><ellipse cx="790" cy="830" rx="65" ry="135"/></g>
+  <g class="hl f" style="--d:1500"><ellipse cx="1120" cy="830" rx="175" ry="150"/></g>
+  <ellipse class="pulse" cx="1120" cy="830" rx="175" ry="150"/>
+  <g class="hl" style="--d:2100"><ellipse cx="1345" cy="830" rx="55" ry="120"/></g>
+  <g class="hl" style="--d:2700"><ellipse cx="1465" cy="830" rx="80" ry="130"/></g>
+  <g class="hl" style="--d:3300"><ellipse cx="1050" cy="660" rx="150" ry="42"/></g>
+
+  <g class="hl n" style="--d:3900"><ellipse cx="1800" cy="830" rx="115" ry="85"/></g>
+  <path class="lead n" pathLength="1" style="--d:4100" d="M 1790 700 L 1790 745"/>
+  <g class="card n" style="--d:4200" transform="translate(1640,540)">
+    <rect width="330" height="160"/>
+    <text class="t" x="20" y="52">배기 노즐</text>
+    <text class="s" x="20" y="100">센서 없음</text>
+    <text class="s" x="20" y="136">배기 상태 측정 없음</text>
+  </g>
+  <!-- 연결선 -->
+  <path class="lead f" pathLength="1" style="--d:500" d="M 330 280 L 330 360 L 560 640"/>
+  <path class="lead f" pathLength="1" style="--d:1700" d="M 1560 280 L 1560 520 L 1250 740"/>
+  <path class="lead" pathLength="1" style="--d:3500" d="M 1010 280 L 1010 600"/>
+  <path class="lead" pathLength="1" style="--d:1100" d="M 310 1350 L 310 1100 L 760 960"/>
+  <path class="lead" pathLength="1" style="--d:2300" d="M 1280 1350 L 1280 1160 L 1340 950"/>
+  <path class="lead" pathLength="1" style="--d:2900" d="M 1720 1350 L 1720 1180 L 1500 960"/>
+
+  <!-- 카드: 위 -->
+  <g class="card f" style="--d:600" transform="translate(60,170)">
+    <rect width="540" height="190"/>
+    <text class="tag" x="24" y="40">고장 모드 ①  팬 열화</text>
+    <text class="t" x="24" y="88">팬 (Fan)</text>
+    <text class="s" x="24" y="130">공기를 빨아들임 · 회전수 Nf</text>
+    <text class="s" x="24" y="166">입구 온도 T2 · 압력 P2</text>
+  </g>
+  <g class="card" style="--d:3600" transform="translate(760,170)">
+    <rect width="500" height="190"/>
+    <text class="t" x="24" y="52">바이패스 덕트</text>
+    <text class="s" x="24" y="98">코어를 거치지 않는 공기 통로</text>
+    <text class="s" x="24" y="136">압력 P15 · 바이패스비 BPR</text>
+  </g>
+  <g class="card f" style="--d:1800" transform="translate(1300,170)">
+    <rect width="620" height="190"/>
+    <text class="tag" x="24" y="40">고장 모드 ②  고압 압축기 열화</text>
+    <text class="t" x="24" y="88">고압 압축기 (HPC)</text>
+    <text class="s" x="24" y="130">출구 온도 T30 · 압력 P30 · Ps30</text>
+    <text class="s" x="24" y="166">코어 회전수 Nc</text>
+  </g>
+
+  <!-- 카드: 아래 -->
+  <g class="card" style="--d:1200" transform="translate(60,1350)">
+    <rect width="500" height="170"/>
+    <text class="t" x="24" y="52">저압 압축기 (LPC)</text>
+    <text class="s" x="24" y="100">출구 온도 T24</text>
+    <text class="s" x="24" y="138">1차 압축된 공기</text>
+  </g>
+  <g class="card" style="--d:2400" transform="translate(640,1350)">
+    <rect width="740" height="170"/>
+    <text class="t" x="24" y="52">연소기 (Combustor)</text>
+    <text class="s" x="24" y="100">연료 흐름 비율 phi · 연료-공기비 farB</text>
+    <text class="s" x="24" y="138">연소기 내부·출구 온도는 센서 없음</text>
+  </g>
+  <g class="card" style="--d:3000" transform="translate(1440,1350)">
+    <rect width="500" height="170"/>
+    <text class="t" x="24" y="52">터빈 (HPT·LPT)</text>
+    <text class="s" x="24" y="100">LPT 출구 온도 T50</text>
+    <text class="s" x="24" y="138">블리드 W31·W32 · HPT 출구 없음</text>
+  </g>
+
+  <text class="sub" x="60" y="1585" style="fill:#2a78d6;font-weight:700">센서값의 미세한 변화 → 어느 부위가 닳고 있는지 → 남은 수명(RUL) 예측</text>
+</svg>
+</body>
+</html>
