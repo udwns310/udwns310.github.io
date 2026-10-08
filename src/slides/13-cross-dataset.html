@@ -1,0 +1,77 @@
+        <!-- 교차 검증 -->
+        <section
+          class="slide"
+          data-title="교차 검증: 다른 데이터에도 통하나"
+          data-sec="④ 기준 모델 · 머신러닝"
+          data-t="45"
+        >
+          <div class="chap">④ 기준 모델 · 머신러닝</div>
+          <h2 class="r" style="--d: 0">
+            FD004로 배운 GRU, <em>다른 데이터에도 통할까?</em>
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.15fr 0.85fr;
+              margin-top: 34px;
+              gap: 44px;
+            "
+          >
+            <div class="card r" style="--d: 500">
+              <h3>학습 데이터 → 평가 데이터</h3>
+              <p class="sm">
+                GRU, 공식 test 오차 (MAE, 사이클 · 낮을수록 좋음)
+              </p>
+              <div class="bars" style="margin-top: 18px">
+                <div class="bar" style="--bd: 0.9s">
+                  <span class="lab">FD004 → FD004</span>
+                  <div class="trk">
+                    <i style="--w: 30.9%; background: var(--blue)"></i>
+                  </div>
+                  <span class="val">17.3</span>
+                </div>
+                <div class="bar" style="--bd: 1.1s">
+                  <span class="lab">FD004 → FD001</span>
+                  <div class="trk">
+                    <i style="--w: 19.9%; background: var(--blue)"></i>
+                  </div>
+                  <span class="val">11.2</span>
+                </div>
+                <div class="bar" style="--bd: 1.3s">
+                  <span class="lab">FD001 → FD001</span>
+                  <div class="trk">
+                    <i style="--w: 17.2%; background: var(--lblue)"></i>
+                  </div>
+                  <span class="val">9.6</span>
+                </div>
+                <div class="bar" style="--bd: 1.5s">
+                  <span class="lab">FD001 → FD004</span>
+                  <div class="trk">
+                    <i style="--w: 100%; background: var(--red)"></i>
+                  </div>
+                  <span class="val">55.8</span>
+                </div>
+              </div>
+              <div class="axis">학습 데이터 → 평가 데이터 · MAE (사이클)</div>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 22px;
+              "
+            >
+              <div class="note r" style="--d: 900; font-size: 28px">
+                FD004로 배우면 <b>FD001에도 통합니다</b> (11.2).
+              </div>
+              <div class="warn r" style="--d: 1100; font-size: 28px">
+                반대(FD001 → FD004)는 <b>실패</b> — 55.8은 센서를 안 쓰는 기준
+                모델(47.4)보다 나쁩니다.
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

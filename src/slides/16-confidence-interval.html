@@ -1,0 +1,52 @@
+        <!-- 12 신뢰도 -->
+        <section
+          class="slide"
+          data-title="숫자를 얼마나 믿을 수 있나: 신뢰구간"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="55"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            차이가 크면 <em>확실</em>, 작으면 <em>조심</em>해서 읽습니다
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.25fr 0.75fr;
+              gap: 44px;
+              margin-top: 26px;
+            "
+          >
+            <div class="card r" style="--d: 250">
+              <h3>공식 test 재현율의 95% 구간 (위험 엔진 69대)</h3>
+              <svg id="ciChart" viewBox="0 0 1000 380" width="100%"></svg>
+              <div class="axis">
+                재현율 (0~1) · 점 = 측정값, 선 = 95% 신뢰구간 (Wilson)
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 18px">
+              <div class="note r" style="--d: 700; font-size: 24px">
+                <b>확실한 차이</b><br />기준 모델과 머신러닝은 구간이 겹치지
+                않음
+              </div>
+              <div class="warn r" style="--d: 900; font-size: 24px">
+                <b>조심할 차이</b><br />RandomForest vs GRU는 겹침 → test만으로
+                우열 불가. 엔진 단위 validation은 GRU가 조금 낫다 (F1 +0.05)
+              </div>
+              <div class="card r" style="--d: 1100">
+                <p class="sm" style="font-size: 24px">
+                  안전 구간에서 <b>한 번이라도</b> 경보를 받은 엔진<br />(49대
+                  중) <b class="hl">RandomForest 25대</b> ·
+                  <b class="hb">GRU 10대</b>
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="xs r" style="--d: 1300; margin-top: 20px">
+            validation 49대 · 엔진 분할 1회(분할 시드 42) · 경보 지표는 이 분할 한 번의 결과 — 한계
+            슬라이드에서 다시 다룹니다.
+          </p>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

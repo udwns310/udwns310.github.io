@@ -1,0 +1,67 @@
+        <!-- 9 분류 결과 -->
+        <section
+          class="slide"
+          data-title="분류 결과: 혼동행렬 · Precision · Recall · F1"
+          data-sec="④ 기준 모델 · 머신러닝"
+          data-t="70"
+        >
+          <div class="chap">④ 기준 모델 · 머신러닝</div>
+          <h2 class="r" style="--d: 0">
+            기준 모델 F1 <em>0.59 → 0.92</em>: 머신러닝이 필요한 이유
+          </h2>
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 26px; align-items: start">
+            <div class="card r" style="--d: 250">
+                <h3>validation F1 (49대, 모든 운행 시점)</h3>
+                <div class="bars" style="margin-top: 14px">
+                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
+                    <span class="lab">기준 (Z-score)</span>
+                    <div class="trk"><i style="--w: 58.3%; background: var(--lgray)"></i></div>
+                    <span class="val">0.58</span>
+                  </div>
+                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s">
+                    <span class="lab">RandomForest (0.36)</span>
+                    <div class="trk"><i style="--w: 86.3%; background: var(--rf)"></i></div>
+                    <span class="val">0.86</span>
+                  </div>
+                </div>
+                <div class="axis">F1 (0~1, 높을수록 좋음)</div>
+              </div>
+            <div class="card r" style="--d: 400">
+                <h3>공식 test F1 (248대, 엔진별 마지막 관측 시점)</h3>
+                <div class="bars" style="margin-top: 14px">
+                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
+                    <span class="lab">기준 (Z-score)</span>
+                    <div class="trk"><i style="--w: 59%; background: var(--lgray)"></i></div>
+                    <span class="val">0.59</span>
+                  </div>
+                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s">
+                    <span class="lab">RandomForest (0.36)</span>
+                    <div class="trk"><i style="--w: 91.5%; background: var(--rf)"></i></div>
+                    <span class="val">0.92</span>
+                  </div>
+                </div>
+                <div class="axis">F1 (0~1, 높을수록 좋음)</div>
+              </div>
+          </div>
+          <div class="grid" style="grid-template-columns: 1.3fr 0.9fr; gap: 36px; margin-top: 20px; align-items: center">
+            <div class="r" style="--d: 700">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/cls_confusion_matrix.png"
+                alt="혼동행렬: 기준 모델 vs RandomForest"
+              />
+              <div class="cap">혼동행렬 (validation 49대의 모든 사이클, 위험 = 남은 수명 ≤ 40)</div>
+            </div>
+            <div>
+              <ul class="b" style="margin-top: 0">
+                <li class="r" style="--d: 900; font-size: 26px; margin: 26px 0">위험 69대 중 RF는 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8</li>
+                <li class="r" style="--d: 1050; font-size: 26px; margin: 26px 0">확률 기준 0.5 → <b>0.36</b>: 재현율 0.90 → 0.94 (위험을 놓치지 않는 것 우선)</li>
+                <li class="r" style="--d: 1200; font-size: 26px; margin: 26px 0">정확도는 쓰지 않음 — 위험이 소수라 "항상 정상"도 높게 나옴</li>
+              </ul>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

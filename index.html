@@ -21,6 +21,7 @@
         --lgray: #bdbdba;
         --red: #d6453d;
         --amber: #e0a22c;
+        --rf: #e08a2c;
         --green: #2e9e63;
         --navy: #05507d;
         --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -2968,8 +2969,24 @@
           <h2 class="r" style="--d: 0">
             기준 모델 F1 <em>0.59 → 0.92</em>: 머신러닝이 필요한 이유
           </h2>
-          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 28px; align-items: start">
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 26px; align-items: start">
             <div class="card r" style="--d: 250">
+                <h3>validation F1 (49대, 모든 운행 시점)</h3>
+                <div class="bars" style="margin-top: 14px">
+                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
+                    <span class="lab">기준 (Z-score)</span>
+                    <div class="trk"><i style="--w: 58.3%; background: var(--lgray)"></i></div>
+                    <span class="val">0.58</span>
+                  </div>
+                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s">
+                    <span class="lab">RandomForest (0.36)</span>
+                    <div class="trk"><i style="--w: 86.3%; background: var(--rf)"></i></div>
+                    <span class="val">0.86</span>
+                  </div>
+                </div>
+                <div class="axis">F1 (0~1, 높을수록 좋음)</div>
+              </div>
+            <div class="card r" style="--d: 400">
                 <h3>공식 test F1 (248대, 엔진별 마지막 관측 시점)</h3>
                 <div class="bars" style="margin-top: 14px">
                   <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
@@ -2979,21 +2996,14 @@
                   </div>
                   <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s">
                     <span class="lab">RandomForest (0.36)</span>
-                    <div class="trk"><i style="--w: 91.5%; background: var(--orange)"></i></div>
+                    <div class="trk"><i style="--w: 91.5%; background: var(--rf)"></i></div>
                     <span class="val">0.92</span>
                   </div>
                 </div>
                 <div class="axis">F1 (0~1, 높을수록 좋음)</div>
               </div>
-            <div>
-              <table class="r" style="--d: 600; margin-top: 0">
-                <tr><th>공식 test (248대)</th><th class="n">정밀도</th><th class="n">재현율</th><th class="n">F1</th></tr>
-                <tr><td>기준 모델</td><td class="n">0.63</td><td class="n">0.55</td><td class="n">0.59</td></tr>
-                <tr class="sel"><td>RandomForest (0.36)</td><td class="n">0.89</td><td class="n">0.94</td><td class="n">0.92</td></tr>
-              </table>
-            </div>
           </div>
-          <div class="grid" style="grid-template-columns: 1.25fr 0.75fr; gap: 40px; margin-top: 22px; align-items: center">
+          <div class="grid" style="grid-template-columns: 1.3fr 0.9fr; gap: 36px; margin-top: 20px; align-items: center">
             <div class="r" style="--d: 700">
               <img
                 class="fig"
@@ -3005,9 +3015,9 @@
             </div>
             <div>
               <ul class="b" style="margin-top: 0">
-                <li class="r" style="--d: 900; font-size: 26px">위험 69대 중 RF는 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8</li>
-                <li class="r" style="--d: 1050; font-size: 26px">확률 기준 0.5 → <b>0.36</b>: 재현율 0.90 → 0.94 (위험을 놓치지 않는 것 우선)</li>
-                <li class="r" style="--d: 1200; font-size: 26px">정확도는 쓰지 않음 — 위험이 소수라 "항상 정상"도 높게 나옴</li>
+                <li class="r" style="--d: 900; font-size: 26px; margin: 26px 0">위험 69대 중 RF는 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8</li>
+                <li class="r" style="--d: 1050; font-size: 26px; margin: 26px 0">확률 기준 0.5 → <b>0.36</b>: 재현율 0.90 → 0.94 (위험을 놓치지 않는 것 우선)</li>
+                <li class="r" style="--d: 1200; font-size: 26px; margin: 26px 0">정확도는 쓰지 않음 — 위험이 소수라 "항상 정상"도 높게 나옴</li>
               </ul>
             </div>
           </div>
@@ -3095,7 +3105,7 @@
                   class="bar"
                   style="grid-template-columns: 270px 1fr 100px; --bd: 0.7s"
                 >
-                  <span class="lab">베이스라인</span>
+                  <span class="lab">기준 모델</span>
                   <div class="trk">
                     <i style="--w: 100%; background: var(--lgray)"></i>
                   </div>
@@ -3107,7 +3117,7 @@
                 >
                   <span class="lab">RandomForest</span>
                   <div class="trk">
-                    <i style="--w: 46%; background: var(--orange)"></i>
+                    <i style="--w: 46%; background: var(--rf)"></i>
                   </div>
                   <span class="val">21.8</span>
                 </div>
@@ -3133,7 +3143,7 @@
                 </div>
               </div>
               <div class="axis">
-                MAE (사이클, 낮을수록 좋음) · 베이스라인 = 평균 수명 − 현재
+                MAE (사이클, 낮을수록 좋음) · 기준 모델 = 평균 수명 − 현재
                 사이클
               </div>
               <div
@@ -3144,7 +3154,7 @@
                   <span class="v" style="color: var(--blue)"
                     ><span class="count" data-to="63.5" data-dec="1">0</span
                     >%</span
-                  ><span class="l">베이스라인 대비 오차 감소</span>
+                  ><span class="l">기준 모델 대비 오차 감소</span>
                 </div>
                 <div class="kpi">
                   <span class="v">25.2</span
@@ -3372,7 +3382,7 @@
                 >
                   <span class="lab">RandomForest</span>
                   <div class="trk" style="height: 28px">
-                    <i style="--w: 41.3%; background: var(--orange)"></i>
+                    <i style="--w: 41.3%; background: var(--rf)"></i>
                   </div>
                   <span class="val">5.54</span>
                 </div>
@@ -3410,7 +3420,7 @@
                   class="bar"
                   style="grid-template-columns: 260px 1fr 90px; --bd: 1.4s"
                 >
-                  <span class="lab">베이스라인</span>
+                  <span class="lab">기준 모델</span>
                   <div class="trk" style="height: 28px">
                     <i style="--w: 100%; background: var(--lgray)"></i>
                   </div>
@@ -4024,7 +4034,7 @@
             v: 0.942,
             lo: 0.86,
             hi: 0.977,
-            c: "#84754e",
+            c: "#e08a2c",
           },
           { n: "GRU 회귀 → 분류", v: 0.884, lo: 0.788, hi: 0.94, c: "#05507d" },
         ];

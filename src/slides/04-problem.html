@@ -1,0 +1,90 @@
+        <!-- 2 문제 -->
+        <section
+          class="slide"
+          data-title="문제 정의: 무엇을 위험으로 볼 것인가"
+          data-sec="① 문제 정의"
+          data-t="70"
+        >
+          <div class="chap">① 문제 정의</div>
+          <h2 class="r" style="--d: 0">
+            엔진이 <em>고장 나기 전에</em>, 정비 시점을 알 수 있을까?
+          </h2>
+          <p class="lead r" style="--d: 200">
+            항공기 터보팬 엔진 센서(온도·압력·회전속도) 기록 → 그 엔진이
+            <b>앞으로 몇 번 더 비행할 수 있는지</b>(남은 수명, RUL)를 예측하고,
+            고장 전에 정비해 <b>긴급 정비 비용</b>을 줄일 수 있는지까지 판단
+          </p>
+          <div style="margin-top: 40px" class="r">
+            <div class="life" style="--d: 400">
+              <div class="z1">정상 (80사이클 이상 남음)</div>
+              <div class="z2">주의 (40~80)</div>
+              <div class="z3">위험 (40 이하)</div>
+              <div class="z4">고장</div>
+            </div>
+            <div class="axis">
+              1사이클은 엔진의 1회 운행 단위이며, 데이터의 각 행에는 해당 시점의
+              운전조건과 센서 측정값이 기록
+            </div>
+            <div class="axis" style="margin-top: 6px">
+              엔진 한 대의 수명 흐름 (왼쪽 → 오른쪽 = 운행 사이클이 쌓임). 남은
+              수명 40 이하를 <b>위험</b>으로 정의
+            </div>
+          </div>
+          <div
+            class="grid"
+            style="grid-template-columns: 1.2fr 1fr 1fr; margin-top: 34px"
+          >
+            <div class="card r" style="--d: 900">
+              <h3>왜 중요한가</h3>
+              <p class="sm" style="font-size: 28px">
+                고장 나서 하는 <b>긴급 정비</b>는 계획 정비보다
+                <b class="hl">2~5배</b> 비쌉니다
+                <span style="white-space: nowrap">(문헌 비용 비율</span>
+                <span style="white-space: nowrap"
+                  >1:5<sup class="ref">1</sup>, 1:2<sup class="ref">2</sup
+                  >)</span
+                >. 미리 알면 계획 정비로 바꿀 수 있습니다.
+              </p>
+            </div>
+            <div class="card r" style="--d: 1100">
+              <h3>필수 과제</h3>
+              <p class="sm" style="font-size: 28px">
+                <span class="pill">이진 분류</span><br /><span
+                  style="display: inline-block; margin-top: 10px"
+                  >지금 위험한가?<br />남은 수명 40 이하면 경보</span
+                >
+              </p>
+            </div>
+            <div class="card r" style="--d: 1300">
+              <h3>선택 과제</h3>
+              <p class="sm" style="font-size: 28px">
+                <span class="pill o">RUL 회귀</span><br /><span
+                  style="font-size: 26px"
+                  >몇 사이클 남았나? 숫자로 예측</span
+                ><br /><span class="pill o" style="margin-top: 12px"
+                  >비용 환산</span
+                ><br /><span style="font-size: 26px"
+                  >예측을 정비 비용으로 바꿔 비교</span
+                >
+              </p>
+            </div>
+          </div>
+          <div class="srcbox r" style="--d: 1400">
+            <span class="srclab">출처</span>
+            <ol>
+              <li>
+                de Pater, Reijns &amp; Mitici (2022).
+                <i>Reliability Engineering &amp; System Safety</i> 221, 108341
+                <em>— 비용 1:5</em>
+              </li>
+              <li>
+                Lee &amp; Mitici (2023).
+                <i>Reliability Engineering &amp; System Safety</i> 230, 108908
+                <em>— 비용 1:2</em>
+              </li>
+            </ol>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

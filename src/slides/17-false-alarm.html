@@ -1,0 +1,59 @@
+        <!-- 13 오탐 -->
+        <section
+          class="slide"
+          data-title="오탐 사례: 엔진 #179"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="55"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em>
+          </h2>
+          <div
+            class="grid"
+            style="
+              grid-template-columns: 1.3fr 1fr;
+              gap: 44px;
+              margin-top: 26px;
+            "
+          >
+            <div class="r" style="--d: 250">
+              <img
+                class="fig"
+                style="width: 100%"
+                src="assets/cls_error_case_false_alarm.png"
+                alt="오탐 사례 시계열"
+              />
+              <div class="cap">
+                validation 엔진 #179 (수명 435사이클): 센서 추이와 모델의 위험
+                확률
+              </div>
+            </div>
+            <div>
+              <ul class="b">
+                <li class="r" style="--d: 500">
+                  실제 남은 수명 194~245(안전)에서 <b>45사이클</b> 경보
+                </li>
+                <li class="r" style="--d: 700">
+                  운행 241번째 전후로
+                  <b>모든 센서가 한꺼번에 정상 수준으로 되돌아감</b> — 중간
+                  정비로 "보이는" 모양 (가설)
+                </li>
+                <li class="r" style="--d: 900">
+                  되돌아가기 전까지는 온도가 실제로 위험 엔진 수준 → 모델
+                  입장에서는 <b>합리적인 경보</b>
+                </li>
+                <li class="r" style="--d: 1100">
+                  같은 모양의 엔진이 train에 3대 (#71·#179·#185)
+                </li>
+              </ul>
+              <div class="note r" style="--d: 1300; margin-top: 20px">
+                시사점: 현장에서는 <b>정비 이력 데이터</b>가 있어야 구분할 수
+                있습니다.
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

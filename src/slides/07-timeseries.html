@@ -1,0 +1,60 @@
+                <!-- 시계열 7-2: 그림 -->
+        <section
+          class="slide"
+          data-title="시계열 분석: 그림으로 확인"
+          data-sec="③ 시계열 패턴 분석"
+          data-t="45"
+        >
+          <div class="chap">③ 시계열 패턴 분석</div>
+          <h2 class="r" style="--d: 0">
+            같은 센서도 <em>엔진마다 변화 양상</em>이 다릅니다
+          </h2>
+          <div class="grid" style="grid-template-columns: 0.64fr 0.36fr; gap: 36px; margin-top: 24px">
+            <div class="card r" style="--d: 300; padding: 14px; display: flex; justify-content: center">
+              <div style="width: 960px; height: 608px; overflow: hidden; border-radius: 10px">
+                <div style="position: relative; width: 960px">
+                  <img src="assets/sensor_trends.png" alt="추세성 상위 센서 4개의 시계열" style="width: 960px; height: auto; display: block" />
+                  <div class="tb tb1" style="left: 10.3%; top: 6.6%; width: 41%; height: 16%"><span>초반: 3대 구분 불가</span></div>
+                  <div class="tb tb2" style="left: 51.5%; top: 6.6%; width: 47%; height: 16%"><span>엔진마다 다른 시점에 상승</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="s8c" style="display: flex; flex-direction: column; gap: 14px">
+              <div class="card r" style="--d: 600">
+                <h3>그림 읽는 법</h3>
+                <ul class="rd">
+                  <li><i style="background:#4a90c2"></i>엔진 #1 (수명 321)</li>
+                  <li><i style="background:#f28e2b"></i>엔진 #25 (수명 150)</li>
+                  <li><i style="background:#59a14f"></i>엔진 #60 (수명 약 218)</li>
+                  <li><span class="sw" style="background:rgba(139,145,144,.4);margin-right:0;width:34px"></span>초반: 3대의 값이 겹침</li>
+                  <li><span class="sw" style="border:3px dashed #05507d;background:rgba(5,80,125,.12);margin-right:0;width:34px"></span>엔진마다 다른 시점에 상승</li>
+                </ul>
+                <p class="sm" style="font-size: 19px; margin-top: 8px">센서 s9, s14 (운전조건 보정값)</p>
+              </div>
+              <div class="card r" style="--d: 800; flex: 1; display: flex; flex-direction: column; gap: 10px">
+                <h3>그림에서 보이는 것</h3>
+                <ul class="sm8">
+                  <li><b>초반</b> 고장 한참 전까지 엔진 3대의 값이 겹침</li>
+                  <li><b>상승 시점</b> #60은 약 150사이클, #1은 200 이후. #25는 뚜렷한 상승 없이 150에서 고장</li>
+                </ul>
+                <div class="s8t">
+                  <div>
+                    <span class="c"><span class="t">상관계수</span><span class="v">0.51~0.57</span></span>
+                    <span class="l">직선 상관 |r|<br />(1이면 완벽한 직선)</span>
+                  </div>
+                  <div>
+                    <span class="c"><span class="t">기준 모델 오차</span><span class="v">47.4</span></span>
+                    <span class="l">평균 수명 − 현재 사이클<br />기준 모델의 평균 오차(사이클)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tr-end r" style="--d: 1100; margin-top: 22px">
+            <b>그래서 추세선만으로는 열화 패턴을 잡을 수 없습니다</b><br />
+            평평하다가 고장 직전에 가속하는 비선형 패턴 → 최근 15사이클의 변화(평균·표준편차·기울기)를 함께 봐야 함
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

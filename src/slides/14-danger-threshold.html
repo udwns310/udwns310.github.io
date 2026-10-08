@@ -1,0 +1,55 @@
+        <!-- 3 기준 40 -->
+        <section
+          class="slide"
+          data-title="위험 기준 40의 근거: 정비 비용 시뮬레이션"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="70"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            왜 위험 기준 사이클을 <em>40</em>으로 정했을까?
+          </h2>
+          <p class="lead r" style="--d: 150">
+            경보가 울려도 정비는 바로 못 합니다 (준비 최소 7일 + 정비 가능한 날
+            10~20일 간격 + 주간 계획) → 경보 후 정비까지 평균 <b>17사이클</b>
+          </p>
+          <img
+            class="fig r"
+            style="--d: 350; margin-top: 24px; width: 1540px"
+            src="assets/threshold_cost.png"
+            alt="위험 기준 N별 정비 비용과 정비 전 고장 비율"
+          />
+          <div class="cap r" style="--d: 400">
+            FD004, validation 엔진 49대, 정비 비용 시뮬레이션 (de Pater 외 2022
+            운영 조건 · 비용 1:5, 1:2 모두 최적 N = 40)
+          </div>
+          <div
+            class="grid"
+            style="grid-template-columns: repeat(3, 1fr); margin-top: 26px"
+          >
+            <div class="kpi r" style="--d: 700">
+              <span class="v" style="color: var(--red)"
+                ><span class="count" data-to="14.3" data-dec="1">0</span>%</span
+              ><span class="l"
+                >기준 30이면 정비 전에 고장 나는 엔진 (비용 +48%)</span
+              >
+            </div>
+            <div class="kpi r" style="--d: 850">
+              <span class="v" style="color: var(--green)"
+                ><span class="count" data-to="0.2" data-dec="1">0</span>%</span
+              ><span class="l"><b>기준 40</b>: 비용 최저</span>
+            </div>
+            <div class="kpi r" style="--d: 1000">
+              <span class="v"
+                >+2%<span style="font-size: 36px; color: var(--muted)">
+                  / +5%</span
+                ></span
+              ><span class="l"
+                >기준 45 / 50: 완만히 늘어남 (너무 일찍 정비)</span
+              >
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
