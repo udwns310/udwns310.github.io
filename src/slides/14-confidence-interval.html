@@ -1,0 +1,67 @@
+        <!-- 12 신뢰도 -->
+        <section
+          class="slide"
+          data-title="우선순위로 고른 최종 모델 GRU"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="55"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            우선순위로 고른 최종 모델 <em>GRU</em>
+          </h2>
+          <p class="lead r" style="--d: 120; font-size: 30px; margin-top: 4px">
+            우선순위 <b>① 놓침 → ② 헛경보 → ③ 오차</b> — 고장(긴급 정비)이 계획
+            정비의 2~5배 비싸서
+          </p>
+          <div
+            class="grid"
+            style="grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px"
+          >
+            <div class="card r" style="--d: 250">
+              <h3>① 놓침: 공식 test 재현율과 95% 구간 (위험 엔진 69대)</h3>
+              <svg id="ciChart" viewBox="0 0 1000 380" width="100%"></svg>
+              <div class="axis">
+                점 = 측정값 · 선 = 95% 신뢰구간 (겹치면 우열을 가리기 어려움)
+              </div>
+              <p class="xs" style="margin-top: 8px">
+                기준 모델 vs 머신러닝은 구간이 겹치지 않아 <b>확실한 차이</b><br />
+                GRU 회귀→분류 = GRU로 남은 수명을 예측한 뒤, 예측이 40 이하면 위험으로 판정
+              </p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <div class="card r" style="--d: 500; padding: 12px 20px">
+                <div style="display:flex;align-items:center;gap:12px;font-size:27px;font-weight:800">
+                  <span style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:23px">1</span>
+                  <span>놓침 (재현율)</span><span style="display:inline-block;background:var(--gray);color:#fff;font-size:22px;font-weight:800;padding:1px 12px;border-radius:999px;margin-left:10px;vertical-align:2px">동급</span>
+                </div>
+                <div style="font-size:23px;line-height:1.45;margin-top:6px;color:var(--ink2)">test: GRU 0.88 vs RF 0.94 — 구간 겹침(우열 불가)<br />validation 재현율은 동급 (GRU 0.885 · RF 0.887)</div>
+              </div>
+              <div class="card r" style="--d: 700; padding: 12px 20px">
+                <div style="display:flex;align-items:center;gap:12px;font-size:27px;font-weight:800">
+                  <span style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:23px">2</span>
+                  <span>헛경보</span><span style="display:inline-block;background:var(--blue);color:#fff;font-size:22px;font-weight:800;padding:1px 12px;border-radius:999px;margin-left:10px;vertical-align:2px">GRU 우세</span>
+                </div>
+                <div style="font-size:23px;line-height:1.45;margin-top:6px;color:var(--ink2)">안전 구간 헛경보를 낸 엔진 49대 중 <b>GRU 10대 · RF 25대</b><br />test 헛경보 GRU 1대 · RF 8대</div>
+              </div>
+              <div class="card r" style="--d: 900; padding: 12px 20px">
+                <div style="display:flex;align-items:center;gap:12px;font-size:27px;font-weight:800">
+                  <span style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:23px">3</span>
+                  <span>오차 (MAE)</span><span style="display:inline-block;background:var(--blue);color:#fff;font-size:22px;font-weight:800;padding:1px 12px;border-radius:999px;margin-left:10px;vertical-align:2px">GRU 우세</span>
+                </div>
+                <div style="font-size:23px;line-height:1.45;margin-top:6px;color:var(--ink2)">test 17.3 (RF 21.8 · LSTM 18.7)<br />학습 시드 3개 반복: <b style="color:var(--blue)">17.0 ± 0.7</b> vs LSTM 19.4 ± 1.4</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="r"
+            style="--d: 1200; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 30px; font-weight: 700; text-align: center"
+          >
+            → GRU 선택: ① 놓침은 RF와 동급, ② 헛경보와 ③ 오차에서 앞섬
+          </div>
+          <p class="xs r" style="--d: 1300; margin-top: 8px">
+            validation 49대 · 엔진 분할 1회(분할 시드 42) · 경보 지표는 이 분할 한 번의 결과 — 한계 슬라이드에서 다시 다룸
+          </p>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

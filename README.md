@@ -20,7 +20,7 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 | 위치 | 내용 |
 |---|---|
 | `src/slides/NN-이름.html` | 슬라이드 한 장 (`<section>` 하나). **번호 순서 = 발표 순서** |
-| `src/slides/NN-이름.js` | (선택) 그 슬라이드 전용 스크립트. 지금은 16번(신뢰구간 차트)만 있음 |
+| `src/slides/NN-이름.js` | (선택) 그 슬라이드 전용 스크립트. 지금은 14번(신뢰구간 차트)만 있음 |
 | `src/notes/NN-이름.txt` | 그 슬라이드의 발표자 노트. 한 줄, 큰따옴표는 `\"` 로 쓸 것 |
 | `src/css/base.css` | 공통 스타일 (색 변수, 카드, 막대, 파이프라인 등) |
 | `src/js/main.js`, `tail.js` | 공통 스크립트 (이동, 노트, 타이머, 애니메이션) |
@@ -43,16 +43,15 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 | 10 | classification-result | 분류 결과 |
 | 11 | task-regression | 선택 과제: 남은 수명 예측 (진행 과정) |
 | 12 | regression-result | 회귀 결과 |
-| 13 | cross-dataset | 교차 검증 |
-| 14 | danger-threshold | 위험 기준 40의 근거 |
-| 15 | model-selection | 최종 모델 선정 |
-| 16 | confidence-interval | 신뢰구간 |
-| 17 | false-alarm | 오탐 사례 |
-| 18 | missed-case | 미탐 사례 |
-| 19 | field-use | 현장 활용(대시보드) |
-| 20 | limits | 한계 |
-| 21 | next-summary | 다음 단계와 요약 |
-| 22 | qna | Q&A |
+| 13 | danger-threshold | 위험 기준 40의 근거 |
+| 14 | confidence-interval | 신뢰구간·시드 반복 (차이가 확실한가) |
+| 15 | cross-dataset | 교차 검증 |
+| 16 | false-alarm | 오탐 사례 |
+| 17 | missed-case | 미탐 사례 |
+| 18 | field-use | 현장 활용(대시보드) |
+| 19 | limits | 한계 |
+| 20 | next-summary | 다음 단계와 요약 |
+| 21 | qna | Q&A |
 
 ## 슬라이드 추가·삭제·순서 바꾸기
 
