@@ -1,56 +1,127 @@
-        <!-- 17 다음 + 요약 -->
+        <!-- 20 개선 방향 -->
         <section
+          id="improvement-directions"
           class="slide"
-          data-title="다음 단계와 요약"
+          data-title="개선 방향"
           data-sec="⑥ 현장 활용 · 한계 · 개선"
           data-t="45"
+          style="padding-left: 112px; padding-right: 112px"
         >
+          <style>
+            #improvement-directions::after {
+              right: 108px;
+              top: 32px;
+            }
+            #improvement-directions .chap,
+            #improvement-directions .foot {
+              left: 112px;
+            }
+            #improvement-directions .pg {
+              right: 108px;
+            }
+            #improvement-directions .summary-columns {
+              display: grid;
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+              margin-top: 113px;
+              min-height: 544px;
+            }
+            #improvement-directions .summary-column {
+              padding-right: 24px;
+            }
+            #improvement-directions .summary-column + .summary-column {
+              border-left: 1px solid #f2f2f1;
+              padding-left: 36px;
+              padding-right: 0;
+            }
+            #improvement-directions .summary-label {
+              display: flex;
+              align-items: center;
+              gap: 24px;
+              height: 86px;
+            }
+            #improvement-directions .summary-number {
+              color: var(--blue);
+              font-size: 86px;
+              font-weight: 800;
+              line-height: 1;
+              letter-spacing: -0.04em;
+            }
+            #improvement-directions .summary-label h3 {
+              color: var(--ink2);
+              font-size: 28px;
+              font-weight: 700;
+              letter-spacing: 0.02em;
+            }
+            #improvement-directions .summary-message {
+              margin-top: 44px;
+              font-size: 48px;
+              font-weight: 800;
+              line-height: 1.24;
+              letter-spacing: -0.015em;
+              color: var(--ink);
+            }
+            #improvement-directions .summary-message span {
+              color: var(--blue);
+              background: linear-gradient(transparent 78%, #cdebf4 78%);
+            }
+            #improvement-directions .summary-details {
+              margin-top: 34px;
+            }
+            #improvement-directions .summary-details li {
+              color: var(--ink2);
+              font-size: 32px;
+              line-height: 1.9;
+              letter-spacing: 0.01em;
+              white-space: nowrap;
+            }
+          </style>
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0">
-            다음에 필요한 것, 그리고 <em>세 줄 요약</em>
-          </h2>
-          <div
-            class="grid"
-            style="grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 36px"
-          >
-            <div>
-              <div class="sm" style="margin-bottom: 10px">
-                <span class="pill g">다음 단계</span>
+          <h2 class="r" style="--d: 0; margin-top: 20px"><em>개선</em> 방향</h2>
+          <div class="summary-columns">
+            <div class="summary-column r" style="--d: 250">
+              <div class="summary-label">
+                <span class="summary-number">01</span>
+                <h3>실제 기록 확보</h3>
               </div>
-              <ul class="b" style="font-size: 32px">
-                <li class="r" style="--d: 250">
-                  정비 이력 + 실제 비용·정비 기간 → 위험 기준 재산정
-                </li>
-                <li class="r" style="--d: 420">
-                  예측 수명이 준비 기간보다 짧으면 <b>긴급 등급</b> 추가 (예: 10
-                  이하)
-                </li>
-                <li class="r" style="--d: 590">
-                  엔진별 초기 대비 변화량 특성, 구간 길이(30~60) 비교, 분할 반복·교차 검증
-                </li>
-                <li class="r" style="--d: 760">
-                  비행 데이터 자동 수집과 연동해 매 비행 후 갱신
-                </li>
+              <p class="summary-message">
+                실제 기록으로<br />
+                <span>현장 기준 보완</span>
+              </p>
+              <ul class="summary-details">
+                <li>운항·정비 이력 수집</li>
+                <li>실제 비용·준비 기간 반영</li>
+                <li>위험 기준 재평가</li>
               </ul>
             </div>
-            <div
-              class="card r"
-              style="--d: 500; background: #fff; border-color: var(--blue)"
-            >
-              <h3 style="color: var(--blue)">요약</h3>
-              <ol style="padding-left: 34px">
-                <li style="margin: 12px 0">
-                  <b>위험 = 남은 수명 40 이하</b> — 정비 비용 시뮬레이션이 근거
-                </li>
-                <li style="margin: 12px 0">
-                  기준 모델 F1 <b>0.59 → 0.92</b> (test), 남은 수명 오차
-                  <b>47 → 17사이클</b>
-                </li>
-                <li style="margin: 12px 0">
-                  한계와 불확실성을 <b>숫자로 함께</b> 제시 — 정비 계획을 돕는
-                  보조 도구 후보
-                </li>
-              </ol>
+            <div class="summary-column r" style="--d: 420">
+              <div class="summary-label">
+                <span class="summary-number">02</span>
+                <h3>검증 범위 확대</h3>
+              </div>
+              <p class="summary-message">
+                다양한 엔진에서<br />
+                <span>성능 다시 확인</span>
+              </p>
+              <ul class="summary-details">
+                <li>엔진 분할을 바꿔 반복 검증</li>
+                <li>고장 모드별 성능 확인</li>
+                <li>오류 사례·입력 특성 재점검</li>
+              </ul>
+            </div>
+            <div class="summary-column r" style="--d: 590">
+              <div class="summary-label">
+                <span class="summary-number">03</span>
+                <h3>운영 연동 준비</h3>
+              </div>
+              <p class="summary-message">
+                비행 후 예측을<br />
+                <span>운영 흐름에 연동</span>
+              </p>
+              <ul class="summary-details">
+                <li>센서 기록 자동 수집</li>
+                <li>비행 후 예측 갱신</li>
+                <li>정비 준비 시간 부족 시 긴급 표시</li>
+              </ul>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
