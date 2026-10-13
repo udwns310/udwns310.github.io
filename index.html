@@ -1221,6 +1221,162 @@
         color: var(--muted);
         margin-top: 10px;
       }
+      /* Error case slides */
+      .case-layout {
+        grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
+        gap: 26px;
+        margin-top: 16px;
+        align-items: stretch;
+        height: 790px;
+        grid-template-rows: minmax(0, 1fr);
+      }
+      .case-insights {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+        grid-column: 2;
+        grid-row: 1;
+      }
+      .case-insight {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        min-height: 0;
+        padding: 18px 22px;
+        border: 0;
+        border-radius: 0 15px 15px 0;
+        box-shadow: none;
+      }
+      .case-insight.metric-card {
+        flex: 0.95;
+        padding: 18px 22px;
+        border-left: 7px solid var(--blue);
+        background: #e9f2f8;
+      }
+      .case-insight.cause-card {
+        flex: 1.1;
+        padding: 18px 22px;
+        border-left: 7px solid var(--orange);
+        background: #f6f2e8;
+      }
+      .case-insight.action-card {
+        flex: 0.95;
+        padding: 19px 24px;
+        border: 1.5px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 4px 0 #d7d7d6, 0 14px 28px rgba(0, 0, 0, 0.12);
+      }
+      .case-insight.metric-card .case-insight-label {
+        color: var(--blue);
+      }
+      .case-insight.cause-card .case-insight-label {
+        color: var(--orange);
+      }
+      .case-insight.action-card .case-insight-label {
+        color: var(--ink2);
+      }
+      .case-insight strong.hl {
+        color: var(--orange);
+      }
+      .case-insight strong.hb {
+        color: var(--blue);
+      }
+      .case-insight-label {
+        color: var(--case-accent, var(--blue));
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+      .case-insight p {
+        color: var(--ink2);
+        font-size: 21px;
+        line-height: 1.4;
+      }
+      .case-headline {
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.28;
+        font-weight: 800;
+      }
+      .case-chart {
+        width: 100%;
+        height: fit-content;
+        align-self: center;
+        grid-column: 1;
+        grid-row: 1;
+        padding: 12px 14px 10px;
+        border: 2px solid var(--line);
+        border-top: 7px solid var(--case-accent, var(--blue));
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      }
+      .case-chart img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+      .case-plot {
+        position: relative;
+        width: 100%;
+      }
+      .case-plot svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .case-plot .mark-ring {
+        fill: rgba(255, 255, 255, 0.08);
+        stroke: var(--case-accent, var(--blue));
+        stroke-width: 5;
+        stroke-dasharray: 11 7;
+        vector-effect: non-scaling-stroke;
+      }
+      .case-plot .mark-dot {
+        fill: var(--case-accent, var(--blue));
+        stroke: #fff;
+        stroke-width: 3;
+        vector-effect: non-scaling-stroke;
+      }
+      .case-plot .mark-no {
+        fill: #fff;
+        font-family: inherit;
+        font-size: 19px;
+        font-weight: 800;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+      .case-chart .cap {
+        margin-top: 4px;
+        text-align: center;
+        font-size: 16px;
+      }
+      .case-chart-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 2px 7px;
+        color: var(--blue);
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+      }
+      .case-chart-head span:last-child {
+        color: var(--muted);
+        font-size: 14px;
+        letter-spacing: 0;
+      }
+      .case-insight strong {
+        color: var(--ink);
+      }
       table {
         border-collapse: collapse;
         width: 100%;
@@ -3519,57 +3675,50 @@
           data-t="55"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">
-            오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em>
+          <h2 class="r" style="--d: 0; font-size: 50px; margin-top: 18px">
+            오탐 사례 — 엔진 #179 <em>· 안전 구간 경보</em>
           </h2>
-          <div
-            class="grid"
-            style="
-              grid-template-columns: 1.3fr 1fr;
-              gap: 44px;
-              margin-top: 26px;
-            "
-          >
-            <div class="r" style="--d: 250">
-              <img
-                class="fig"
-                style="width: 100%"
-                src="assets/cls_error_case_false_alarm.png"
-                alt="오탐 사례 시계열"
-              />
-              <div class="cap">
-                validation 엔진 #179 (수명 435사이클): 센서 추이와 모델의 위험
-                확률
+          <div class="grid case-layout" style="--case-accent: var(--orange); --case-tint: #f8f2e7">
+            <div class="case-insights">
+              <div class="case-insight metric-card r" style="--d: 150">
+                <div class="case-insight-label">현상 ①</div>
+                <div class="case-headline">안전 구간에서 오경보</div>
+                <p>실제 잔여 수명 194~245사이클 구간이었습니다. 경보는 45사이클 이어졌습니다.</p>
+              </div>
+              <div class="case-insight cause-card r" style="--d: 300">
+                <div class="case-insight-label">원인 ②</div>
+                <p>센서 온도가 위험 수준을 보여 모델 경보는 합리적이었습니다. 이후 센서값이 급격히 정상화된 이유는 중간 정비로 추정되지만 <strong>가설</strong>입니다.</p>
+              </div>
+              <div class="case-insight action-card r" style="--d: 450">
+                <div class="case-insight-label">현장 시사점</div>
+                <div class="case-headline">정비 이력 연계</div>
+                <p>센서 변화의 원인을 구분하려면 <strong class="hl">정비 이력</strong>이 필요합니다. 학습 데이터에서도 동일 패턴이 <strong class="hb">3대</strong> 확인됐습니다.</p>
               </div>
             </div>
-            <div>
-              <ul class="b">
-                <li class="r" style="--d: 500">
-                  실제 남은 수명 194~245(안전)에서 <b>45사이클</b> 경보
-                </li>
-                <li class="r" style="--d: 700">
-                  운행 241번째 전후로
-                  <b>모든 센서가 한꺼번에 정상 수준으로 되돌아감</b> — 중간
-                  정비로 "보이는" 모양 (가설)
-                </li>
-                <li class="r" style="--d: 900">
-                  되돌아가기 전까지는 온도가 실제로 위험 엔진 수준 → 모델
-                  입장에서는 <b>합리적인 경보</b>
-                </li>
-                <li class="r" style="--d: 1100">
-                  같은 모양의 엔진이 train에 3대 (#71·#179·#185)
-                </li>
-              </ul>
-              <div class="note r" style="--d: 1300; margin-top: 20px">
-                시사점: 현장에서는 <b>정비 이력 데이터</b>가 있어야 구분할 수
-                있습니다.
+            <div class="case-chart r" style="--d: 450">
+              <div class="case-chart-head"><span>센서 신호 · 모델 위험 확률</span><span>① 현상　② 센서 변화</span></div>
+              <div class="case-plot">
+                <img
+                  src="assets/cls_error_case_false_alarm.png"
+                  alt="엔진 #179 센서 추이와 모델 위험 확률. 안전 구간에서 발생한 오탐"
+                />
+                <svg viewBox="0 0 990 610" role="img" aria-label="원 1은 안전 구간 오경보, 원 2는 센서 신호가 급격히 정상화된 지점">
+                  <ellipse class="mark-ring" cx="520" cy="155" rx="48" ry="86" />
+                  <circle class="mark-dot" cx="478" cy="82" r="17" /><text class="mark-no" x="478" y="82">1</text>
+                  <ellipse class="mark-ring" cx="520" cy="455" rx="48" ry="95" />
+                  <circle class="mark-dot" cx="478" cy="365" r="17" /><text class="mark-no" x="478" y="365">1</text>
+                  <ellipse class="mark-ring" cx="574" cy="158" rx="23" ry="54" />
+                  <circle class="mark-dot" cx="606" cy="105" r="17" /><text class="mark-no" x="606" y="105">2</text>
+                  <ellipse class="mark-ring" cx="574" cy="458" rx="22" ry="68" />
+                  <circle class="mark-dot" cx="607" cy="365" r="17" /><text class="mark-no" x="607" y="365">2</text>
+                </svg>
               </div>
+              <div class="cap">VALIDATION · 엔진 #179 · 전체 수명 435사이클 · 같은 패턴이 학습 데이터 3대(#71 · #179 · #185)에서 확인됨</div>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
         </section>
-
         <!-- 14 미탐 -->
         <section
           class="slide"
@@ -3578,53 +3727,46 @@
           data-t="50"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">
-            미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em>
+          <h2 class="r" style="--d: 0; font-size: 50px; margin-top: 18px">
+            미탐 사례 — 엔진 #245 <em>· 위험 구간 경보 지연</em>
           </h2>
-          <div
-            class="grid"
-            style="
-              grid-template-columns: 1.3fr 1fr;
-              gap: 44px;
-              margin-top: 26px;
-            "
-          >
-            <div class="r" style="--d: 250">
-              <img
-                class="fig"
-                style="width: 100%"
-                src="assets/cls_error_case_missed.png"
-                alt="미탐 사례 시계열"
-              />
-              <div class="cap">
-                validation 엔진 #245 (수명 205사이클): 센서 추이와 모델의 위험
-                확률
+          <div class="grid case-layout" style="--case-accent: var(--red); --case-tint: #f9eeee">
+            <div class="case-insights">
+              <div class="case-insight metric-card r" style="--d: 150">
+                <div class="case-insight-label">현상 ①</div>
+                <div class="case-headline">위험 구간에서 경보 지연</div>
+                <p>위험 진입 후 19사이클 동안 경보가 거의 없었고, 고장 약 20사이클 전에 경보가 나타났습니다.</p>
+              </div>
+              <div class="case-insight cause-card r" style="--d: 300">
+                <div class="case-insight-label">원인 ②</div>
+                <p>위험 진입 때 s3 온도가 평균 <strong>1,422°R보다 낮아</strong> 절대 온도만으로 이상을 포착하기 어려웠습니다.</p>
+              </div>
+              <div class="case-insight action-card r" style="--d: 450">
+                <div class="case-insight-label">정비 관점</div>
+                <div class="case-headline">엔진별 기준선 활용</div>
+                <p><strong class="hl">초기 상태 대비 변화량</strong>을 반영하고, 정비 준비 기간인 <strong class="hb">7~32사이클</strong>을 고려해 경보를 앞당깁니다.</p>
               </div>
             </div>
-            <div>
-              <ul class="b">
-                <li class="r" style="--d: 500">
-                  남은 수명 40~21(위험)인 <b>19사이클</b> 동안 경보 거의 없음
-                </li>
-                <li class="r" style="--d: 700">
-                  위험 구간 진입 때 s3 온도가 다른 엔진 평균(1,422°R)보다
-                  <b>낮았음</b> → "낮은 온도에서 고장 나는 개체"
-                </li>
-                <li class="r" style="--d: 900">
-                  고장 약 20사이클 전에는 경보가 울려 완전 누락은 아니지만, 정비
-                  준비(7~32사이클)에는 <b>늦을 수 있음</b>
-                </li>
-              </ul>
-              <div class="note r" style="--d: 1150; margin-top: 20px">
-                개선 방향: 센서의 절대값 대신
-                <b>엔진별 초기 상태 대비 변화량</b>을 특성으로.
+            <div class="case-chart r" style="--d: 450">
+              <div class="case-chart-head"><span>센서 신호 · 모델 위험 확률</span><span>① 경보 지연　② 낮은 온도</span></div>
+              <div class="case-plot">
+                <img
+                  src="assets/cls_error_case_missed.png"
+                  alt="엔진 #245 센서 추이와 모델 위험 확률. 위험 구간에서 경보가 늦게 발생한 미탐"
+                />
+                <svg viewBox="0 0 990 610" role="img" aria-label="원 1은 위험 구간에서 낮은 경보 확률, 원 2는 평균보다 낮은 센서 온도 구간">
+                  <ellipse class="mark-ring" cx="825" cy="462" rx="43" ry="92" />
+                  <circle class="mark-dot" cx="777" cy="365" r="17" /><text class="mark-no" x="777" y="365">1</text>
+                  <ellipse class="mark-ring" cx="808" cy="158" rx="42" ry="60" />
+                  <circle class="mark-dot" cx="764" cy="88" r="17" /><text class="mark-no" x="764" y="88">2</text>
+                </svg>
               </div>
+              <div class="cap">VALIDATION · 엔진 #245 · 전체 수명 205사이클 · 정비 준비 기간은 7~32사이클</div>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
         </section>
-
         <!-- 15 현장 활용 -->
         <section
           class="slide"

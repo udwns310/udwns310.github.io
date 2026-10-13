@@ -6,50 +6,43 @@
           data-t="50"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">
-            미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em>
+          <h2 class="r" style="--d: 0; font-size: 50px; margin-top: 18px">
+            미탐 사례 — 엔진 #245 <em>· 위험 구간 경보 지연</em>
           </h2>
-          <div
-            class="grid"
-            style="
-              grid-template-columns: 1.3fr 1fr;
-              gap: 44px;
-              margin-top: 26px;
-            "
-          >
-            <div class="r" style="--d: 250">
-              <img
-                class="fig"
-                style="width: 100%"
-                src="assets/cls_error_case_missed.png"
-                alt="미탐 사례 시계열"
-              />
-              <div class="cap">
-                validation 엔진 #245 (수명 205사이클): 센서 추이와 모델의 위험
-                확률
+          <div class="grid case-layout" style="--case-accent: var(--red); --case-tint: #f9eeee">
+            <div class="case-insights">
+              <div class="case-insight metric-card r" style="--d: 150">
+                <div class="case-insight-label">현상 ①</div>
+                <div class="case-headline">위험 구간에서 경보 지연</div>
+                <p>위험 진입 후 19사이클 동안 경보가 거의 없었고, 고장 약 20사이클 전에 경보가 나타났습니다.</p>
+              </div>
+              <div class="case-insight cause-card r" style="--d: 300">
+                <div class="case-insight-label">원인 ②</div>
+                <p>위험 진입 때 s3 온도가 평균 <strong>1,422°R보다 낮아</strong> 절대 온도만으로 이상을 포착하기 어려웠습니다.</p>
+              </div>
+              <div class="case-insight action-card r" style="--d: 450">
+                <div class="case-insight-label">정비 관점</div>
+                <div class="case-headline">엔진별 기준선 활용</div>
+                <p><strong class="hl">초기 상태 대비 변화량</strong>을 반영하고, 정비 준비 기간인 <strong class="hb">7~32사이클</strong>을 고려해 경보를 앞당깁니다.</p>
               </div>
             </div>
-            <div>
-              <ul class="b">
-                <li class="r" style="--d: 500">
-                  남은 수명 40~21(위험)인 <b>19사이클</b> 동안 경보 거의 없음
-                </li>
-                <li class="r" style="--d: 700">
-                  위험 구간 진입 때 s3 온도가 다른 엔진 평균(1,422°R)보다
-                  <b>낮았음</b> → "낮은 온도에서 고장 나는 개체"
-                </li>
-                <li class="r" style="--d: 900">
-                  고장 약 20사이클 전에는 경보가 울려 완전 누락은 아니지만, 정비
-                  준비(7~32사이클)에는 <b>늦을 수 있음</b>
-                </li>
-              </ul>
-              <div class="note r" style="--d: 1150; margin-top: 20px">
-                개선 방향: 센서의 절대값 대신
-                <b>엔진별 초기 상태 대비 변화량</b>을 특성으로.
+            <div class="case-chart r" style="--d: 450">
+              <div class="case-chart-head"><span>센서 신호 · 모델 위험 확률</span><span>① 경보 지연　② 낮은 온도</span></div>
+              <div class="case-plot">
+                <img
+                  src="assets/cls_error_case_missed.png"
+                  alt="엔진 #245 센서 추이와 모델 위험 확률. 위험 구간에서 경보가 늦게 발생한 미탐"
+                />
+                <svg viewBox="0 0 990 610" role="img" aria-label="원 1은 위험 구간에서 낮은 경보 확률, 원 2는 평균보다 낮은 센서 온도 구간">
+                  <ellipse class="mark-ring" cx="825" cy="462" rx="43" ry="92" />
+                  <circle class="mark-dot" cx="777" cy="365" r="17" /><text class="mark-no" x="777" y="365">1</text>
+                  <ellipse class="mark-ring" cx="808" cy="158" rx="42" ry="60" />
+                  <circle class="mark-dot" cx="764" cy="88" r="17" /><text class="mark-no" x="764" y="88">2</text>
+                </svg>
               </div>
+              <div class="cap">VALIDATION · 엔진 #245 · 전체 수명 205사이클 · 정비 준비 기간은 7~32사이클</div>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
         </section>
-

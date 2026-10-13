@@ -1212,6 +1212,162 @@
         color: var(--muted);
         margin-top: 10px;
       }
+      /* Error case slides */
+      .case-layout {
+        grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
+        gap: 26px;
+        margin-top: 16px;
+        align-items: stretch;
+        height: 790px;
+        grid-template-rows: minmax(0, 1fr);
+      }
+      .case-insights {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+        grid-column: 2;
+        grid-row: 1;
+      }
+      .case-insight {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        min-height: 0;
+        padding: 18px 22px;
+        border: 0;
+        border-radius: 0 15px 15px 0;
+        box-shadow: none;
+      }
+      .case-insight.metric-card {
+        flex: 0.95;
+        padding: 18px 22px;
+        border-left: 7px solid var(--blue);
+        background: #e9f2f8;
+      }
+      .case-insight.cause-card {
+        flex: 1.1;
+        padding: 18px 22px;
+        border-left: 7px solid var(--orange);
+        background: #f6f2e8;
+      }
+      .case-insight.action-card {
+        flex: 0.95;
+        padding: 19px 24px;
+        border: 1.5px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 4px 0 #d7d7d6, 0 14px 28px rgba(0, 0, 0, 0.12);
+      }
+      .case-insight.metric-card .case-insight-label {
+        color: var(--blue);
+      }
+      .case-insight.cause-card .case-insight-label {
+        color: var(--orange);
+      }
+      .case-insight.action-card .case-insight-label {
+        color: var(--ink2);
+      }
+      .case-insight strong.hl {
+        color: var(--orange);
+      }
+      .case-insight strong.hb {
+        color: var(--blue);
+      }
+      .case-insight-label {
+        color: var(--case-accent, var(--blue));
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+      .case-insight p {
+        color: var(--ink2);
+        font-size: 21px;
+        line-height: 1.4;
+      }
+      .case-headline {
+        color: var(--ink);
+        font-size: 29px;
+        line-height: 1.28;
+        font-weight: 800;
+      }
+      .case-chart {
+        width: 100%;
+        height: fit-content;
+        align-self: center;
+        grid-column: 1;
+        grid-row: 1;
+        padding: 12px 14px 10px;
+        border: 2px solid var(--line);
+        border-top: 7px solid var(--case-accent, var(--blue));
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      }
+      .case-chart img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+      .case-plot {
+        position: relative;
+        width: 100%;
+      }
+      .case-plot svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .case-plot .mark-ring {
+        fill: rgba(255, 255, 255, 0.08);
+        stroke: var(--case-accent, var(--blue));
+        stroke-width: 5;
+        stroke-dasharray: 11 7;
+        vector-effect: non-scaling-stroke;
+      }
+      .case-plot .mark-dot {
+        fill: var(--case-accent, var(--blue));
+        stroke: #fff;
+        stroke-width: 3;
+        vector-effect: non-scaling-stroke;
+      }
+      .case-plot .mark-no {
+        fill: #fff;
+        font-family: inherit;
+        font-size: 19px;
+        font-weight: 800;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+      .case-chart .cap {
+        margin-top: 4px;
+        text-align: center;
+        font-size: 16px;
+      }
+      .case-chart-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 2px 7px;
+        color: var(--blue);
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+      }
+      .case-chart-head span:last-child {
+        color: var(--muted);
+        font-size: 14px;
+        letter-spacing: 0;
+      }
+      .case-insight strong {
+        color: var(--ink);
+      }
       table {
         border-collapse: collapse;
         width: 100%;
