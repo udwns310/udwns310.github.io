@@ -2215,6 +2215,44 @@
           <div class="pg"></div>
         </section>
 
+        <!-- 페르소나 -->
+        <section
+          class="slide"
+          data-title="페르소나 (가상)"
+          data-sec="① 문제 정의"
+          data-t="45"
+        >
+          <div class="chap">① 문제 정의</div>
+          <h2 class="r" style="--d: 0">
+            <em>페르소나</em>: 정비 기획 담당자와 안전 관리자
+          </h2>
+          <div
+            class="grid"
+            style="grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 36px"
+          >
+            <div class="card r" style="--d: 250; border-top: 10px solid var(--blue)">
+              <h3 style="font-size: 30px">정비 기획 담당자</h3>
+              <p class="sm" style="font-size: 22px; margin-top: 2px">
+                <span class="pill">비용 최우선</span>
+                <span style="font-size: 24px; color: var(--muted); margin-left: 8px">A항공 (가상)</span>
+              </p>
+              <p class="sm" style="font-size: 24px; margin-top: 6px"><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">목표</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">총 정비 비용 최소</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">제약</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">주간 계획 · 정비 준비 7일 이상</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">안전 하한</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">정비 전 고장 엔진 1% 이하 (가정)</span></div></p>
+            </div>
+            <div class="card r" style="--d: 450; border-top: 10px solid #4b5151">
+              <h3 style="font-size: 30px">안전 관리자</h3>
+              <p class="sm" style="font-size: 22px; margin-top: 2px">
+                <span class="pill">안전 최우선</span>
+                <span style="font-size: 24px; color: var(--muted); margin-left: 8px">A항공 (가상)</span>
+              </p>
+              <p class="sm" style="font-size: 24px; margin-top: 6px"><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">목표</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">위험 엔진을 놓치지 않기</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">제약</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">조기 정비로 늘어나는 비용은 감수</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">안전 하한</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">test 놓침 0대 (가정)</span></div></p>
+            </div>
+          </div>
+          <p class="xs r" style="--d: 800; margin-top: 18px">
+            ※ 팀이 만든 가상 페르소나이며 실제 인물·항공사가 아님 · 비용 1:5, 정비 준비 7일은 논문 가정값(de Pater 외 2022), 안전 하한은 시나리오상 가정
+          </p>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
         <!-- 데이터 구성 -->
         <section
           class="slide"
@@ -3564,73 +3602,6 @@
           <div class="pg"></div>
         </section>
 
-        <!-- 12 신뢰도 -->
-        <section
-          class="slide"
-          data-title="우선순위로 고른 최종 모델 GRU"
-          data-sec="⑤ 평가 · 오류 분석"
-          data-t="55"
-        >
-          <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">
-            우선순위로 고른 최종 모델 <em>GRU</em>
-          </h2>
-          <p class="lead r" style="--d: 120; font-size: 30px; margin-top: 4px">
-            우선순위 <b>① 놓침 → ② 헛경보 → ③ 오차</b> — 고장(긴급 정비)이 계획
-            정비의 2~5배 비싸서
-          </p>
-          <div
-            class="grid"
-            style="grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px"
-          >
-            <div class="card r" style="--d: 250">
-              <h3>① 놓침: 공식 test 재현율과 95% 구간 (위험 엔진 69대)</h3>
-              <svg id="ciChart" viewBox="0 0 1000 380" width="100%"></svg>
-              <div class="axis">
-                점 = 측정값 · 선 = 95% 신뢰구간 (겹치면 우열을 가리기 어려움)
-              </div>
-              <p class="xs" style="margin-top: 8px">
-                기준 모델 vs 머신러닝은 구간이 겹치지 않아 <b>확실한 차이</b><br />
-                GRU 회귀→분류 = GRU로 남은 수명을 예측한 뒤, 예측이 40 이하면 위험으로 판정
-              </p>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 12px">
-              <div class="card r" style="--d: 500; padding: 12px 20px">
-                <div style="display:flex;align-items:center;gap:12px;font-size:27px;font-weight:800">
-                  <span style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:23px">1</span>
-                  <span>놓침 (재현율)</span><span style="display:inline-block;background:var(--gray);color:#fff;font-size:22px;font-weight:800;padding:1px 12px;border-radius:999px;margin-left:10px;vertical-align:2px">동급</span>
-                </div>
-                <div style="font-size:23px;line-height:1.45;margin-top:6px;color:var(--ink2)">test: GRU 0.88 vs RF 0.94 — 구간 겹침(우열 불가)<br />validation 재현율은 동급 (GRU 0.885 · RF 0.887)</div>
-              </div>
-              <div class="card r" style="--d: 700; padding: 12px 20px">
-                <div style="display:flex;align-items:center;gap:12px;font-size:27px;font-weight:800">
-                  <span style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:23px">2</span>
-                  <span>헛경보</span><span style="display:inline-block;background:var(--blue);color:#fff;font-size:22px;font-weight:800;padding:1px 12px;border-radius:999px;margin-left:10px;vertical-align:2px">GRU 우세</span>
-                </div>
-                <div style="font-size:23px;line-height:1.45;margin-top:6px;color:var(--ink2)">안전 구간 헛경보를 낸 엔진 49대 중 <b>GRU 10대 · RF 25대</b><br />test 헛경보 GRU 1대 · RF 8대</div>
-              </div>
-              <div class="card r" style="--d: 900; padding: 12px 20px">
-                <div style="display:flex;align-items:center;gap:12px;font-size:27px;font-weight:800">
-                  <span style="width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:23px">3</span>
-                  <span>오차 (MAE)</span><span style="display:inline-block;background:var(--blue);color:#fff;font-size:22px;font-weight:800;padding:1px 12px;border-radius:999px;margin-left:10px;vertical-align:2px">GRU 우세</span>
-                </div>
-                <div style="font-size:23px;line-height:1.45;margin-top:6px;color:var(--ink2)">test 17.3 (RF 21.8 · LSTM 18.7)<br />학습 시드 3개 반복: <b style="color:var(--blue)">17.0 ± 0.7</b> vs LSTM 19.4 ± 1.4</div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="r"
-            style="--d: 1200; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 30px; font-weight: 700; text-align: center"
-          >
-            → GRU 선택: ① 놓침은 RF와 동급, ② 헛경보와 ③ 오차에서 앞섬
-          </div>
-          <p class="xs r" style="--d: 1300; margin-top: 8px">
-            validation 49대 · 엔진 분할 1회(분할 시드 42) · 경보 지표는 이 분할 한 번의 결과 — 한계 슬라이드에서 다시 다룸
-          </p>
-          <div class="foot">Sentinel · 5조 감시자들</div>
-          <div class="pg"></div>
-        </section>
-
         <!-- 교차 검증 -->
         <section
           class="slide"
@@ -3826,6 +3797,66 @@
           <div class="pg"></div>
         </section>
 
+        <!-- 경보 기준 5안 -->
+        <section
+          class="slide"
+          data-title="터보팬 엔진 고장 예측 분석 결과"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="80"
+        >
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0">
+            터보팬 엔진 고장 예측 <em>분석 결과</em>
+          </h2>
+          <p class="lead r" style="--d: 120; font-size: 26px; margin-top: 4px">
+            1. 목적: 경보 기준 5가지 안 비교 — 기준을 올릴수록 놓침은 줄고 헛경보·비용은 늘어남, 운영 우선순위에 맞는 안을 선택<br />
+            2. 지표: 놓침·헛경보 = 공식 test (위험 69대·안전 179대) · 정비 전 고장·비용·낭비 = validation 49대 정비 시뮬레이션 (비용 1:5)
+          </p>
+          <style>
+            .t5 td { padding-top: 15px; padding-bottom: 15px; font-size: 31px; }
+            .t5 th { font-size: 24px; padding-bottom: 12px; }
+            .t5 td:last-child { font-size: 26px !important; }
+          </style>
+          <table class="r t5" style="--d: 300; margin-top: 8px; font-size: 29px; width: 100%">
+            <tr>
+              <th>안</th><th>방식 · 경보 기준</th>
+              <th class="n">놓침<br />(대)</th><th class="n">헛경보<br />(대)</th>
+              <th class="n">정비 전<br />고장</th><th class="n">정비<br />비용</th><th class="n">평균<br />낭비*</th>
+              <th>장점 ＋ / 단점 －</th>
+            </tr>
+            <tr class="sel">
+                <td><b style="color:var(--blue)">A</b></td>
+                <td><b>GRU ≤ 40</b><br /><span style="font-size:23px;color:var(--muted)">비용 최우선</span></td>
+                <td class="n">8</td><td class="n">1</td><td class="n">0.19%</td><td class="n">4.47</td><td class="n">26</td>
+                <td style="font-size:25px;line-height:1.4"><span style="color:var(--green);font-weight:800">＋</span> 비용 최저·헛경보 최소<br /><span style="color:var(--red);font-weight:800">－</span> 놓침 8대</td>
+              </tr><tr>
+                <td><b style="color:var(--blue)">B</b></td>
+                <td><b>GRU ≤ 42</b><br /><span style="font-size:23px;color:var(--muted)">절충</span></td>
+                <td class="n">3</td><td class="n">3</td><td class="n">0.09%</td><td class="n">4.50 (+0.7%)</td><td class="n">28</td>
+                <td style="font-size:25px;line-height:1.4"><span style="color:var(--green);font-weight:800">＋</span> 놓침 8 → 3, 비용 거의 그대로<br /><span style="color:var(--red);font-weight:800">－</span> 최적이라 단정 어려움</td>
+              </tr><tr style="background: rgba(46, 158, 99, 0.16)">
+                <td><b style="color:var(--blue)">C</b></td>
+                <td><b>GRU ≤ 46</b><br /><span style="font-size:23px;color:var(--muted)">안전 최우선 (놓침 0 최소값)</span></td>
+                <td class="n">0</td><td class="n">5</td><td class="n">0.00%</td><td class="n">4.57 (+2.2%)</td><td class="n">33</td>
+                <td style="font-size:25px;line-height:1.4"><span style="color:var(--green);font-weight:800">＋</span> 놓침 0, 정비 전 고장 없음<br /><span style="color:var(--red);font-weight:800">－</span> 헛경보 5대, 비용 증가</td>
+              </tr><tr>
+                <td><b style="color:var(--rf)">D</b></td>
+                <td><b>RF 분류 ≥ 0.36</b><br /><span style="font-size:23px;color:var(--muted)">RF 현재 설정</span></td>
+                <td class="n">4</td><td class="n">8</td><td class="n">1.3%</td><td class="n">4.82 (+7.8%)</td><td class="n">33</td>
+                <td style="font-size:25px;line-height:1.4"><span style="color:var(--green);font-weight:800">＋</span> 놓침 4대<br /><span style="color:var(--red);font-weight:800">－</span> 헛경보 8대, 비용 높음</td>
+              </tr><tr>
+                <td><b style="color:var(--rf)">E</b></td>
+                <td><b>RF 분류 ≥ 0.10</b><br /><span style="font-size:23px;color:var(--muted)">RF 놓침 0 (최대 기준)</span></td>
+                <td class="n">0</td><td class="n">22</td><td class="n">0.00%</td><td class="n">6.14 (+37%)</td><td class="n">89</td>
+                <td style="font-size:25px;line-height:1.4"><span style="color:var(--green);font-weight:800">＋</span> 놓침 0<br /><span style="color:var(--red);font-weight:800">－</span> 헛경보 22대, 비용·낭비 큼</td>
+              </tr>
+          </table>
+          <p class="xs r" style="--d: 600; margin-top: 6px">
+            * 낭비 = 정비 시점에 아직 남아 있던 평균 수명(사이클) · 비용 = 운행 1,000사이클당, 계획 정비 1회 = 1 · C·E는 test 놓침 0이 되는 가장 느슨한 기준
+          </p>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
         <!-- 15 현장 활용 -->
         <section
           class="slide"
@@ -4051,6 +4082,7 @@
         "조원별 역할. 이름과 담당만 짧게 소개하고 넘어간다. 코드 작성은 전원이 함께 했다는 점을 한 번 언급.",
         "목차. 여섯 단계로 진행한다고 한 문장으로 안내. 1분 이내.",
         "① 문제 정의. 한 문장: 어떤 설비의 무엇을, 왜, 어느 수준까지 맞히면 성공인가. 설비=터보팬 엔진, 예측 대상=남은 비행 횟수(RUL). 이상 정의=남은 수명 40 이하. 중요한 이유=긴급 정비는 계획 정비보다 2~5배 비쌈(문헌 비율 1:2, 1:5). 필수=이진 분류, 선택=RUL 회귀. 성공 기준=혼동행렬과 정밀도·재현율·F1, 놓치지 않기(재현율) 우선.",
+        "① 페르소나(가상). 같은 경보라도 쓰는 사람의 우선순위가 다르면 알맞은 경보 기준이 달라진다. 정비 기획 담당자: 목표 총 정비 비용 최소, 제약 주간 계획과 정비 준비 7일 이상, 안전 하한 정비 전 고장 엔진 1% 이하(가정) (이후 경보 기준 5가지 안 비교에서 비용 최우선 안과 연결). 안전 관리자: 목표 위험 엔진을 놓치지 않기, 제약 조기 정비로 늘어나는 비용은 감수, 안전 하한 test 놓침 0대(가정) (안전 최우선 안과 연결). 주의: 가상 페르소나이며, 안전 하한 값은 결과를 본 뒤 정한 가정이므로 질문받으면 솔직히 밝힐 것. 실제 운영에서는 고객이 정함.",
         "② 데이터의 구성. 한 행 = 엔진 한 대의 한 번의 운행(사이클). 26열: 엔진 번호·사이클 2, 운전 설정 3(고도·마하수·스로틀), 센서 21(온도·압력·회전속도·비율). 파란 행은 운전조건이 사이클마다 바뀐다는 것을 보여줌(FD004는 6가지 조합). 센서 21개 중 15개 사용: 같은 운전조건에서 표준편차가 0.01 미만인 사실상 상수 센서 6개(s1·s5·s10·s16·s18·s19)는 제외. train 61,249행(엔진 249대), test 41,214행(엔진 248대). FD004를 쓰는 이유: 4개 서브셋 중 운전조건 6가지·고장 모드 2가지로 가장 복잡. 시뮬레이션 데이터.",
         "② 전처리 4단계. ① 점검: FD004 train·test 모두 결측값 0, 중복 행 0, 엔진별 사이클이 1씩 이어짐 → 채우거나 지울 것이 없음. ② 정답 라벨 만들기: 데이터에 남은 수명(RUL) 열이 없어 '엔진의 마지막 사이클 − 현재 사이클'로 계산하고, 가장 짧은 수명(128)보다 작은 125에서 자름. ③ 운전조건 6가지별로 따로 표준화(Z-score)(조건 변화가 열화로 보이지 않게). ④ 엔진 단위 200/49 분할, 표준화 기준(평균·표준편차)은 학습 엔진만으로 계산(누수 방지), 공식 test는 마지막에 한 번. 센서 15개를 고른 이유는 앞 슬라이드(데이터 이해)에서 설명.",
         "③ 시계열(그림). 앞 슬라이드 내용을 그림으로 확인: 엔진 #1·#25·#60의 추세성 상위 센서 4개(운전조건 보정값). 회색 박스=초반에는 3대 값이 겹침, 파란 박스=엔진마다 다른 시점에 상승. 직선 상관 0.51~0.57 → 직선 추세만으로는 한계.",
@@ -4060,10 +4092,10 @@
         "④ 선택 과제(남은 수명 예측) 진행 과정. ① 정답 라벨: 총 사이클 − 현재 사이클 = 고장까지 남은 사이클 수(예: 총 200, 지금 150번째면 50), 125에서 자름(가장 짧은 엔진 수명 128을 고려). ② 모델 3개: 기준 모델(평균 수명 − 현재 사이클, 센서 미사용), RandomForest 회귀(특성 60개), GRU 회귀(센서 15개의 지금까지 기록을 순서대로 입력). ③ 후보 8종(Ridge·RandomForest·ExtraTrees·HistGB·MLP·1D-CNN·LSTM·GRU)을 같은 분할·같은 지표로 비교해 최종 모델 선정. ④ 평가: MAE(평균 오차), RMSE(큰 오차에 민감), NASA 점수(늦게 예측하면 벌점). 모든 모델 공통: 같은 분할·지표·시드 42. GRU 설명: 센서 기록을 사이클 순서대로 읽으면서 앞의 정보를 기억해 두는 순환 신경망(RNN)의 한 종류. 기억 게이트가 무엇을 남기고 무엇을 버릴지 학습하며 LSTM보다 구조가 단순하다.",
         "④ 회귀 결과. MAE 47.4 → 21.8 → 17.3(GRU). 오차 63.5% 감소. 후보 8종 그래프: MAE가 작을수록 미탐도 낮음(r=0.87), 오탐은 무관. validation 기준 그림임을 말하기. 하단 두 줄은 외부 논문의 FD004 표와 비교한 것(Akbari Pour 2025 Table 5, He 2024 Table II). 논문마다 전처리·구간 길이가 달라 참고용이라고 말하기. 2021년 이후 최신 모델은 RMSE 14~21로 우리보다 좋으니 '최고 성능'이라고 말하지 말 것. GRU 선택 근거는 내부 비교: LSTM 대비 학습 시드 3회 MAE 17.04±0.72 대 19.35±1.43.",
         "⑤ 위험 기준 40의 근거. 과제 예시값 30에서 바꾼 이유를 설명: 경보 → 주간 계획 회의(0~6일 뒤) → 정비 준비 최소 7일 → 정비 가능한 날까지 대기(10~20일 간격) = 경보 후 정비까지 평균 17사이클(7~32사이클 범위, 시뮬레이션 200회 평균, 1일=1사이클)(출처: de Pater 외 2022, 비용 1:2는 Lee & Mitici 2023). 논문 운영 조건으로 비용 시뮬레이션 → 최적 40. 30이면 정비 전 고장 14.3%, 비용 +48%. 비용 비율 1:5와 1:2 둘 다 40. 질문 대비: 시뮬레이션이며 실제 항공사 값이 아니라는 점, 강사님 확인 사항.",
-        "⑤ 최종 모델 GRU 선택(우선순위 기준). 우선순위: ① 놓침 → ② 헛경보 → ③ 오차. 이유: 고장(긴급 정비)이 계획 정비의 2~5배 비쌈(de Pater 1:5, Lee & Mitici 1:2). ① 놓침: test 재현율 GRU 0.88(0.79~0.94) vs RF 0.94(0.86~0.98), 구간이 겹쳐 test만으로 우열 불가(test 놓침 GRU 8대, RF 4대, MLP 5대). validation 재현율은 GRU 0.885 ≈ RF 0.887 동급. 기준 모델(0.55)과 머신러닝은 구간이 겹치지 않아 확실한 차이. ② 헛경보: 안전 구간에서 한 번이라도 경보받은 엔진 49대 중 GRU 10 vs RF 25, test 헛경보 GRU 1 vs RF 8, validation F1 차이 GRU−RF +0.05(95% 구간 0.03~0.07, 재표본 2000회 모두 GRU 우위). ③ 오차: test MAE GRU 17.3, LSTM 18.7, RF 21.8. 학습 시드 3개 반복 GRU 17.0±0.7 vs LSTM 19.4±1.4(GRU의 최악이 LSTM의 최선보다 낮음). 결론: ①은 RF와 동급, ②③에서 앞서 GRU 선택. 정직한 약점: test 놓침은 GRU가 RF·MLP보다 많음, 학습 약 12분, 설명 어려움. GRU 회귀→분류 = GRU로 예측한 남은 수명이 40 이하면 위험. 참고(질문 대비) 후보별 정비 비용(위험 기준 40, 비용 1:5, validation, 계획 정비 1회=1): GRU 4.47, LSTM 4.57(사실상 동률), MLP 5.15, HistGradientBoosting 5.17, RandomForest 5.54, ExtraTrees 5.54, 1D-CNN 5.74, Ridge 9.12, 기준 모델 13.42.",
         "⑤ 교차 검증. (FD001은 같은 시뮬레이션의 더 단순한 서브셋: 운전조건 1종, 고장 모드 1종.) FD004로 학습한 GRU를 FD001에 적용하면 오차 11.2로 잘 통함. 반대로 FD001로 학습해 FD004에 적용하면 55.8로 실패(센서를 안 쓰는 기준 모델 47.4보다 나쁨). 쉬운 데이터로 배운 모델은 복잡한 데이터에 못 쓴다는 뜻.",
         "⑤ 오탐 사례 #179. 안전 구간에서 45사이클 경보. 모든 센서가 한꺼번에 정상 수준으로 되돌아감 → 중간 정비로 보이는 모양(가설, 확정 아님). 정비 이력이 있어야 구분 가능. train에 같은 모양 3대.",
         "⑤ 미탐 사례 #245. 위험 구간 19사이클 경보 거의 없음. 위험 진입 때 s3가 평균보다 낮음. 완전 누락은 아니지만 정비 준비 기간에 늦을 수 있음. 개선: 엔진별 초기 대비 변화량.",
+        "⑤ 경보 기준 5가지 안 비교 보고. 안: A GRU 예측 ≤ 40(비용 최우선, test를 보기 전에 validation 비용 시뮬레이션으로 정한 값), B GRU ≤ 42(절충), C GRU ≤ 46(test 놓침이 0이 되는 가장 작은 GRU 기준), D RF 분류 확률 ≥ 0.36(RF 현재 설정, train 교차검증으로 정한 값), E RF 분류 확률 ≥ 0.10(test 놓침 0이 되는 가장 높은 RF 기준). 결과: test 놓침/헛경보 A 8/1, B 3/3, C 0/5, D 4/8, E 0/22. validation 정비 시뮬레이션(비용 1:5): 정비 전 고장 A 0.19%, B 0.09%, C 0%, D 1.3%, E 0%. 비용 A 4.47, B 4.50, C 4.57, D 4.82, E 6.14. 평균 낭비(정비 시점에 남은 수명) A 26, B 28, C 33, D 33, E 89사이클. 해석: 놓침 0이 목표여도 GRU는 헛경보 5대, RF는 22대. 같은 놓침 수(0)에서 GRU 5 vs RF 22, 놓침 4 근처에서 GRU 2~3 vs RF 8. 주의: B·C·E의 test 값은 test를 보고 고른 기준이라 최종 기준 확정에 쓰면 사후 선택이 되므로 민감도 확인으로만 쓸 것. 표본이 작아(위험 엔진 69대, validation 49대) 안 사이의 작은 차이는 우연일 수 있음. 비용은 가정 기반 시뮬레이션. 우리의 선택: 분석은 A(40), 놓침을 더 중시하는 운영이라면 B~C. 근거: scripts/15_alert_comparison.py 및 alert_comparison_*.csv.",
         "⑥ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 화면은 실제 대시보드 캡처(홈 = 플릿 9대, 설비 상세 = #198). 가능하면 2분 라이브 데모(홈 → 설비 상세 → 시나리오). 가동중단·비용 수치는 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
         "⑥ 한계. 시뮬레이션 데이터·가정 비용, 정비 이력 없음, 작은 표본, 서서히 진행되는 마모만 대상, 검증의 한계(시드 1회·튜닝 안 함·입력 정보 차이), 오류 사례 선택 방식. 한계를 먼저 말하는 편이 신뢰를 얻는다. GRU의 약점: 학습 약 12분, 게이트가 무엇을 기억하는지 읽기 어려움, test 놓침은 MLP 5대 < GRU 8대.",
         "⑥ 다음 단계와 요약. 정비 이력·실제 비용으로 기준 재산정, 긴급 등급, 초기 대비 변화량 특성, 자동 수집 연동. 세 줄 요약으로 마무리.",
@@ -4225,84 +4257,6 @@
         if (e.clientX < innerWidth * 0.28) go(-1);
         else go(1);
       });
-
-      /* ---- 신뢰구간 차트 ---- */
-      (function () {
-        const data = [
-          {
-            n: "기준 모델 (Z-score)",
-            v: 0.551,
-            lo: 0.434,
-            hi: 0.662,
-            c: "#8a8985",
-          },
-          {
-            n: "RandomForest 분류",
-            v: 0.942,
-            lo: 0.86,
-            hi: 0.977,
-            c: "#e08a2c",
-          },
-          { n: "GRU 회귀 → 분류", v: 0.884, lo: 0.788, hi: 0.94, c: "#05507d" },
-        ];
-        const svg = document.getElementById("ciChart"),
-          L = 290,
-          R = 960,
-          x = (v) => L + ((v - 0.3) / (1.0 - 0.3)) * (R - L);
-        let h = "";
-        for (let t = 0.3; t <= 1.0001; t += 0.1) {
-          h +=
-            '<line x1="' +
-            x(t) +
-            '" x2="' +
-            x(t) +
-            '" y1="20" y2="300" stroke="#e5e5e3" stroke-width="2"/><text x="' +
-            x(t) +
-            '" y="335" text-anchor="middle" font-size="22" fill="#8a8985">' +
-            t.toFixed(1) +
-            "</text>";
-        }
-        data.forEach((d, i) => {
-          const y = 70 + i * 95,
-            cd = 0.8 + i * 0.35 + "s";
-          h +=
-            '<text x="' +
-            (L - 22) +
-            '" y="' +
-            (y + 8) +
-            '" text-anchor="end" font-size="26" fill="#000000">' +
-            d.n +
-            "</text>" +
-            '<g class="ci" style="--cd:' +
-            cd +
-            '"><line class="rng" pathLength="1" x1="' +
-            x(d.lo) +
-            '" x2="' +
-            x(d.hi) +
-            '" y1="' +
-            y +
-            '" y2="' +
-            y +
-            '" stroke="' +
-            d.c +
-            '" stroke-width="10" stroke-linecap="round"/>' +
-            '<circle class="dot" cx="' +
-            x(d.v) +
-            '" cy="' +
-            y +
-            '" r="15" fill="' +
-            d.c +
-            '" stroke="#fff" stroke-width="3"/>' +
-            '<text class="dot" x="' +
-            x(d.v) +
-            '" y="' +
-            (y - 26) +
-            '" text-anchor="middle" font-size="24" font-weight="800" fill="#000000">' +
-            d.v.toFixed(2) +
-            "</text></g>";
-        });
-        svg.innerHTML = h;
-      })();
 
       const h = parseInt(location.hash.slice(1));
       show(isNaN(h) ? 0 : h - 1);

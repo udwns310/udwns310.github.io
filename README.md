@@ -20,7 +20,7 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 | 위치 | 내용 |
 |---|---|
 | `src/slides/NN-이름.html` | 슬라이드 한 장 (`<section>` 하나). **번호 순서 = 발표 순서** |
-| `src/slides/NN-이름.js` | (선택) 그 슬라이드 전용 스크립트. 지금은 14번(신뢰구간 차트)만 있음 |
+| `src/slides/NN-이름.js` | (선택) 그 슬라이드 전용 스크립트. 지금은 없음 |
 | `src/notes/NN-이름.txt` | 그 슬라이드의 발표자 노트. 한 줄, 큰따옴표는 `\"` 로 쓸 것 |
 | `src/css/base.css` | 공통 스타일 (색 변수, 카드, 막대, 파이프라인 등) |
 | `src/js/main.js`, `tail.js` | 공통 스크립트 (이동, 노트, 타이머, 애니메이션) |
@@ -29,12 +29,13 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 
 ## 현재 슬라이드
 
-| 번호 | 파일 | 내용 |
+| 파일 번호 | 파일 | 내용 (04b 이후 화면 쪽 번호는 한 장씩 뒤로 밀림) |
 |---|---|---|
 | 01 | cover | 표지 |
 | 02 | team | 조원별 역할 |
 | 03 | agenda | 목차 |
 | 04 | problem | 문제 정의 |
+| 04b | personas | 가상 페르소나 2명 (정비 기획 담당자 · 안전 관리자) |
 | 05 | data | 데이터 이해 |
 | 06 | preprocess | 전처리 4단계 |
 | 07 | timeseries | 시계열 그림 |
@@ -44,10 +45,10 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 | 11 | task-regression | 선택 과제: 남은 수명 예측 (진행 과정) |
 | 12 | regression-result | 회귀 결과 |
 | 13 | danger-threshold | 위험 기준 40의 근거 |
-| 14 | confidence-interval | 신뢰구간·시드 반복 (차이가 확실한가) |
-| 15 | cross-dataset | 교차 검증 |
-| 16 | false-alarm | 오탐 사례 |
-| 17 | missed-case | 미탐 사례 |
+| 14 | cross-dataset | 교차 검증 |
+| 15 | false-alarm | 오탐 사례 |
+| 16 | missed-case | 미탐 사례 |
+| 17 | alert-options | 경보 기준 5가지 안: 비교 보고 (GRU 40·42·46, RF 0.36·0.10) |
 | 18 | field-use | 현장 활용(대시보드) |
 | 19 | limits | 한계 |
 | 20 | next-summary | 다음 단계와 요약 |
