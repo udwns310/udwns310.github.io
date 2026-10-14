@@ -41,7 +41,13 @@
       function show(i) {
         i = Math.max(0, Math.min(N - 1, i));
         cur = i;
-        slides.forEach((s, k) => s.classList.toggle("active", k === i));
+        slides.forEach((s, k) => {
+          s.classList.toggle("active", k === i);
+          if (k !== i)
+            s.querySelectorAll(".evidence[open]").forEach((detail) => {
+              detail.open = false;
+            });
+        });
         // 애니메이션 재생을 위해 활성 슬라이드를 다시 그린다
         const s = slides[i];
         s.style.display = "none";
