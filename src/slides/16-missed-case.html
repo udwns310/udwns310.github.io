@@ -1,12 +1,12 @@
         <!-- 미탐 사례 -->
         <section
           class="slide"
-          data-title="미탐 사례: 엔진 #245"
+          data-title="RF 미탐 사례: 엔진 #245"
           data-sec="⑤ 평가 · 오류 분석"
           data-t="55"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em></h2>
+          <h2 class="r" style="--d: 0">RF 미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em></h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
             RF 분류(위험 확률 ≥ 0.36) · validation 엔진 #245 (수명 205사이클, 놓침 19사이클)
           </p>
@@ -40,9 +40,16 @@
           </div>
           <div
             class="r"
-            style="--d: 1100; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
+            style="--d: 1100; margin-top: 8px; background: var(--blue); color: #fff; border-radius: 16px; padding: 7px 26px; font-size: 24px; font-weight: 700; text-align: center"
           >
             개선 방향: 센서의 절대값 대신 <b>엔진별 초기 상태 대비 변화량</b>을 특성으로
+          </div>
+          <div
+            class="r"
+            style="--d: 2600; margin-top: 8px; background: #fff; border: 3px solid var(--blue); color: var(--ink); border-radius: 16px; padding: 4px 26px; font-size: 22px; font-weight: 700; line-height: 1.4"
+          >
+            적용 결과 · RF: 이 엔진 놓침 19 → <b>5</b>사이클, 전체 헛경보 337 → 378 · GRU: 놓침 6 → <b>0</b>, 헛경보 엔진 10 → 29대, 검증 오차 7.8 → 11.0<br />
+            <span style="color: var(--blue)">결론: 이 엔진은 좋아지지만 다른 엔진 오류가 늘어 <b>전체 성능은 개선되지 않음</b> → 현재 모델 유지</span>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>

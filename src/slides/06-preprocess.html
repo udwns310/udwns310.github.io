@@ -1,127 +1,30 @@
-        <!-- 전처리 (다른 구성안) -->
-        <section
-          class="slide"
-          data-title="전처리 4단계: 점검, 정답 라벨, 스케일링, 분할"
-          data-sec="② 데이터 이해 · 전처리"
-          data-t="60"
-        >
-          <div class="chap">② 데이터 이해 · 전처리</div>
-          <h2 class="r" style="--d: 0">
-            전처리 4단계: <em>점검 → 정답 라벨 → 스케일링 → 분할</em>
-          </h2>
-          <div class="p2">
-            <div class="q r" style="--d: 250">
-              <div class="qh">
-                <span class="pn">1</span>
-                <h3>데이터 점검</h3>
-                <p>채우거나 지울 데이터 없음</p>
-              </div>
-              <div class="qb">
-                <ul class="ck">
-                  <li><i>✓</i>결측값 <b>0개</b> (train · test)</li>
-                  <li><i>✓</i>중복 행 <b>0개</b></li>
-                  <li><i>✓</i>엔진별 사이클이 <b>1씩 연속</b></li>
-                </ul>
-              </div>
-            </div>
-            <div class="q r" style="--d: 450">
-              <div class="qh">
-                <span class="pn">2</span>
-                <h3>정답 라벨(RUL) 만들기</h3>
-                <div class="fm">RUL = 마지막 사이클 − 현재 사이클</div>
-              </div>
-              <div class="qb">
-                <div class="why2">
-                  <div class="w2t">왜 125에서 자를까?</div>
-                  <ul>
-                    <li>
-                      새 엔진은 사용 누적에 따른 센서값의 변화량이 미미하여
-                      <b>구분 제한</b>
-                    </li>
-                    <li>가장 짧은 엔진 수명을 고려하여 <b>125</b>로 정함</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="q r" style="--d: 650">
-              <div class="qh">
-                <span class="pn">3</span>
-                <h3>스케일링</h3>
-                <div class="fm">
-                  운전조건별 표준화 (<b>Z-score</b>)<br />(값 − 평균) ÷ 표준편차
-                </div>
-              </div>
-              <div class="qb">
-                <table class="pt">
-                  <tr>
-                    <th class="n">사이클</th>
-                    <th class="n">s3 원래값 (°C)</th>
-                    <th class="n">표준화 후</th>
-                  </tr>
-                  <tr>
-                    <td class="n">1</td>
-                    <td class="n">473.2</td>
-                    <td class="n zz">−1.41</td>
-                  </tr>
-                  <tr>
-                    <td class="n">2</td>
-                    <td class="n">547.7</td>
-                    <td class="n zz">−0.91</td>
-                  </tr>
-                  <tr>
-                    <td class="n">3</td>
-                    <td class="n">473.0</td>
-                    <td class="n zz">−1.46</td>
-                  </tr>
-                  <tr>
-                    <td class="n">4</td>
-                    <td class="n">472.0</td>
-                    <td class="n zz">−1.74</td>
-                  </tr>
-                  <tr>
-                    <td class="n">5</td>
-                    <td class="n">424.2</td>
-                    <td class="n zz">−0.95</td>
-                  </tr>
-                </table>
-                <p class="qn">
-                  원래값 424~548°C로 분산 → 표준화 후 −1.7~−0.9로 수렴
-                </p>
-                <p class="qn" style="font-size: 17px; margin-top: 4px">
-                  스케일링 5가지 × 모델 3개 비교 → <b>운전조건별 표준화</b> 선정
-                  (RandomForest 오차 14.4 → 11.8)
-                </p>
-              </div>
-            </div>
-            <div class="q r" style="--d: 850">
-              <div class="qh">
-                <span class="pn">4</span>
-                <h3>엔진 단위 분할</h3>
-                <p>
-                  train 249대를 엔진 통째로 <b>80:20</b>으로 나눔 (200대 / 49대,
-                  시드 42)
-                </p>
-              </div>
-              <div class="qb">
-                <div class="sb">
-                  <div class="s1" style="flex: 200">학습 200대</div>
-                  <div class="s2" style="flex: 49">검증 49</div>
-                </div>
-                <div class="sb sb2">
-                  <div class="s3" style="flex: 1">test 248대 — 최종 채점용</div>
-                </div>
-                <p class="qn">모델·설정을 모두 정한 뒤 최초 사용</p>
-                <p class="qn">
-                  표준화의 평균·표준편차도 <b>학습 200대로만</b> 계산
-                </p>
-                <p class="qn">
-                  분할 시드를 바꿔 6번 반복: RF 검증 오차 <b>10.3~14.2</b> (평균
-                  11.9), 우리 분할(42)은 중간
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="foot">Sentinel · 5조 감시자들</div>
-          <div class="pg"></div>
-        </section>
+<section id="preprocess" class="slide refined" data-title="전처리 4단계: 점검, 정답 라벨, 스케일링, 분할" data-sec="② 데이터 이해 · 전처리" data-t="60">
+<style>
+#preprocess .prep-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:36px}
+#preprocess .prep-grid>.card{padding:28px 26px;min-height:610px}
+#preprocess .section-label{gap:12px;margin-bottom:32px}
+#preprocess .section-label h3{font-size:28px}
+#preprocess .prep-divider{height:2px;background:var(--line);margin:28px 0}
+#preprocess .prep-formula{font-size:35px;line-height:1.35;font-weight:800}
+#preprocess .prep-result{font-size:46px;font-weight:800;margin:16px 0;color:var(--blue)}
+#preprocess .prep-result span{font-size:32px;color:var(--ink2)}
+#preprocess .prep-split{display:grid;grid-template-columns:200fr 49fr;gap:3px;border-radius:12px;overflow:hidden;margin:18px 0 22px}
+#preprocess .prep-split>div{background:var(--blue);color:white;padding:16px 10px;text-align:center}
+#preprocess .prep-split>div+div{background:var(--lblue)}
+#preprocess .prep-split strong{display:block;font-size:42px;line-height:1.1}
+#preprocess .prep-split span{display:block;font-size:24px;margin-top:6px}
+#preprocess .prep-test{padding:16px;border-radius:12px;background:#f2f2f1}
+#preprocess .prep-test b{font-size:28px;display:block}
+#preprocess .prep-test span{font-size:22px;color:var(--ink2);display:block;margin-top:8px}</style>
+<div class="chap">② 데이터 이해 · 전처리</div>
 
+<h2 class="r" style="--d:0">전처리 4단계: <em>점검 → 라벨 → 스케일링 → 분할</em></h2>
+<div class="prep-grid">
+  <div class="card r" style="--d:200"><div class="section-label"><span class="step-number">1</span><h3>데이터 점검</h3></div><span class="metric-value" style="color:var(--blue)">0개</span><span class="metric-label">결측값 · 중복 행</span><div class="prep-divider"></div><p class="body-copy">train · test 모두 확인</p><p class="support" style="margin-top:18px">엔진별 사이클이 <b>1씩 연속</b><br />채우거나 지울 데이터 없음</p></div>
+  <div class="card r" style="--d:380"><div class="section-label"><span class="step-number">2</span><h3>정답 라벨</h3></div><div class="prep-formula">마지막 사이클<br />− 현재 사이클</div><p class="support" style="margin-top:16px">고장까지 남은 수명 (RUL)</p><div class="prep-divider"></div><span class="metric-value" style="color:var(--blue)">125</span><span class="metric-label">남은 수명 상한</span><p class="support" style="margin-top:18px">새 엔진의 미미한 변화와<br />가장 짧은 수명을 고려</p></div>
+  <div class="card r" style="--d:560"><div class="section-label"><span class="step-number">3</span><h3>스케일링</h3></div><div class="prep-formula">운전조건별<br /><b style="color:var(--blue)">표준화</b></div><p class="support" style="margin-top:16px">Z-score<br />(값 − 평균) ÷ 표준편차</p><div class="prep-divider"></div><span class="eyebrow">스케일링 5가지 × 모델 3개 비교</span><div class="prep-result">14.4 <span>→</span> 11.8</div><p class="support">RandomForest 검증 오차</p></div>
+  <div class="card r" style="--d:740"><div class="section-label"><span class="step-number">4</span><h3>엔진 단위 분할</h3></div><span class="eyebrow">train 249대 · 80:20</span><div class="prep-split"><div><strong>200</strong><span>학습</span></div><div><strong>49</strong><span>검증</span></div></div><p class="support">엔진 통째로 분할<br />분할 시드 42</p><div class="prep-divider"></div><div class="prep-test"><b>공식 test 248대</b><span>모델·설정 확정 후 최종 평가</span></div><p class="support" style="margin-top:20px">표준화 기준도<br /><b>학습 200대로만 계산</b></p></div>
+</div>
+<div class="callout r" style="--d:1000;margin-top:28px">엔진별로 분리하고, 학습 엔진으로만 표준화 기준 계산 → <b>데이터 누수 방지</b></div>
+<div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
+</section>

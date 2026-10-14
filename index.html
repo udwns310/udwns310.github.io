@@ -1950,6 +1950,51 @@
           display: none !important;
         }
       }
+
+      /* Readability refinements are opt-in; the established deck chrome stays shared. */
+      .slide.refined h2 { font-size: 58px; }
+      .refined .intro { margin-top: 18px; font-size: 28px; line-height: 1.45; color: var(--ink2); }
+      .refined .eyebrow { font-size: 22px; font-weight: 700; color: var(--blue); letter-spacing: .02em; }
+      .refined .support { font-size: 24px; line-height: 1.45; color: var(--ink2); }
+      .refined .body-copy { font-size: 28px; line-height: 1.5; color: var(--ink); }
+      .refined .caption { font-size: 21px; line-height: 1.45; color: var(--ink2); }
+      .refined .source-note { font-size: 20px; line-height: 1.4; color: var(--muted); }
+      .refined .callout { padding: 18px 24px; border-left: 5px solid var(--blue); border-radius: 0 14px 14px 0; background: #e3eef6; font-size: 27px; line-height: 1.45; color: var(--ink); }
+      .refined .section-label { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+      .refined .section-label h3 { font-size: 30px; margin: 0; }
+      .refined .step-number { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; border-radius: 50%; color: white; background: var(--blue); font-size: 25px; font-weight: 800; }
+      .refined .metric-value { display: block; font-size: 76px; font-weight: 800; line-height: 1.05; letter-spacing: -.025em; font-variant-numeric: tabular-nums; }
+      .refined .metric-label { display: block; margin-top: 12px; font-size: 25px; line-height: 1.4; color: var(--ink2); }
+      .refined .bar .lab { text-align: left; font-size: 29px; }
+      .refined .bar .val { font-size: 34px; }
+      .refined .bar .trk { height: 36px; }
+      .refined .bars { gap: 26px; }
+      .refined .process-strip { display: grid; gap: 24px; margin-top: 28px; }
+      .refined .process-step { position: relative; min-width: 0; padding: 22px 24px; }
+      .refined .process-step:not(:last-child)::after { content: "→"; position: absolute; right: -24px; top: 40%; font-size: 32px; color: var(--blue); z-index: 2; }
+      .refined .process-step h3 { font-size: 27px; margin: 16px 0 10px; }
+      .refined .process-step p { font-size: 24px; line-height: 1.4; color: var(--ink2); }
+      .refined .fig { display: block; height: auto; }
+      .refined .evidence { position: absolute; right: 316px; top: 40px; z-index: 10; }
+      .refined .evidence > summary { position: relative; z-index: 42; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 14px; padding: 8px 16px; border: 2px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink2); font-size: 22px; font-weight: 700; }
+      .refined .evidence > summary::-webkit-details-marker { display: none; }
+      .refined .evidence > summary::after { content: "+"; font-size: 26px; line-height: 1; color: var(--blue); }
+      .refined .evidence > summary:focus-visible { outline: 3px solid var(--lblue); outline-offset: 4px; }
+      .refined .evidence[open] { z-index: 40; }
+      .refined .evidence[open] > summary { border-color: var(--blue); color: var(--blue); }
+      .refined .evidence[open] > summary::after { content: "×"; }
+      .refined .evidence[open]::before { content: ""; position: fixed; inset: 0; background: rgba(0,0,0,.38); z-index: 40; }
+      .refined .evidence-panel { position: fixed; inset: 126px 120px 92px; z-index: 41; overflow: auto; background: var(--surface); border: 2.5px solid var(--line); border-radius: 22px; padding: 34px 40px; box-shadow: 0 18px 48px rgba(0,0,0,.2); }
+      .refined .evidence-panel h3 { font-size: 34px; margin-bottom: 14px; }
+      .refined .evidence-panel h4 { font-size: 27px; margin: 24px 0 12px; }
+      .refined .evidence-panel p, .refined .evidence-panel li { font-size: 25px; line-height: 1.5; }
+      .refined .evidence-panel table { width: 100%; font-size: 25px; }
+      .refined .evidence-panel th { font-size: 22px; color: var(--ink2); }
+      .refined .evidence-panel td { font-size: 25px; }
+      .refined .evidence-panel img { max-width: 100%; height: auto; display: block; }
+      .refined .evidence-panel .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+      .refined .evidence-panel .evidence-grid > * { min-width: 0; }
+      @media print { .refined .evidence { display: none !important; } }
     </style>
   </head>
   <body>
@@ -2125,134 +2170,45 @@
           <div class="pg"></div>
         </section>
 
-        <!-- 2 문제 -->
-        <section
-          class="slide"
-          data-title="문제 정의: 무엇을 위험으로 볼 것인가"
-          data-sec="① 문제 정의"
-          data-t="70"
-        >
-          <div class="chap">① 문제 정의</div>
-          <h2 class="r" style="--d: 0">
-            엔진이 <em>고장 나기 전에</em>, 정비 시점을 알 수 있을까?
-          </h2>
-          <p class="lead r" style="--d: 200">
-            항공기 터보팬 엔진 센서(온도·압력·회전속도) 기록 → 그 엔진이
-            <b>앞으로 몇 번 더 비행할 수 있는지</b>(남은 수명, RUL)를 예측하고,
-            고장 전에 정비해 <b>긴급 정비 비용</b>을 줄일 수 있는지까지 판단
-          </p>
-          <div style="margin-top: 40px" class="r">
-            <div class="life" style="--d: 400">
-              <div class="z1">정상 (80사이클 이상 남음)</div>
-              <div class="z2">주의 (40~80)</div>
-              <div class="z3">위험 (40 이하)</div>
-              <div class="z4">고장</div>
-            </div>
-            <div class="axis">
-              1사이클은 엔진의 1회 운행 단위이며, 데이터의 각 행에는 해당 시점의
-              운전조건과 센서 측정값이 기록
-            </div>
-            <div class="axis" style="margin-top: 6px">
-              엔진 한 대의 수명 흐름 (왼쪽 → 오른쪽 = 운행 사이클이 쌓임). 남은
-              수명 40 이하를 <b>위험</b>으로 정의
-            </div>
-          </div>
-          <div
-            class="grid"
-            style="grid-template-columns: 1.2fr 1fr 1fr; margin-top: 34px"
-          >
-            <div class="card r" style="--d: 900">
-              <h3>왜 중요한가</h3>
-              <p class="sm" style="font-size: 28px">
-                고장 나서 하는 <b>긴급 정비</b>는 계획 정비보다
-                <b class="hl">2~5배</b> 비쌉니다
-                <span style="white-space: nowrap">(문헌 비용 비율</span>
-                <span style="white-space: nowrap"
-                  >1:5<sup class="ref">1</sup>, 1:2<sup class="ref">2</sup
-                  >)</span
-                >. 미리 알면 계획 정비로 바꿀 수 있습니다.
-              </p>
-            </div>
-            <div class="card r" style="--d: 1100">
-              <h3>필수 과제</h3>
-              <p class="sm" style="font-size: 28px">
-                <span class="pill">이진 분류</span><br /><span
-                  style="display: inline-block; margin-top: 10px"
-                  >지금 위험한가?<br />남은 수명 40 이하면 경보</span
-                >
-              </p>
-            </div>
-            <div class="card r" style="--d: 1300">
-              <h3>선택 과제</h3>
-              <p class="sm" style="font-size: 28px">
-                <span class="pill o">RUL 회귀</span><br /><span
-                  style="font-size: 26px"
-                  >몇 사이클 남았나? 숫자로 예측</span
-                ><br /><span class="pill o" style="margin-top: 12px"
-                  >비용 환산</span
-                ><br /><span style="font-size: 26px"
-                  >예측을 정비 비용으로 바꿔 비교</span
-                >
-              </p>
-            </div>
-          </div>
-          <div class="srcbox r" style="--d: 1400">
-            <span class="srclab">출처</span>
-            <ol>
-              <li>
-                de Pater, Reijns &amp; Mitici (2022).
-                <i>Reliability Engineering &amp; System Safety</i> 221, 108341
-                <em>— 비용 1:5</em>
-              </li>
-              <li>
-                Lee &amp; Mitici (2023).
-                <i>Reliability Engineering &amp; System Safety</i> 230, 108908
-                <em>— 비용 1:2</em>
-              </li>
-            </ol>
-          </div>
-          <div class="foot">Sentinel · 5조 감시자들</div>
-          <div class="pg"></div>
-        </section>
+<section id="problem-definition" class="slide refined" data-title="문제 정의: 무엇을 위험으로 볼 것인가" data-sec="① 문제 정의" data-t="70">
+<style>
+#problem-definition .problem-cards{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:28px;margin-top:28px}
+#problem-definition .problem-cards>.card{padding:28px 30px;min-height:345px}
+#problem-definition .life{height:80px}
+#problem-definition .life>div{font-size:26px}</style>
+<div class="chap">① 문제 정의</div>
 
-        <!-- 페르소나 -->
-        <section
-          class="slide"
-          data-title="페르소나 (가상)"
-          data-sec="① 문제 정의"
-          data-t="45"
-        >
-          <div class="chap">① 문제 정의</div>
-          <h2 class="r" style="--d: 0">
-            <em>페르소나</em>: 정비 기획 담당자와 안전 관리자
-          </h2>
-          <div
-            class="grid"
-            style="grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 36px"
-          >
-            <div class="card r" style="--d: 250; border-top: 10px solid var(--blue)">
-              <h3 style="font-size: 30px">정비 기획 담당자</h3>
-              <p class="sm" style="font-size: 22px; margin-top: 2px">
-                <span class="pill">비용 최우선</span>
-                <span style="font-size: 24px; color: var(--muted); margin-left: 8px">A항공 (가상)</span>
-              </p>
-              <p class="sm" style="font-size: 24px; margin-top: 6px"><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">목표</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">총 정비 비용 최소</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">제약</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">주간 계획 · 정비 준비 7일 이상</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">안전 하한</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">정비 전 고장 엔진 1% 이하 (가정)</span></div></p>
-            </div>
-            <div class="card r" style="--d: 450; border-top: 10px solid #4b5151">
-              <h3 style="font-size: 30px">안전 관리자</h3>
-              <p class="sm" style="font-size: 22px; margin-top: 2px">
-                <span class="pill">안전 최우선</span>
-                <span style="font-size: 24px; color: var(--muted); margin-left: 8px">A항공 (가상)</span>
-              </p>
-              <p class="sm" style="font-size: 24px; margin-top: 6px"><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">목표</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">위험 엔진을 놓치지 않기</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">제약</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">조기 정비로 늘어나는 비용은 감수</span></div><div style="margin:12px 0"><span style="color:var(--muted);font-size:20px">안전 하한</span><br /><span style="font-size: 27px; font-weight: 700; color: var(--ink)">test 놓침 0대 (가정)</span></div></p>
-            </div>
-          </div>
-          <p class="xs r" style="--d: 800; margin-top: 18px">
-            ※ 팀이 만든 가상 페르소나이며 실제 인물·항공사가 아님 · 비용 1:5, 정비 준비 7일은 논문 가정값(de Pater 외 2022), 안전 하한은 시나리오상 가정
-          </p>
-          <div class="foot">Sentinel · 5조 감시자들</div>
-          <div class="pg"></div>
-        </section>
+<h2 class="r" style="--d:0">엔진이 <em>고장 나기 전에</em>, 정비 시점을 알 수 있을까?</h2>
+<p class="intro r" style="--d:180;font-size:34px;color:var(--ink)">센서 기록 → <b>남은 수명 예측</b> → 정비 시점 판단</p>
+<p class="support r" style="--d:300;margin-top:12px">온도·압력·회전속도로 앞으로 몇 번 더 비행할 수 있는지 예측하고, 고장 전 계획 정비로 긴급 정비 비용을 줄일 수 있는지 확인</p>
+<div class="r" style="--d:450;margin-top:26px"><div class="life"><div class="z1">정상 · 80사이클 이상</div><div class="z2">주의 · 40~80</div><div class="z3">위험 · 40 이하</div><div class="z4">고장</div></div><p class="caption" style="margin-top:12px">왼쪽 → 오른쪽: 운행 사이클 누적 · 1사이클 = 엔진 1회 운행 · 한 행 = 해당 시점의 운전조건·센서값</p></div>
+<div class="problem-cards"><div class="card r" style="--d:700"><span class="eyebrow">왜 중요한가</span><span class="metric-value" style="color:var(--blue);margin-top:24px">2~5배</span><p class="body-copy" style="margin-top:18px">계획 정비보다 비싼<br /><b>긴급 정비 비용</b></p><p class="support" style="margin-top:20px">문헌 비용 비율 1:5¹ / 1:2²<br />미리 알면 계획 정비로 전환</p></div><div class="card r" style="--d:880"><span class="eyebrow">필수 과제 · 이진 분류</span><h3 style="font-size:38px;margin-top:26px">지금 위험한가?</h3><p class="body-copy" style="margin-top:30px">남은 수명 <b>40 이하</b><br />→ 위험으로 정의·경보</p></div><div class="card r" style="--d:1060"><span class="eyebrow">선택 과제 · RUL 회귀</span><h3 style="font-size:38px;margin-top:26px">몇 사이클 남았나?</h3><p class="body-copy" style="margin-top:30px">남은 수명을 숫자로 예측<br />→ 정비 비용으로 환산·비교</p></div></div>
+<div class="source-note r" style="--d:1200;margin-top:22px">¹ de Pater, Reijns &amp; Mitici (2022), Reliability Engineering &amp; System Safety 221, 108341 — 비용 1:5<br />² Lee &amp; Mitici (2023), Reliability Engineering &amp; System Safety 230, 108908 — 비용 1:2</div>
+<div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
+</section>
+<section id="personas" class="slide refined" data-title="페르소나 (가상)" data-sec="① 문제 정의" data-t="45">
+<style>
+#personas .persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:30px}
+#personas .persona-grid>.card{padding:30px 34px;min-height:590px}
+#personas .persona-head{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:24px;border-bottom:2px solid var(--line)}
+#personas .persona-head h3{font-size:34px;margin:0}
+#personas .persona-head>span{padding:8px 16px;border-radius:10px;background:var(--blue);color:white;font-size:23px;font-weight:700;white-space:nowrap}
+#personas dl>div{display:grid;grid-template-columns:165px 1fr;gap:24px;align-items:start;padding:28px 0;border-bottom:1px solid var(--line)}
+#personas dl>div:last-child{border-bottom:0}
+#personas dt{font-size:24px;line-height:1.5;color:var(--ink2)}
+#personas dd{font-size:32px;line-height:1.4;margin:0}
+#personas dd b{color:var(--blue)}
+#personas .persona-safety{background:var(--surface)}
+#personas .persona-safety .persona-head>span{background:var(--green)}
+#personas .persona-safety dd b{color:var(--ink)}</style>
+<div class="chap">① 문제 정의</div>
+
+<h2 class="r" style="--d:0">두 항공사의 우선순위: <em>비용</em><span style="color:var(--ink)">과</span> <em style="color:var(--green)">안전</em></h2>
+<p class="intro r" style="--d:150">A 항공사: 비용 최우선 · B 항공사: 안전 최우선 · 가상 시나리오</p>
+<div class="persona-grid"><div class="card r" style="--d:300;border-top:8px solid var(--blue)"><div class="persona-head"><h3>A 항공사</h3><span>비용 최우선</span></div><dl><div><dt>목표</dt><dd>총 정비 비용 최소</dd></div><div><dt>제약</dt><dd>주간 계획<br />정비 준비 7일 이상</dd></div><div><dt>안전 하한 · 가정</dt><dd>정비 전 고장 엔진<br /><b>1% 이하</b></dd></div></dl></div><div class="card persona-safety r" style="--d:550;border-top:8px solid var(--green)"><div class="persona-head"><h3>B 항공사</h3><span>안전 최우선</span></div><dl><div><dt>목표</dt><dd>위험 엔진을 놓치지 않기</dd></div><div><dt>제약</dt><dd>조기 정비로 늘어나는<br />비용은 감수</dd></div><div><dt>안전 하한 · 가정</dt><dd>공식 test<br /><b>놓침 0대</b></dd></div></dl></div></div>
+<p class="source-note r" style="--d:800;margin-top:24px">팀이 만든 가상 항공사 시나리오 · 실제 항공사가 아님 · 비용 1:5·정비 준비 7일은 논문 가정값 (de Pater 외 2022), 안전 하한은 시나리오상 가정</p>
+<div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
+</section>
         <!-- 데이터 구성 -->
         <section
           class="slide"
@@ -2508,133 +2464,36 @@
           <div class="pg"></div>
         </section>
 
-        <!-- 전처리 (다른 구성안) -->
-        <section
-          class="slide"
-          data-title="전처리 4단계: 점검, 정답 라벨, 스케일링, 분할"
-          data-sec="② 데이터 이해 · 전처리"
-          data-t="60"
-        >
-          <div class="chap">② 데이터 이해 · 전처리</div>
-          <h2 class="r" style="--d: 0">
-            전처리 4단계: <em>점검 → 정답 라벨 → 스케일링 → 분할</em>
-          </h2>
-          <div class="p2">
-            <div class="q r" style="--d: 250">
-              <div class="qh">
-                <span class="pn">1</span>
-                <h3>데이터 점검</h3>
-                <p>채우거나 지울 데이터 없음</p>
-              </div>
-              <div class="qb">
-                <ul class="ck">
-                  <li><i>✓</i>결측값 <b>0개</b> (train · test)</li>
-                  <li><i>✓</i>중복 행 <b>0개</b></li>
-                  <li><i>✓</i>엔진별 사이클이 <b>1씩 연속</b></li>
-                </ul>
-              </div>
-            </div>
-            <div class="q r" style="--d: 450">
-              <div class="qh">
-                <span class="pn">2</span>
-                <h3>정답 라벨(RUL) 만들기</h3>
-                <div class="fm">RUL = 마지막 사이클 − 현재 사이클</div>
-              </div>
-              <div class="qb">
-                <div class="why2">
-                  <div class="w2t">왜 125에서 자를까?</div>
-                  <ul>
-                    <li>
-                      새 엔진은 사용 누적에 따른 센서값의 변화량이 미미하여
-                      <b>구분 제한</b>
-                    </li>
-                    <li>가장 짧은 엔진 수명을 고려하여 <b>125</b>로 정함</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="q r" style="--d: 650">
-              <div class="qh">
-                <span class="pn">3</span>
-                <h3>스케일링</h3>
-                <div class="fm">
-                  운전조건별 표준화 (<b>Z-score</b>)<br />(값 − 평균) ÷ 표준편차
-                </div>
-              </div>
-              <div class="qb">
-                <table class="pt">
-                  <tr>
-                    <th class="n">사이클</th>
-                    <th class="n">s3 원래값 (°C)</th>
-                    <th class="n">표준화 후</th>
-                  </tr>
-                  <tr>
-                    <td class="n">1</td>
-                    <td class="n">473.2</td>
-                    <td class="n zz">−1.41</td>
-                  </tr>
-                  <tr>
-                    <td class="n">2</td>
-                    <td class="n">547.7</td>
-                    <td class="n zz">−0.91</td>
-                  </tr>
-                  <tr>
-                    <td class="n">3</td>
-                    <td class="n">473.0</td>
-                    <td class="n zz">−1.46</td>
-                  </tr>
-                  <tr>
-                    <td class="n">4</td>
-                    <td class="n">472.0</td>
-                    <td class="n zz">−1.74</td>
-                  </tr>
-                  <tr>
-                    <td class="n">5</td>
-                    <td class="n">424.2</td>
-                    <td class="n zz">−0.95</td>
-                  </tr>
-                </table>
-                <p class="qn">
-                  원래값 424~548°C로 분산 → 표준화 후 −1.7~−0.9로 수렴
-                </p>
-                <p class="qn" style="font-size: 17px; margin-top: 4px">
-                  스케일링 5가지 × 모델 3개 비교 → <b>운전조건별 표준화</b> 선정
-                  (RandomForest 오차 14.4 → 11.8)
-                </p>
-              </div>
-            </div>
-            <div class="q r" style="--d: 850">
-              <div class="qh">
-                <span class="pn">4</span>
-                <h3>엔진 단위 분할</h3>
-                <p>
-                  train 249대를 엔진 통째로 <b>80:20</b>으로 나눔 (200대 / 49대,
-                  시드 42)
-                </p>
-              </div>
-              <div class="qb">
-                <div class="sb">
-                  <div class="s1" style="flex: 200">학습 200대</div>
-                  <div class="s2" style="flex: 49">검증 49</div>
-                </div>
-                <div class="sb sb2">
-                  <div class="s3" style="flex: 1">test 248대 — 최종 채점용</div>
-                </div>
-                <p class="qn">모델·설정을 모두 정한 뒤 최초 사용</p>
-                <p class="qn">
-                  표준화의 평균·표준편차도 <b>학습 200대로만</b> 계산
-                </p>
-                <p class="qn">
-                  분할 시드를 바꿔 6번 반복: RF 검증 오차 <b>10.3~14.2</b> (평균
-                  11.9), 우리 분할(42)은 중간
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="foot">Sentinel · 5조 감시자들</div>
-          <div class="pg"></div>
-        </section>
+<section id="preprocess" class="slide refined" data-title="전처리 4단계: 점검, 정답 라벨, 스케일링, 분할" data-sec="② 데이터 이해 · 전처리" data-t="60">
+<style>
+#preprocess .prep-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:36px}
+#preprocess .prep-grid>.card{padding:28px 26px;min-height:610px}
+#preprocess .section-label{gap:12px;margin-bottom:32px}
+#preprocess .section-label h3{font-size:28px}
+#preprocess .prep-divider{height:2px;background:var(--line);margin:28px 0}
+#preprocess .prep-formula{font-size:35px;line-height:1.35;font-weight:800}
+#preprocess .prep-result{font-size:46px;font-weight:800;margin:16px 0;color:var(--blue)}
+#preprocess .prep-result span{font-size:32px;color:var(--ink2)}
+#preprocess .prep-split{display:grid;grid-template-columns:200fr 49fr;gap:3px;border-radius:12px;overflow:hidden;margin:18px 0 22px}
+#preprocess .prep-split>div{background:var(--blue);color:white;padding:16px 10px;text-align:center}
+#preprocess .prep-split>div+div{background:var(--lblue)}
+#preprocess .prep-split strong{display:block;font-size:42px;line-height:1.1}
+#preprocess .prep-split span{display:block;font-size:24px;margin-top:6px}
+#preprocess .prep-test{padding:16px;border-radius:12px;background:#f2f2f1}
+#preprocess .prep-test b{font-size:28px;display:block}
+#preprocess .prep-test span{font-size:22px;color:var(--ink2);display:block;margin-top:8px}</style>
+<div class="chap">② 데이터 이해 · 전처리</div>
 
+<h2 class="r" style="--d:0">전처리 4단계: <em>점검 → 라벨 → 스케일링 → 분할</em></h2>
+<div class="prep-grid">
+  <div class="card r" style="--d:200"><div class="section-label"><span class="step-number">1</span><h3>데이터 점검</h3></div><span class="metric-value" style="color:var(--blue)">0개</span><span class="metric-label">결측값 · 중복 행</span><div class="prep-divider"></div><p class="body-copy">train · test 모두 확인</p><p class="support" style="margin-top:18px">엔진별 사이클이 <b>1씩 연속</b><br />채우거나 지울 데이터 없음</p></div>
+  <div class="card r" style="--d:380"><div class="section-label"><span class="step-number">2</span><h3>정답 라벨</h3></div><div class="prep-formula">마지막 사이클<br />− 현재 사이클</div><p class="support" style="margin-top:16px">고장까지 남은 수명 (RUL)</p><div class="prep-divider"></div><span class="metric-value" style="color:var(--blue)">125</span><span class="metric-label">남은 수명 상한</span><p class="support" style="margin-top:18px">새 엔진의 미미한 변화와<br />가장 짧은 수명을 고려</p></div>
+  <div class="card r" style="--d:560"><div class="section-label"><span class="step-number">3</span><h3>스케일링</h3></div><div class="prep-formula">운전조건별<br /><b style="color:var(--blue)">표준화</b></div><p class="support" style="margin-top:16px">Z-score<br />(값 − 평균) ÷ 표준편차</p><div class="prep-divider"></div><span class="eyebrow">스케일링 5가지 × 모델 3개 비교</span><div class="prep-result">14.4 <span>→</span> 11.8</div><p class="support">RandomForest 검증 오차</p></div>
+  <div class="card r" style="--d:740"><div class="section-label"><span class="step-number">4</span><h3>엔진 단위 분할</h3></div><span class="eyebrow">train 249대 · 80:20</span><div class="prep-split"><div><strong>200</strong><span>학습</span></div><div><strong>49</strong><span>검증</span></div></div><p class="support">엔진 통째로 분할<br />분할 시드 42</p><div class="prep-divider"></div><div class="prep-test"><b>공식 test 248대</b><span>모델·설정 확정 후 최종 평가</span></div><p class="support" style="margin-top:20px">표준화 기준도<br /><b>학습 200대로만 계산</b></p></div>
+</div>
+<div class="callout r" style="--d:1000;margin-top:28px">엔진별로 분리하고, 학습 엔진으로만 표준화 기준 계산 → <b>데이터 누수 방지</b></div>
+<div class="foot">Sentinel · 5조 감시자들</div><div class="pg"></div>
+</section>
                 <!-- 시계열 7-2: 그림 -->
         <section
           class="slide"
@@ -3661,12 +3520,12 @@
         <!-- 오탐 사례 -->
         <section
           class="slide"
-          data-title="오탐 사례: 엔진 #179"
+          data-title="RF 오탐 사례: 엔진 #179"
           data-sec="⑤ 평가 · 오류 분석"
           data-t="55"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em></h2>
+          <h2 class="r" style="--d: 0">RF 오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em></h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
             RF 분류(위험 확률 ≥ 0.36) · validation 엔진 #179 (수명 435사이클, 헛경보 59사이클)
           </p>
@@ -3702,7 +3561,7 @@
             class="r"
             style="--d: 1100; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
           >
-            모델 실수만이 아니라 <b>데이터의 한계</b> — 중간 정비로 보이는 모양은 정비 이력이 있어야 구분 (가설)
+            모델 실수만이 아니라 <b>데이터의 한계</b> — 중간 정비로 보이는 모양은 정비 이력이 있어야 구분
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
@@ -3710,12 +3569,12 @@
         <!-- 미탐 사례 -->
         <section
           class="slide"
-          data-title="미탐 사례: 엔진 #245"
+          data-title="RF 미탐 사례: 엔진 #245"
           data-sec="⑤ 평가 · 오류 분석"
           data-t="55"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em></h2>
+          <h2 class="r" style="--d: 0">RF 미탐 사례 — 엔진 #245: <em>위험 구간인데 경보가 늦음</em></h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
             RF 분류(위험 확률 ≥ 0.36) · validation 엔진 #245 (수명 205사이클, 놓침 19사이클)
           </p>
@@ -3749,9 +3608,16 @@
           </div>
           <div
             class="r"
-            style="--d: 1100; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
+            style="--d: 1100; margin-top: 8px; background: var(--blue); color: #fff; border-radius: 16px; padding: 7px 26px; font-size: 24px; font-weight: 700; text-align: center"
           >
             개선 방향: 센서의 절대값 대신 <b>엔진별 초기 상태 대비 변화량</b>을 특성으로
+          </div>
+          <div
+            class="r"
+            style="--d: 2600; margin-top: 8px; background: #fff; border: 3px solid var(--blue); color: var(--ink); border-radius: 16px; padding: 4px 26px; font-size: 22px; font-weight: 700; line-height: 1.4"
+          >
+            적용 결과 · RF: 이 엔진 놓침 19 → <b>5</b>사이클, 전체 헛경보 337 → 378 · GRU: 놓침 6 → <b>0</b>, 헛경보 엔진 10 → 29대, 검증 오차 7.8 → 11.0<br />
+            <span style="color: var(--blue)">결론: 이 엔진은 좋아지지만 다른 엔진 오류가 늘어 <b>전체 성능은 개선되지 않음</b> → 현재 모델 유지</span>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
@@ -3798,7 +3664,7 @@
             class="r"
             style="--d: 1100; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
           >
-            모델이 달라도 같은 엔진에서 헛경보 — 모델이 아니라 <b>데이터(정비 이력 없음)의 한계</b> (가설)
+            모델이 달라도 같은 엔진에서 헛경보 — 모델이 아니라 <b>데이터(정비 이력 없음)의 한계</b>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
@@ -3843,13 +3709,7 @@
           </div>
           <div
             class="r"
-            style="--d: 1000; margin-top: 16px; font-size: 27px; font-weight: 700; line-height: 1.4"
-          >
-            <span style="display:inline-block;background:var(--lblue);color:#fff;font-size:22px;font-weight:800;padding:1px 14px;border-radius:999px;margin-right:12px;vertical-align:2px">오탐 · 미탐 결론</span>오류는 모델만의 약점이 아니라 <span style="color: var(--blue)">데이터(정비 이력 없음)와 경보 기준</span>의 문제 — RF·GRU 모두 같은 엔진에서 오탐
-          </div>
-          <div
-            class="r"
-            style="--d: 1100; margin-top: 12px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
+            style="--d: 1100; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
           >
             경보 기준을 올리면 놓침은 줄지만 헛경보가 늘어남 — 경보 기준 5가지 안 비교 참고
           </div>
@@ -4182,7 +4042,7 @@
               <ul class="summary-details">
                 <li>엔진 분할을 바꿔 반복 검증</li>
                 <li>고장 모드별 성능 확인</li>
-                <li>오류 사례·입력 특성 재점검</li>
+                <li>초기 대비 변화량 특성: 시험했으나 전체 개선 없음</li>
               </ul>
             </div>
             <div class="summary-column r" style="--d: 590">
@@ -4249,7 +4109,7 @@
         "조원별 역할. 이름과 담당만 짧게 소개하고 넘어간다. 코드 작성은 전원이 함께 했다는 점을 한 번 언급.",
         "목차. 여섯 단계로 진행한다고 한 문장으로 안내. 1분 이내.",
         "① 문제 정의. 한 문장: 어떤 설비의 무엇을, 왜, 어느 수준까지 맞히면 성공인가. 설비=터보팬 엔진, 예측 대상=남은 비행 횟수(RUL). 이상 정의=남은 수명 40 이하. 중요한 이유=긴급 정비는 계획 정비보다 2~5배 비쌈(문헌 비율 1:2, 1:5). 필수=이진 분류, 선택=RUL 회귀. 성공 기준=혼동행렬과 정밀도·재현율·F1, 놓치지 않기(재현율) 우선.",
-        "① 페르소나(가상). 같은 경보라도 쓰는 사람의 우선순위가 다르면 알맞은 경보 기준이 달라진다. 정비 기획 담당자: 목표 총 정비 비용 최소, 제약 주간 계획과 정비 준비 7일 이상, 안전 하한 정비 전 고장 엔진 1% 이하(가정) (이후 경보 기준 5가지 안 비교에서 비용 최우선 안과 연결). 안전 관리자: 목표 위험 엔진을 놓치지 않기, 제약 조기 정비로 늘어나는 비용은 감수, 안전 하한 test 놓침 0대(가정) (안전 최우선 안과 연결). 주의: 가상 페르소나이며, 안전 하한 값은 결과를 본 뒤 정한 가정이므로 질문받으면 솔직히 밝힐 것. 실제 운영에서는 고객이 정함.",
+        "① 페르소나(가상). 같은 경보라도 항공사의 운영 우선순위가 다르면 알맞은 경보 기준이 달라진다. A 항공사(비용 최우선): 목표 총 정비 비용 최소, 제약 주간 계획과 정비 준비 7일 이상, 안전 하한 정비 전 고장 엔진 1% 이하(가정) (이후 경보 기준 5가지 안 비교에서 비용 최우선 안과 연결). B 항공사(안전 최우선): 목표 위험 엔진을 놓치지 않기, 제약 조기 정비로 늘어나는 비용은 감수, 안전 하한 test 놓침 0대(가정) (안전 최우선 안과 연결). 주의: 가상 페르소나이며, 안전 하한 값은 결과를 본 뒤 정한 가정이므로 질문받으면 솔직히 밝힐 것. 실제 운영에서는 고객이 정함.",
         "② 데이터의 구성. 한 행 = 엔진 한 대의 한 번의 운행(사이클). 26열: 엔진 번호·사이클 2, 운전 설정 3(고도·마하수·스로틀), 센서 21(온도·압력·회전속도·비율). 파란 행은 운전조건이 사이클마다 바뀐다는 것을 보여줌(FD004는 6가지 조합). 센서 21개 중 15개 사용: 같은 운전조건에서 표준편차가 0.01 미만인 사실상 상수 센서 6개(s1·s5·s10·s16·s18·s19)는 제외. train 61,249행(엔진 249대), test 41,214행(엔진 248대). FD004를 쓰는 이유: 4개 서브셋 중 운전조건 6가지·고장 모드 2가지로 가장 복잡. 시뮬레이션 데이터.",
         "② 전처리 4단계. ① 점검: FD004 train·test 모두 결측값 0, 중복 행 0, 엔진별 사이클이 1씩 이어짐 → 채우거나 지울 것이 없음. ② 정답 라벨 만들기: 데이터에 남은 수명(RUL) 열이 없어 '엔진의 마지막 사이클 − 현재 사이클'로 계산하고, 가장 짧은 수명(128)보다 작은 125에서 자름. ③ 운전조건 6가지별로 따로 표준화(Z-score)(조건 변화가 열화로 보이지 않게). ④ 엔진 단위 200/49 분할, 표준화 기준(평균·표준편차)은 학습 엔진만으로 계산(누수 방지), 공식 test는 마지막에 한 번. 센서 15개를 고른 이유는 앞 슬라이드(데이터 이해)에서 설명.",
         "③ 시계열(그림). 앞 슬라이드 내용을 그림으로 확인: 엔진 #1·#25·#60의 추세성 상위 센서 4개(운전조건 보정값). 회색 박스=초반에는 3대 값이 겹침, 파란 박스=엔진마다 다른 시점에 상승. 직선 상관 0.51~0.57 → 직선 추세만으로는 한계.",
@@ -4261,15 +4121,15 @@
         "⑤ 위험 기준 40의 근거. 과제 예시값 30에서 바꾼 이유를 설명: 경보 → 주간 계획 회의(0~6일 뒤) → 정비 준비 최소 7일 → 정비 가능한 날까지 대기(10~20일 간격) = 경보 후 정비까지 평균 17사이클(7~32사이클 범위, 시뮬레이션 200회 평균, 1일=1사이클)(출처: de Pater 외 2022, 비용 1:2는 Lee & Mitici 2023). 논문 운영 조건으로 비용 시뮬레이션 → 최적 40. 30이면 정비 전 고장 14.3%, 비용 +48%. 비용 비율 1:5와 1:2 둘 다 40. 질문 대비: 시뮬레이션이며 실제 항공사 값이 아니라는 점, 강사님 확인 사항.",
         "⑤ 교차 검증. FD001은 같은 시뮬레이션의 더 단순한 서브셋(운전조건 1종, 고장 모드 1종, train 엔진 100대). GRU 공식 test MAE: FD004로 학습해 FD004 평가 17.3, FD004로 학습해 FD001 평가 11.2(FD001 전용 9.6에 근접), FD001로 학습해 FD001 평가 9.6, FD001로 학습해 FD004 평가 55.8(센서를 쓰지 않는 기준 모델 47.4보다 나쁨). 복잡한 데이터로 배운 모델은 단순한 데이터에서도 통하지만 반대는 아님. 환경이 바뀌면 그 환경의 데이터로 재학습·검증이 필요(해석).",
         "⑤ 오탐 사례 엔진 #179(RF 분류, 위험 확률 0.36 이상, validation). 안전 구간(남은 수명 194~245)에서 45사이클, 위험 직전(41~54)에서 14사이클 경보로 총 헛경보 59사이클. 운행 241번째 전후로 모든 센서가 한꺼번에 정상 수준으로 되돌아가 중간 정비로 보이는 모양(가설, 확정 아님). 되돌아가기 전에는 온도가 실제로 위험 엔진 수준이라 모델 입장에서는 합리적인 경보. 정비 이력 데이터가 있어야 구분 가능. 학습 데이터에 같은 모양 3대(#71, #179, #185). 오류가 가장 많은 엔진을 골랐다는 점도 밝힐 것.",
-        "⑤ 미탐 사례 엔진 #245(RF 분류, 위험 확률 0.36 이상, validation). 남은 수명 40~21 위험 구간 19사이클 동안 경보가 거의 없었음. 위험 진입 때 s3 온도가 다른 엔진 평균(517°C)보다 낮아 낮은 온도에서 고장 나는 개체. 고장 약 20사이클 전에는 경보가 울려 완전 누락은 아니지만 정비 준비 기간(7~32사이클)에는 늦을 수 있음. 개선: 센서 절대값 대신 엔진별 초기 상태 대비 변화량을 특성으로(아직 시험하지 않은 방향). 오류가 가장 많은 엔진을 골랐다는 점도 밝힐 것.",
+        "⑤ 미탐 사례 엔진 #245(RF 분류, 위험 확률 0.36 이상, validation). 남은 수명 40~21 위험 구간 19사이클 동안 경보가 거의 없었음. 위험 진입 때 s3 온도가 다른 엔진 평균(517°C)보다 낮아 낮은 온도에서 고장 나는 개체. 고장 약 20사이클 전에는 경보가 울려 완전 누락은 아니지만 정비 준비 기간(7~32사이클)에는 늦을 수 있음. 변화량 특성 실험(scripts/17_engine_baseline_features.py): 각 엔진의 처음 30사이클 평균을 그 엔진의 초기 상태로 삼아 현재값과 최근 15사이클 평균의 변화량을 특성으로 추가(RF는 특성 60 → 90개, GRU는 센서 15개 + 변화량 15개 입력 등 3가지 변형). 엔진 분할·학습 설정·경보 기준(RF 0.36, GRU 예측 40 이하)은 그대로, 시드 42 한 번. RF: 이 엔진(#245) 놓침 19 → 5사이클, 전체 validation 놓침 227 → 182, 헛경보 337 → 378, F1 0.863 → 0.867(거의 같음), test 놓침/헛경보 4/8 → 3/7. #179 헛경보는 59 → 72로 오히려 늘어남. GRU(변화량만 입력): #245 놓침 6 → 0, 그러나 헛경보 엔진 10 → 29대, validation F1 0.915 → 0.879, 검증 MAE 7.8 → 11.0, test MAE 17.3 → 19.0, test 놓침/헛경보 8/1 → 2/4. GRU(센서 + 변화량): 놓침 382사이클로 늘고 test 재현율 하락. 결론: 엔진 개체 차이를 반영하면 해당 엔진의 놓침은 줄지만 다른 엔진에서 헛경보가 늘어 전체 성능은 나아지지 않음. 한계: 시드 1회, 초기 30사이클 하나의 설정만 시험, 경보 기준 재조정 안 함. #179 오탐은 변화량 특성으로도 해결되지 않음(RF 59 → 72, GRU 41 → 39).",
         "⑤ GRU 오탐 사례 엔진 #179(GRU 예측 남은 수명 40 이하, validation). GRU 기준 헛경보가 가장 많은 엔진이 RF와 같은 #179. 헛경보 41사이클: 남은 수명 194~225(안전)에서 32사이클, 위험 직전(41~50)에서 9사이클(RF 분류는 45+14=59). 241번째 전후로 센서가 한꺼번에 정상 수준으로 돌아가면서 예측이 6까지 떨어졌다가 약 100으로 복귀. 정비 이력이 없으면 구분하기 어렵다는 가설(확정 아님). 같은 엔진에서 경보 기준을 40 → 45로 올리면 헛경보가 41 → 55사이클로 늘어남(validation 이 엔진 기준 수치). 오류가 가장 많은 엔진을 골랐다는 점도 밝힐 것. 근거: scripts/16_gru_error_cases.py.",
-        "⑤ GRU 미탐 사례 엔진 #235(GRU 예측 남은 수명 40 이하, validation). GRU 기준 놓침이 가장 많은 엔진. 남은 수명 40~28(위험) 13사이클(159~171번째) 동안 경보 없음, 172번째에 예측이 39.0으로 내려가며 경보 시작. 위험 구간에 들어설 때 예측 51.5 vs 실제 40으로 약 11사이클 길게 예측. s3 온도는 위험 진입 때 516°C로 train 평균 517°C보다 약간 낮음(차이 약 0.8°C, RF 미탐 #245만큼 뚜렷하지는 않음). 정비 준비 7~32사이클에 늦을 수 있음. 같은 엔진에서 경보 기준을 45로 올리면 첫 경보 166번째, 놓침 7사이클(40은 13, 42는 11). 기준을 올리면 다른 엔진(#179)에서는 헛경보가 늘어남. 이 엔진은 오류가 가장 많은 엔진을 골랐다는 점도 밝힐 것. 근거: scripts/16_gru_error_cases.py. 오탐·미탐 한 줄 결론: 오류는 모델만의 약점이 아니라 데이터(정비 이력 없음)와 경보 기준의 문제. 오탐은 RF(59사이클)와 GRU(41사이클) 모두 같은 엔진 #179에서 발생, 미탐은 RF #245(19사이클, 낮은 온도에서 고장)와 GRU #235(13사이클, 예측이 길음). 개선 방향(엔진별 초기 상태 대비 변화량 특성, 정비 이력 확보)은 아직 시험하지 않음.",
+        "⑤ GRU 미탐 사례 엔진 #235(GRU 예측 남은 수명 40 이하, validation). GRU 기준 놓침이 가장 많은 엔진. 남은 수명 40~28(위험) 13사이클(159~171번째) 동안 경보 없음, 172번째에 예측이 39.0으로 내려가며 경보 시작. 위험 구간에 들어설 때 예측 51.5 vs 실제 40으로 약 11사이클 길게 예측. s3 온도는 위험 진입 때 516°C로 train 평균 517°C보다 약간 낮음(차이 약 0.8°C, RF 미탐 #245만큼 뚜렷하지는 않음). 정비 준비 7~32사이클에 늦을 수 있음. 같은 엔진에서 경보 기준을 45로 올리면 첫 경보 166번째, 놓침 7사이클(40은 13, 42는 11). 기준을 올리면 다른 엔진(#179)에서는 헛경보가 늘어남. 이 엔진은 오류가 가장 많은 엔진을 골랐다는 점도 밝힐 것. 근거: scripts/16_gru_error_cases.py.",
         "⑤ 경보 기준 5가지 안 비교 보고. 안: A GRU 예측 ≤ 40(비용 최우선, test를 보기 전에 validation 비용 시뮬레이션으로 정한 값), B GRU ≤ 42(절충), C GRU ≤ 46(test 놓침이 0이 되는 가장 작은 GRU 기준), D RF 분류 확률 ≥ 0.36(RF 현재 설정, train 교차검증으로 정한 값), E RF 분류 확률 ≥ 0.10(test 놓침 0이 되는 가장 높은 RF 기준). 결과: test 놓침/헛경보 A 8/1, B 3/3, C 0/5, D 4/8, E 0/22. validation 정비 시뮬레이션(비용 1:5): 정비 전 고장 A 0.19%, B 0.09%, C 0%, D 1.3%, E 0%. 비용 A 4.47, B 4.50, C 4.57, D 4.82, E 6.14. 평균 낭비(정비 시점에 남은 수명) A 26, B 28, C 33, D 33, E 89사이클. 해석: 놓침 0이 목표여도 GRU는 헛경보 5대, RF는 22대. 같은 놓침 수(0)에서 GRU 5 vs RF 22, 놓침 4 근처에서 GRU 2~3 vs RF 8. 주의: B·C·E의 test 값은 test를 보고 고른 기준이라 최종 기준 확정에 쓰면 사후 선택이 되므로 민감도 확인으로만 쓸 것. 표본이 작아(위험 엔진 69대, validation 49대) 안 사이의 작은 차이는 우연일 수 있음. 비용은 가정 기반 시뮬레이션. 우리의 선택: 분석은 A(40), 놓침을 더 중시하는 운영이라면 B~C. 근거: scripts/15_alert_comparison.py 및 alert_comparison_*.csv.",
         "⑥ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 화면은 실제 대시보드 캡처(홈 = 플릿 9대, 설비 상세 = #198). 가능하면 2분 라이브 데모(홈 → 설비 상세 → 시나리오). 가동중단·비용 수치는 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
         "⑥ 분석의 한계. 서서히 진행되는 마모만 분석하며 갑작스러운 고장과 비행 중 즉시 경보는 별도 영역. 시뮬레이션 기록과 가정 비용을 사용하고 정비 이력·비용·기간 정보가 없어 센서 변화 원인을 확정하기 어려움. 엔진 분할 1회 결과이며 고장 모드별 성능과 추가 표본 검증이 필요.",
         "⑥ 개선 방향. 실제 운항·정비 이력과 비용·준비 기간을 확보해 현장 기준과 위험 기준을 보완. 엔진 분할을 바꿔 반복 검증하고 고장 모드별 성능과 오류 사례·입력 특성을 재점검. 센서 기록 자동 수집, 비행 후 예측 갱신, 정비 준비 시간 부족 시 긴급 표시를 운영 흐름에 연동.",
-        "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?",
-      ];
+        "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"
+];
       const deck = document.getElementById("deck"),
         slides = [...document.querySelectorAll(".slide")];
       const N = slides.length;
@@ -4313,7 +4173,13 @@
       function show(i) {
         i = Math.max(0, Math.min(N - 1, i));
         cur = i;
-        slides.forEach((s, k) => s.classList.toggle("active", k === i));
+        slides.forEach((s, k) => {
+          s.classList.toggle("active", k === i);
+          if (k !== i)
+            s.querySelectorAll(".evidence[open]").forEach((detail) => {
+              detail.open = false;
+            });
+        });
         // 애니메이션 재생을 위해 활성 슬라이드를 다시 그린다
         const s = slides[i];
         s.style.display = "none";
