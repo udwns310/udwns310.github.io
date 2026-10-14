@@ -46,8 +46,10 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 | 12 | regression-result | 회귀 결과 |
 | 13 | danger-threshold | 위험 기준 40의 근거 |
 | 14 | cross-dataset | 교차 검증 |
-| 15 | false-alarm | 오탐 사례 |
-| 16 | missed-case | 미탐 사례 |
+| 15 | false-alarm | 오탐 사례 (RF 분류, 엔진 #179) |
+| 16 | missed-case | 미탐 사례 (RF 분류, 엔진 #245) |
+| 16b | gru-false-alarm | GRU 오탐 사례 (엔진 #179) |
+| 16c | gru-missed-case | GRU 미탐 사례 (엔진 #235) |
 | 17 | alert-options | 경보 기준 5가지 안: 비교 보고 (GRU 40·42·46, RF 0.36·0.10) |
 | 18 | field-use | 현장 활용(대시보드) |
 | 19 | limits | 한계 |

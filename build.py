@@ -31,7 +31,7 @@ def build():
     notes = ''
     for n in names:
         p = os.path.join('notes', n + '.txt')
-        text = read(p) if os.path.exists(os.path.join(SRC, p)) else ''
+        text = read(p).strip() if os.path.exists(os.path.join(SRC, p)) else ''  # 끝의 줄바꿈 제거 (편집기가 붙여도 안전)
         notes += '        "' + text + '",\n'
     slide_js = ''
     for n in names:
