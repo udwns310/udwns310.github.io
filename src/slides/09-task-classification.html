@@ -36,19 +36,8 @@
                 <p class="cp">혼동행렬 · 정밀도 · 재현율 · F1</p>
               </div>
           </div>
-          <div class="grid" style="grid-template-columns: 0.9fr 1.45fr 0.65fr; gap: 20px; margin-top: 22px">
-            <div class="card r" style="--d: 950; padding: 16px 20px">
-              <h3 style="margin-bottom: 8px">분류 후보 비교 (validation F1)</h3>
-              <table style="font-size: 21px; width: 100%">
-                <tr><th>모델</th><th class="n">정밀도</th><th class="n">재현율</th><th class="n">F1</th></tr>
-                <tr><td>HistGradientBoosting</td><td class="n">0.87</td><td class="n">0.85</td><td class="n">0.86</td></tr>
-                <tr class="sel"><td>RandomForest</td><td class="n">0.88</td><td class="n">0.83</td><td class="n">0.85</td></tr>
-                <tr><td>LogisticRegression</td><td class="n">0.88</td><td class="n">0.80</td><td class="n">0.84</td></tr>
-                <tr><td>IsolationForest (비지도)</td><td class="n">0.68</td><td class="n">0.83</td><td class="n">0.74</td></tr>
-              </table>
-              <div class="cap" style="margin-top: 8px; font-size: 19px">기본 임곗값 0.5 · 튜닝 없음 · 상위 3종 차이는 작음 → RF를 대표로 사용 (특성 중요도 확인 가능)</div>
-            </div>
-            <div class="card r" style="--d: 1050; padding: 10px; display: flex; align-items: center; justify-content: center">
+          <div class="grid" style="grid-template-columns: 1.3fr 0.66fr 1.34fr; gap: 20px; margin-top: 22px">
+            <div class="card r" style="--d: 950; padding: 10px; display: flex; align-items: center; justify-content: center">
               <img src="assets/cls_threshold_tradeoff.png" alt="임곗값별 성능" style="width: 100%; height: auto; display: block; border-radius: 10px" />
             </div>
             <div class="card r" style="--d: 1150">
@@ -58,6 +47,17 @@
                 <li>학습 엔진 5-겹 교차검증에서 위험을 <b>90% 이상 잡는</b> 값 중 헛경보가 가장 적은 값</li>
                 <li>검증·test 엔진은 기준을 정하는 데 쓰지 않음</li>
               </ul>
+            </div>
+            <div class="card r" style="--d: 1350; padding: 16px 20px">
+              <h3 style="margin-bottom: 8px">분류 후보 비교 (임곗값 0.36 · validation)</h3>
+              <table style="font-size: 19px; width: 100%; white-space: nowrap">
+                <tr><th>모델</th><th class="n">정밀도</th><th class="n">재현율</th><th class="n">F1</th><th class="n">보정 오차</th></tr>
+                <tr class="sel"><td>RandomForest</td><td class="n">0.84</td><td class="n">0.89</td><td class="n">0.86</td><td class="n">0.008</td></tr>
+                <tr><td>HistGradientBoosting</td><td class="n">0.85</td><td class="n">0.88</td><td class="n">0.86</td><td class="n">0.018</td></tr>
+                <tr><td>LogisticRegression</td><td class="n">0.84</td><td class="n">0.86</td><td class="n">0.85</td><td class="n">0.013</td></tr>
+                <tr><td>IsolationForest*</td><td class="n">0.68</td><td class="n">0.83</td><td class="n">0.74</td><td class="n">-</td></tr>
+              </table>
+              <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.35">같은 경보 기준 0.36 · 튜닝 없음 · 보정 오차 = 예측 확률과 실제 위험 비율의 차이(낮을수록 확률을 믿을 수 있음) · *비지도, 점수 기준(확률 없음) · 성능은 동급 → 권장 모델이고 중요도 해석이 쉬운 RF를 대표로 사용</div>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>

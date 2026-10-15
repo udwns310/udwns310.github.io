@@ -38,7 +38,7 @@ python build.py --watch  # src/ 를 저장할 때마다 자동 재생성 (브라
 | 02 | team | 조원별 역할 |
 | 03 | agenda | 목차 |
 | 04 | problem | 문제 정의 |
-| 04b | personas | 가상 페르소나 2명 (정비 기획 담당자 · 안전 관리자) |
+| 04b | personas | 가상 페르소나 2명 (재무 담당자 · 정비 담당자) |
 | 05 | data | 데이터 이해 |
 | 06 | preprocess | 전처리 4단계 |
 | 07 | timeseries | 시계열 그림 |
