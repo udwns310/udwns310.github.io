@@ -1,33 +1,20 @@
         <!-- 9 분류 결과 -->
         <section
           class="slide"
-          data-title="분류 결과: 혼동행렬 · Precision · Recall · F1"
+          data-title="분류 결과: 공식 test 최종 평가"
           data-sec="④ 기준 모델 · 머신러닝"
           data-t="70"
         >
           <div class="chap">④ 기준 모델 · 머신러닝</div>
           <h2 class="r" style="--d: 0">
-            기준 모델 F1 <em>0.59 → 0.92</em>: 머신러닝이 필요한 이유
+            기준 모델 F1 <em>0.59 → 0.92</em>: 위험 69대 중 65대 탐지
           </h2>
-          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 26px; align-items: start">
+          <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
+            최종 평가: 공식 test 248대 (모델과 경보 기준을 확정한 뒤 엔진별 마지막 관측 시점에 적용)
+          </p>
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; align-items: stretch">
             <div class="card r" style="--d: 250">
-                <h3>validation F1 (49대, 모든 운행 시점)</h3>
-                <div class="bars" style="margin-top: 14px">
-                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
-                    <span class="lab">기준 (Z-score)</span>
-                    <div class="trk"><i style="--w: 58.3%; background: var(--lgray)"></i></div>
-                    <span class="val">0.58</span>
-                  </div>
-                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s">
-                    <span class="lab">RandomForest (0.36)</span>
-                    <div class="trk"><i style="--w: 86.3%; background: var(--rf)"></i></div>
-                    <span class="val">0.86</span>
-                  </div>
-                </div>
-                <div class="axis">F1 (0~1, 높을수록 좋음)</div>
-              </div>
-            <div class="card r" style="--d: 400">
-                <h3>공식 test F1 (248대, 엔진별 마지막 관측 시점)</h3>
+                <h3>공식 test F1</h3>
                 <div class="bars" style="margin-top: 14px">
                   <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
                     <span class="lab">기준 (Z-score)</span>
@@ -42,26 +29,46 @@
                 </div>
                 <div class="axis">F1 (0~1, 높을수록 좋음)</div>
               </div>
+            <div class="card r" style="--d: 400">
+                <h3>재현율 · 정밀도 (95% 신뢰구간)</h3>
+                <table style="font-size: 23px; width: 100%; margin-top: 10px">
+                  <tr><th>모델</th><th class="n">재현율</th><th class="n">정밀도</th></tr>
+                  <tr><td>기준 (Z-score)</td><td class="n">0.55 <span style="color:var(--muted);font-size:19px">(0.43–0.66)</span></td><td class="n">0.63 <span style="color:var(--muted);font-size:19px">(0.51–0.74)</span></td></tr>
+                  <tr class="sel"><td>RandomForest</td><td class="n"><b>0.94</b> <span style="color:var(--muted);font-size:19px">(0.86–0.98)</span></td><td class="n"><b>0.89</b> <span style="color:var(--muted);font-size:19px">(0.80–0.94)</span></td></tr>
+                </table>
+                <div class="cap" style="margin-top: 8px; font-size: 19px">위험 엔진이 69대뿐이라 구간이 넓음 · 재현율 구간이 겹치지 않아 차이는 확실</div>
+              </div>
           </div>
           <div class="grid" style="grid-template-columns: 1.3fr 0.9fr; gap: 36px; margin-top: 20px; align-items: center">
-            <div class="r" style="--d: 700">
-              <img
-                class="fig"
-                style="width: 100%"
-                src="assets/cls_confusion_matrix.png"
-                alt="혼동행렬: 기준 모델 vs RandomForest"
-              />
-              <div class="cap">혼동행렬 (validation 49대의 모든 사이클, 위험 = 남은 수명 ≤ 40)</div>
+            <div class="card r" style="--d: 700; padding: 16px 20px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+                  <div>
+                    <div style="font-size:24px;font-weight:800;margin-bottom:8px;color:var(--ink2)">기준 모델 (Z-score)</div>
+                    <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:6px;align-items:stretch">
+                      <div></div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 (위험 예측)</div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 없음</div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 위험</div><div style="background:#05507d;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">잡아냄 TP</div><div style="font-size:46px;font-weight:800;line-height:1.1">38</div><div style="font-size:19px;opacity:.9">위험 → 경보</div></div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">놓침 FN</div><div style="font-size:46px;font-weight:800;line-height:1.1">31</div><div style="font-size:19px;opacity:.9">위험 → 경보 없음</div></div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 정상</div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">헛경보 FP</div><div style="font-size:46px;font-weight:800;line-height:1.1">22</div><div style="font-size:19px;opacity:.9">정상 → 경보</div></div><div style="background:#00a5e5;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">정상 맞춤 TN</div><div style="font-size:46px;font-weight:800;line-height:1.1">157</div><div style="font-size:19px;opacity:.9">정상 → 경보 없음</div></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:24px;font-weight:800;margin-bottom:8px;color:var(--blue)">RandomForest (0.36)</div>
+                    <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:6px;align-items:stretch">
+                      <div></div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 (위험 예측)</div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 없음</div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 위험</div><div style="background:#05507d;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">잡아냄 TP</div><div style="font-size:46px;font-weight:800;line-height:1.1">65</div><div style="font-size:19px;opacity:.9">위험 → 경보</div></div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">놓침 FN</div><div style="font-size:46px;font-weight:800;line-height:1.1">4</div><div style="font-size:19px;opacity:.9">위험 → 경보 없음</div></div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 정상</div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">헛경보 FP</div><div style="font-size:46px;font-weight:800;line-height:1.1">8</div><div style="font-size:19px;opacity:.9">정상 → 경보</div></div><div style="background:#00a5e5;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">정상 맞춤 TN</div><div style="font-size:46px;font-weight:800;line-height:1.1">171</div><div style="font-size:19px;opacity:.9">정상 → 경보 없음</div></div>
+                    </div>
+                  </div>
+              </div>
+              <div class="cap" style="margin-top: 8px">공식 test 혼동행렬 (248대, 위험 = 남은 수명 ≤ 40: 위험 69대, 정상 179대)</div>
             </div>
             <div>
               <ul class="b" style="margin-top: 0">
-                <li class="r" style="--d: 900; font-size: 26px; margin: 26px 0">위험 69대 중 RF는 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8</li>
-                <li class="r" style="--d: 1050; font-size: 26px; margin: 26px 0">확률 기준 0.5 → <b>0.36</b>: 재현율 0.90 → 0.94 (위험을 놓치지 않는 것 우선)</li>
-                <li class="r" style="--d: 1200; font-size: 26px; margin: 26px 0">정확도는 쓰지 않음 — 위험이 소수라 "항상 정상"도 높게 나옴</li>
+                <li class="r" style="--d: 900; font-size: 25px; margin: 18px 0">위험 69대 중 <b>65대 탐지</b> (재현율 94%) · 놓침 4, 헛경보 8</li>
+                <li class="r" style="--d: 1050; font-size: 25px; margin: 18px 0">0.36은 test를 보기 전에 정한 값 · 0.5였다면 놓침 7, 헛경보 6 → <b>3대를 더 잡고 헛경보 2건</b> 감수</li>
+                <li class="r" style="--d: 1200; font-size: 25px; margin: 18px 0">정확도는 쓰지 않음 — 위험이 드물어서 <b>"전부 정상"이라고만 해도 72%</b>가 나옴 → 위험을 얼마나 찾았는지(재현율·정밀도·F1)로 평가</li>
               </ul>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
         </section>
-

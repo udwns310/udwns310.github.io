@@ -2824,7 +2824,7 @@
               <div class="ps r" style="--d: 800">
                 <div class="psh"><span class="pn">5</span><h4>평가</h4></div>
                 <div class="vis"><svg viewBox="0 0 260 100" width="100%"><g font-size="14" font-weight="700" text-anchor="middle"><rect x="40" y="6" width="100" height="40" rx="6" fill="#05507d"/><text x="90" y="31" fill="#fff">잡아냄</text><rect x="146" y="6" width="100" height="40" rx="6" fill="#bdbdba"/><text x="196" y="31" fill="#000">놓침</text><rect x="40" y="52" width="100" height="40" rx="6" fill="#bdbdba"/><text x="90" y="77" fill="#000">헛경보</text><rect x="146" y="52" width="100" height="40" rx="6" fill="#00a5e5"/><text x="196" y="77" fill="#fff">정상 맞춤</text></g><text x="4" y="31" font-size="12" fill="#4b5151">위험</text><text x="4" y="77" font-size="12" fill="#4b5151">정상</text></svg></div>
-                <p class="cp">혼동행렬 · 정밀도 · 재현율 · F1</p>
+                <p class="cp">혼동행렬 · 정밀도 · 재현율 · F1<br>(공식 test는 다음 슬라이드)</p>
               </div>
           </div>
           <div class="grid" style="grid-template-columns: 1.3fr 0.66fr 1.34fr; gap: 20px; margin-top: 22px">
@@ -2840,15 +2840,16 @@
               </ul>
             </div>
             <div class="card r" style="--d: 1350; padding: 16px 20px">
-              <h3 style="margin-bottom: 8px">분류 후보 비교 (임곗값 0.36 · validation)</h3>
+              <h3 style="margin-bottom: 8px">선정 근거: 분류 후보 비교</h3>
               <table style="font-size: 19px; width: 100%; white-space: nowrap">
                 <tr><th>모델</th><th class="n">정밀도</th><th class="n">재현율</th><th class="n">F1</th><th class="n">보정 오차</th></tr>
                 <tr class="sel"><td>RandomForest</td><td class="n">0.84</td><td class="n">0.89</td><td class="n">0.86</td><td class="n">0.008</td></tr>
                 <tr><td>HistGradientBoosting</td><td class="n">0.85</td><td class="n">0.88</td><td class="n">0.86</td><td class="n">0.018</td></tr>
                 <tr><td>LogisticRegression</td><td class="n">0.84</td><td class="n">0.86</td><td class="n">0.85</td><td class="n">0.013</td></tr>
+                <tr><td>기준 모델 (Z-score)</td><td class="n">0.57</td><td class="n">0.60</td><td class="n">0.58</td><td class="n">-</td></tr>
                 <tr><td>IsolationForest*</td><td class="n">0.68</td><td class="n">0.83</td><td class="n">0.74</td><td class="n">-</td></tr>
               </table>
-              <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.35">같은 경보 기준 0.36 · 튜닝 없음 · 보정 오차 = 예측 확률과 실제 위험 비율의 차이(낮을수록 확률을 믿을 수 있음) · *비지도, 점수 기준(확률 없음) · 성능은 동급 → 권장 모델이고 중요도 해석이 쉬운 RF를 대표로 사용</div>
+              <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.35">validation 49대 · 같은 경보 기준 0.36 · 튜닝 없음 · 보정 오차 = 예측 확률과 실제 위험 비율의 차이(낮을수록 좋음) · *점수 기준(확률 없음) · 성능은 동급 → 권장 모델이고 중요도 해석이 쉬운 RF를 대표로 사용</div>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
@@ -2858,33 +2859,20 @@
         <!-- 9 분류 결과 -->
         <section
           class="slide"
-          data-title="분류 결과: 혼동행렬 · Precision · Recall · F1"
+          data-title="분류 결과: 공식 test 최종 평가"
           data-sec="④ 기준 모델 · 머신러닝"
           data-t="70"
         >
           <div class="chap">④ 기준 모델 · 머신러닝</div>
           <h2 class="r" style="--d: 0">
-            기준 모델 F1 <em>0.59 → 0.92</em>: 머신러닝이 필요한 이유
+            기준 모델 F1 <em>0.59 → 0.92</em>: 위험 69대 중 65대 탐지
           </h2>
-          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 26px; align-items: start">
+          <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
+            최종 평가: 공식 test 248대 (모델과 경보 기준을 확정한 뒤 엔진별 마지막 관측 시점에 적용)
+          </p>
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; align-items: stretch">
             <div class="card r" style="--d: 250">
-                <h3>validation F1 (49대, 모든 운행 시점)</h3>
-                <div class="bars" style="margin-top: 14px">
-                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
-                    <span class="lab">기준 (Z-score)</span>
-                    <div class="trk"><i style="--w: 58.3%; background: var(--lgray)"></i></div>
-                    <span class="val">0.58</span>
-                  </div>
-                  <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.9s">
-                    <span class="lab">RandomForest (0.36)</span>
-                    <div class="trk"><i style="--w: 86.3%; background: var(--rf)"></i></div>
-                    <span class="val">0.86</span>
-                  </div>
-                </div>
-                <div class="axis">F1 (0~1, 높을수록 좋음)</div>
-              </div>
-            <div class="card r" style="--d: 400">
-                <h3>공식 test F1 (248대, 엔진별 마지막 관측 시점)</h3>
+                <h3>공식 test F1</h3>
                 <div class="bars" style="margin-top: 14px">
                   <div class="bar" style="grid-template-columns: 260px 1fr 90px; --bd: 0.7s">
                     <span class="lab">기준 (Z-score)</span>
@@ -2899,29 +2887,49 @@
                 </div>
                 <div class="axis">F1 (0~1, 높을수록 좋음)</div>
               </div>
+            <div class="card r" style="--d: 400">
+                <h3>재현율 · 정밀도 (95% 신뢰구간)</h3>
+                <table style="font-size: 23px; width: 100%; margin-top: 10px">
+                  <tr><th>모델</th><th class="n">재현율</th><th class="n">정밀도</th></tr>
+                  <tr><td>기준 (Z-score)</td><td class="n">0.55 <span style="color:var(--muted);font-size:19px">(0.43–0.66)</span></td><td class="n">0.63 <span style="color:var(--muted);font-size:19px">(0.51–0.74)</span></td></tr>
+                  <tr class="sel"><td>RandomForest</td><td class="n"><b>0.94</b> <span style="color:var(--muted);font-size:19px">(0.86–0.98)</span></td><td class="n"><b>0.89</b> <span style="color:var(--muted);font-size:19px">(0.80–0.94)</span></td></tr>
+                </table>
+                <div class="cap" style="margin-top: 8px; font-size: 19px">위험 엔진이 69대뿐이라 구간이 넓음 · 재현율 구간이 겹치지 않아 차이는 확실</div>
+              </div>
           </div>
           <div class="grid" style="grid-template-columns: 1.3fr 0.9fr; gap: 36px; margin-top: 20px; align-items: center">
-            <div class="r" style="--d: 700">
-              <img
-                class="fig"
-                style="width: 100%"
-                src="assets/cls_confusion_matrix.png"
-                alt="혼동행렬: 기준 모델 vs RandomForest"
-              />
-              <div class="cap">혼동행렬 (validation 49대의 모든 사이클, 위험 = 남은 수명 ≤ 40)</div>
+            <div class="card r" style="--d: 700; padding: 16px 20px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+                  <div>
+                    <div style="font-size:24px;font-weight:800;margin-bottom:8px;color:var(--ink2)">기준 모델 (Z-score)</div>
+                    <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:6px;align-items:stretch">
+                      <div></div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 (위험 예측)</div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 없음</div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 위험</div><div style="background:#05507d;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">잡아냄 TP</div><div style="font-size:46px;font-weight:800;line-height:1.1">38</div><div style="font-size:19px;opacity:.9">위험 → 경보</div></div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">놓침 FN</div><div style="font-size:46px;font-weight:800;line-height:1.1">31</div><div style="font-size:19px;opacity:.9">위험 → 경보 없음</div></div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 정상</div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">헛경보 FP</div><div style="font-size:46px;font-weight:800;line-height:1.1">22</div><div style="font-size:19px;opacity:.9">정상 → 경보</div></div><div style="background:#00a5e5;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">정상 맞춤 TN</div><div style="font-size:46px;font-weight:800;line-height:1.1">157</div><div style="font-size:19px;opacity:.9">정상 → 경보 없음</div></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:24px;font-weight:800;margin-bottom:8px;color:var(--blue)">RandomForest (0.36)</div>
+                    <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:6px;align-items:stretch">
+                      <div></div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 (위험 예측)</div><div style="text-align:center;font-size:19px;color:var(--ink2)">경보 없음</div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 위험</div><div style="background:#05507d;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">잡아냄 TP</div><div style="font-size:46px;font-weight:800;line-height:1.1">65</div><div style="font-size:19px;opacity:.9">위험 → 경보</div></div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">놓침 FN</div><div style="font-size:46px;font-weight:800;line-height:1.1">4</div><div style="font-size:19px;opacity:.9">위험 → 경보 없음</div></div>
+                      <div style="writing-mode:vertical-rl;font-size:19px;color:var(--ink2);text-align:center">실제 정상</div><div style="background:#bdbdba;color:#000;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">헛경보 FP</div><div style="font-size:46px;font-weight:800;line-height:1.1">8</div><div style="font-size:19px;opacity:.9">정상 → 경보</div></div><div style="background:#00a5e5;color:#fff;border-radius:10px;padding:10px 6px;text-align:center"><div style="font-size:22px;font-weight:700">정상 맞춤 TN</div><div style="font-size:46px;font-weight:800;line-height:1.1">171</div><div style="font-size:19px;opacity:.9">정상 → 경보 없음</div></div>
+                    </div>
+                  </div>
+              </div>
+              <div class="cap" style="margin-top: 8px">공식 test 혼동행렬 (248대, 위험 = 남은 수명 ≤ 40: 위험 69대, 정상 179대)</div>
             </div>
             <div>
               <ul class="b" style="margin-top: 0">
-                <li class="r" style="--d: 900; font-size: 26px; margin: 26px 0">위험 69대 중 RF는 <b>65대 탐지</b> (놓침 4), 안전 179대 중 헛경보 8</li>
-                <li class="r" style="--d: 1050; font-size: 26px; margin: 26px 0">확률 기준 0.5 → <b>0.36</b>: 재현율 0.90 → 0.94 (위험을 놓치지 않는 것 우선)</li>
-                <li class="r" style="--d: 1200; font-size: 26px; margin: 26px 0">정확도는 쓰지 않음 — 위험이 소수라 "항상 정상"도 높게 나옴</li>
+                <li class="r" style="--d: 900; font-size: 25px; margin: 18px 0">위험 69대 중 <b>65대 탐지</b> (재현율 94%) · 놓침 4, 헛경보 8</li>
+                <li class="r" style="--d: 1050; font-size: 25px; margin: 18px 0">0.36은 test를 보기 전에 정한 값 · 0.5였다면 놓침 7, 헛경보 6 → <b>3대를 더 잡고 헛경보 2건</b> 감수</li>
+                <li class="r" style="--d: 1200; font-size: 25px; margin: 18px 0">정확도는 쓰지 않음 — 위험이 드물어서 <b>"전부 정상"이라고만 해도 72%</b>가 나옴 → 위험을 얼마나 찾았는지(재현율·정밀도·F1)로 평가</li>
               </ul>
             </div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
         </section>
-
 <!-- 선택 과제 -->
 <section
   class="slide"
@@ -3968,6 +3976,7 @@
             #improvement-directions .summary-column + .summary-column {
               border-left: 1px solid #f2f2f1;
               padding-left: 36px;
+              padding-right: 0;
             }
             #improvement-directions .summary-label {
               display: flex;
@@ -4008,7 +4017,7 @@
               font-size: 32px;
               line-height: 1.9;
               letter-spacing: 0.01em;
-              white-space: normal;
+              white-space: nowrap;
             }
           </style>
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
@@ -4041,7 +4050,7 @@
               <ul class="summary-details">
                 <li>엔진 분할을 바꿔 반복 검증</li>
                 <li>고장 모드별 성능 확인</li>
-                <li>초기 대비 변화량 특성:<br />시험했으나 전체 개선 없음</li>
+                <li>초기 대비 변화량 특성: 시험했으나 전체 개선 없음</li>
               </ul>
             </div>
             <div class="summary-column r" style="--d: 590">
@@ -4113,8 +4122,8 @@
         "② 전처리 4단계. ① 점검: FD004 train·test 모두 결측값 0, 중복 행 0, 엔진별 사이클이 1씩 이어짐 → 채우거나 지울 것이 없음. ② 정답 라벨 만들기: 데이터에 남은 수명(RUL) 열이 없어 '엔진의 마지막 사이클 − 현재 사이클'로 계산하고, 가장 짧은 수명(128)보다 작은 125에서 자름. ③ 운전조건 6가지별로 따로 표준화(Z-score)(조건 변화가 열화로 보이지 않게). ④ 엔진 단위 200/49 분할, 표준화 기준(평균·표준편차)은 학습 엔진만으로 계산(누수 방지), 공식 test는 마지막에 한 번. 센서 15개를 고른 이유는 앞 슬라이드(데이터 이해)에서 설명.",
         "③ 시계열(그림). 앞 슬라이드 내용을 그림으로 확인: 엔진 #1·#25·#60의 추세성 상위 센서 4개(운전조건 보정값). 회색 박스=초반에는 3대 값이 겹침, 파란 박스=엔진마다 다른 시점에 상승. 직선 상관 0.51~0.57 → 직선 추세만으로는 한계.",
         "③ 특성과 중요도. 발표 순서: ① 특성 만들기 — 센서의 최근 15사이클에서 현재값·평균·표준편차(흔들림)·기울기 4가지를 계산(그림은 엔진 #1 고장 직전 80사이클의 s9 실제 값: 평균 8,570, 표준편차 6.2, 기울기 +1.3/사이클). 센서 15개 × 4 = 특성 60개(15는 서로 다른 숫자: 센서 수, 구간 길이). ② 구간 길이 정하기 — 5·10·15·20·30을 RandomForest로 비교(분할 2가지 평균): 5~20은 차이 거의 없어 15 유지, 30은 고장 직전 오차가 커서 제외. 15가 최적이라고 증명한 것은 아님. ③ 중요한 센서 확인 — 모델 중요도 상위 8개 중 5개가 추세성 상위 8개와 겹침(s8·s11·s13·s14·s17) → 노이즈가 아니라 실제 열화 신호. 1위 s3(고압 압축기 출구 온도), 팬 속도 s8도 상위 → 고장 부위 2곳 반영.",
-        "④ 필수 과제(위험 분류) 진행 과정. ① 정답 라벨: 남은 수명 40 이하=위험(1), 그 외=정상(0). ② 입력: 센서 15개로 특성 60개(현재값·최근 15사이클 평균·표준편차·기울기). ③ 모델 2개를 같은 분할(학습 200/검증 49)로 학습: 기준 모델(점수 규칙: 센서가 엔진 초반(정상)보다 얼마나 벗어났는지 평균 낸 점수, 기준점 이상이면 위험. 정상 구간은 처음 30사이클로 가정, 검증하지 않음)과 RandomForest 분류(위험 확률). ④ 경보 기준: 기본 0.5에서 0.36으로 낮춤. 위험을 놓치지 않는 것을 우선해, 학습 엔진 5-겹 교차검증에서 위험을 90% 이상 잡는(재현율 0.9 이상) 값 중 헛경보가 가장 적은(정밀도 최대) 값. 검증·test 엔진은 기준을 정하는 데 쓰지 않음. ⑤ 평가: 혼동행렬·정밀도·재현율·F1(정확도 단독 보고 안 함). 후보 비교 표는 같은 경보 기준 0.36으로 다시 계산한 결과(validation 49대, scripts/19_classification_candidates.py): RF 정밀도 0.84·재현율 0.89·F1 0.86, HistGradientBoosting 0.85·0.88·0.86, LogisticRegression 0.84·0.86·0.85, IsolationForest(비지도, 이상 점수 기준) 0.68·0.83·0.74. 0.36은 RF 기준으로 고른 값이라 다른 모델에는 같은 기준을 맞춰 적용한 것일 뿐 각자의 최적 값이 아님 → 확률 품질을 보는 보정 오차(예측 확률과 실제 위험 비율의 차이, 낮을수록 좋음)를 같이 보여줌: RF 0.008, LogisticRegression 0.013, HGB 0.018 (IsolationForest는 확률이 없어 해당 없음). 이 수치는 RF를 먼저 고른 뒤에 확인한 사후 값이며 선택 이유가 아님. 질문이 나오면: 임곗값 기준으로 경보를 쓰므로 확률이 믿을 만한 RF가 유리하지만, 오탐율·test F1은 HGB가 약간 높아 전체 성능은 동급이라고 답할 것. 기본 0.5에서는 HGB F1 0.859, RF 0.854로 순서가 달랐으며 차이가 작아서 특성 중요도를 확인할 수 있는 RF를 대표로 사용.",
-        "④ 분류 결과. 공식 test(248대) 기준 F1 기준 0.59 → RF 0.92, 정밀도·재현율은 표 참고. 혼동행렬 그림은 validation 49대 기준. 확률 기준 0.36은 위험을 놓치지 않는 것을 우선해 학습 엔진 교차검증으로 정함. 위험 69대 중 65대 탐지(놓침 4, 헛경보 8). 정확도는 위험이 소수라 쓰지 않음.",
+        "④ 필수 과제(위험 분류) 진행 과정. ① 정답 라벨: 남은 수명 40 이하=위험(1), 그 외=정상(0). ② 입력: 센서 15개로 특성 60개(현재값·최근 15사이클 평균·표준편차·기울기). ③ 모델 2개를 같은 분할(학습 200/검증 49)로 학습: 기준 모델(점수 규칙: 센서가 엔진 초반(정상)보다 얼마나 벗어났는지 평균 낸 점수, 기준점 이상이면 위험. 정상 구간은 처음 30사이클로 가정, 검증하지 않음)과 RandomForest 분류(위험 확률). ④ 경보 기준: 기본 0.5에서 0.36으로 낮춤. 위험을 놓치지 않는 것을 우선해, 학습 엔진 5-겹 교차검증에서 위험을 90% 이상 잡는(재현율 0.9 이상) 값 중 헛경보가 가장 적은(정밀도 최대) 값. 검증·test 엔진은 기준을 정하는 데 쓰지 않음. ⑤ 평가: 혼동행렬·정밀도·재현율·F1(정확도 단독 보고 안 함). 후보 비교 표는 같은 경보 기준 0.36으로 다시 계산한 결과(validation 49대, scripts/19_classification_candidates.py): RF 정밀도 0.84·재현율 0.89·F1 0.86, HistGradientBoosting 0.85·0.88·0.86, LogisticRegression 0.84·0.86·0.85, IsolationForest(비지도, 이상 점수 기준) 0.68·0.83·0.74. 0.36은 RF 기준으로 고른 값이라 다른 모델에는 같은 기준을 맞춰 적용한 것일 뿐 각자의 최적 값이 아님 → 확률 품질을 보는 보정 오차(예측 확률과 실제 위험 비율의 차이, 낮을수록 좋음)를 같이 보여줌: RF 0.008, LogisticRegression 0.013, HGB 0.018 (IsolationForest는 확률이 없어 해당 없음). 이 수치는 RF를 먼저 고른 뒤에 확인한 사후 값이며 선택 이유가 아님. 질문이 나오면: 임곗값 기준으로 경보를 쓰므로 확률이 믿을 만한 RF가 유리하지만, 오탐율·test F1은 HGB가 약간 높아 전체 성능은 동급이라고 답할 것. 기본 0.5에서는 HGB F1 0.859, RF 0.854로 순서가 달랐으며 차이가 작아서 특성 중요도를 확인할 수 있는 RF를 대표로 사용. 표에 기준 모델(이동 Z-score) 행을 추가: validation 정밀도 0.57·재현율 0.60·F1 0.58(점수 규칙이라 보정 오차 없음). 이 슬라이드는 모델·경보 기준의 선정 근거(학습 교차검증·validation)이고, 공식 test 최종 결과는 다음 슬라이드(11번).",
+        "④ 분류 결과(최종 평가). 10번 슬라이드가 선정 근거(학습 교차검증·validation), 이 슬라이드가 공식 test 최종 결과. 공식 test 248대(엔진별 마지막 관측 시점, 위험 69대·정상 179대): 기준 모델 F1 0.589(재현율 0.551, 정밀도 0.633; TP 38, FN 31, FP 22, TN 157) 대 RandomForest 0.36 F1 0.915(재현율 0.942, 정밀도 0.890; TP 65, FN 4, FP 8, TN 171). 95% 신뢰구간(Wilson): 재현율 기준 0.43–0.66 대 RF 0.86–0.98(겹치지 않아 차이는 확실), 정밀도 기준 0.51–0.74 대 RF 0.80–0.94. 위험 엔진이 69대뿐이라 구간이 넓음. 0.36은 학습 엔진 5-겹 교차검증으로 정한 값이며 test를 보기 전에 확정. 참고로 0.5였다면 test에서 놓침 7, 헛경보 6이었음(TP 62). 이 비교는 확인용이고 test를 보고 기준을 바꾼 것이 아님을 분명히 말할 것. 정확도는 안전한 시점이 많아 쓰지 않음. 예전 validation 비교(F1 0.58 대 0.86)는 10번 후보 표로 옮김.",
         "④ 선택 과제(남은 수명 예측) 진행 과정. ① 정답 라벨: 총 사이클 − 현재 사이클 = 고장까지 남은 사이클 수(예: 총 200, 지금 150번째면 50), 125에서 자름(가장 짧은 엔진 수명 128을 고려). ② 모델 3개: 기준 모델(평균 수명 − 현재 사이클, 센서 미사용), RandomForest 회귀(특성 60개), GRU 회귀(센서 15개의 지금까지 기록을 순서대로 입력). ③ 후보 8종(Ridge·RandomForest·ExtraTrees·HistGB·MLP·1D-CNN·LSTM·GRU)을 같은 분할·같은 지표로 비교해 최종 모델 선정. ④ 평가: MAE(평균 오차), RMSE(큰 오차에 민감), NASA 점수(늦게 예측하면 벌점). 모든 모델 공통: 같은 분할·지표·시드 42. GRU 설명: 센서 기록을 사이클 순서대로 읽으면서 앞의 정보를 기억해 두는 순환 신경망(RNN)의 한 종류. 기억 게이트가 무엇을 남기고 무엇을 버릴지 학습하며 LSTM보다 구조가 단순하다.",
         "④ 회귀 결과. MAE 47.4 → 21.8 → 17.3(GRU). 오차 63.5% 감소. 후보 8종 그래프: MAE가 작을수록 미탐도 낮음(r=0.87), 오탐은 무관. validation 기준 그림임을 말하기. 하단 두 줄은 외부 논문의 FD004 표와 비교한 것(Akbari Pour 2025 Table 5, He 2024 Table II). 논문마다 전처리·구간 길이가 달라 참고용이라고 말하기. 2021년 이후 최신 모델은 RMSE 14~21로 우리보다 좋으니 '최고 성능'이라고 말하지 말 것. GRU 선택 근거는 내부 비교: LSTM 대비 학습 시드 3회 MAE 17.04±0.72 대 19.35±1.43.",
         "⑤ 위험 기준 40의 근거. 과제 예시값 30에서 바꾼 이유를 설명: 경보 → 주간 계획 회의(0~6일 뒤) → 정비 준비 최소 7일 → 정비 가능한 날까지 대기(10~20일 간격) = 경보 후 정비까지 평균 17사이클(7~32사이클 범위, 시뮬레이션 200회 평균, 1일=1사이클)(출처: de Pater 외 2022, 비용 1:2는 Lee & Mitici 2023). 논문 운영 조건으로 비용 시뮬레이션 → 최적 40. 30이면 정비 전 고장 14.3%, 비용 +48%. 비용 비율 1:5와 1:2 둘 다 40. 질문 대비: 시뮬레이션이며 실제 항공사 값이 아니라는 점, 강사님 확인 사항.",
