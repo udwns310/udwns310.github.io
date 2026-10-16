@@ -1,0 +1,43 @@
+        <!-- 데이터 파일과 참고 문헌 -->
+        <section
+          class="slide"
+          data-title="사용한 데이터 파일과 참고 문헌"
+          data-sec="② 데이터 이해 · 전처리"
+          data-t="45"
+        >
+          <div class="chap">② 데이터 이해 · 전처리</div>
+          <h2 class="r" style="--d: 0">사용한 <em>데이터 파일</em>과 <em>참고 문헌</em></h2>
+          <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
+            NASA C-MAPSS 터보팬 엔진 열화 시뮬레이션 데이터 · 2개 세트(FD004, FD001), 파일 6개
+          </p>
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 20px; align-items: stretch">
+            <div class="card r" style="--d: 250; padding: 18px 22px">
+              <h3 style="margin-bottom: 8px">데이터 파일</h3>
+              <table style="font-size: 21px; width: 100%">
+                <tr><th>파일</th><th class="n">행</th><th class="n">엔진</th><th>용도</th></tr>
+                <tr class="sel"><td>train_FD004</td><td class="n">61,249</td><td class="n">249대</td><td>학습 200대 + 검증 49대</td></tr>
+                <tr class="sel"><td>test_FD004</td><td class="n">41,214</td><td class="n">248대</td><td>공식 test 평가</td></tr>
+                <tr class="sel"><td>RUL_FD004</td><td class="n">248</td><td class="n">248대</td><td>test 정답(남은 수명)</td></tr>
+                <tr><td>train_FD001</td><td class="n">20,631</td><td class="n">100대</td><td rowspan="3" style="vertical-align: middle">교차 검증<br />(비교용)</td></tr>
+                <tr><td>test_FD001</td><td class="n">13,096</td><td class="n">100대</td></tr>
+                <tr><td>RUL_FD001</td><td class="n">100</td><td class="n">100대</td></tr>
+              </table>
+              <div class="cap" style="margin-top: 8px; font-size: 18px; line-height: 1.4">
+                train·test는 26열: 엔진 번호 1 + 사이클 1 + 운전 설정 3 + 센서 21 (RUL 파일은 1열) · 실제 항공사 데이터가 아닌 <b>시뮬레이션 데이터</b> · 내려받은 곳: NASA PCoE 데이터 저장소(Turbofan Engine Degradation Simulation)
+              </div>
+            </div>
+            <div class="card r" style="--d: 450; padding: 18px 22px">
+              <h3 style="margin-bottom: 8px">참고 문헌과 쓴 곳</h3>
+              <table style="font-size: 20px; width: 100%">
+                <tr><th>자료</th><th>사용한 내용</th></tr>
+                <tr><td>Saxena 외 (2008), PHM 2008<br /><span style="color: var(--muted); font-size: 17px">Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation</span></td><td>데이터 출처, 센서 이름·단위, NASA 점수</td></tr>
+                <tr><td>de Pater, Reijns &amp; Mitici (2022)<br /><span style="color: var(--muted); font-size: 17px">Reliability Eng. &amp; System Safety 221, 108341</span></td><td>정비 준비 7일, 정비 슬롯 10~20일, 주간 계획, 비용 1:5</td></tr>
+                <tr><td>Lee &amp; Mitici (2023)<br /><span style="color: var(--muted); font-size: 17px">Reliability Eng. &amp; System Safety 230, 108908</span></td><td>비용 1:2, 정비 준비 며칠</td></tr>
+                <tr><td>MathWorks<br /><span style="color: var(--muted); font-size: 17px">Sequence-to-Sequence Regression Using Deep Learning</span></td><td>RUL 상한(125로 조정), Z-score, 순환 신경망 구조</td></tr>
+                <tr><td>MathWorks<br /><span style="color: var(--muted); font-size: 17px">Similarity-Based RUL Estimation</span></td><td>운전조건별 정규화, 센서 추세성</td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
