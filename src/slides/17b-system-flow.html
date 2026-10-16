@@ -1,0 +1,62 @@
+        <!-- 시스템 개요와 역할별 시나리오 -->
+        <section
+          class="slide"
+          data-title="시스템 개요: 예측에서 알림·결재까지"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="70"
+        >
+          <style>
+            .sf-row { display: grid; grid-template-columns: 240px 1fr; gap: 16px; align-items: stretch; margin-top: 52px; min-height: 270px; }
+            .sf-lane { border-radius: 14px; color: #fff; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center; }
+            .sf-lane b { font-size: 36px; line-height: 1.2; }
+            .sf-lane span { font-size: 22px; opacity: .9; margin-top: 4px; }
+            .sf-flow { display: flex; align-items: stretch; gap: 0; }
+            .sf-step { flex: 1; min-width: 0; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 18px 16px; font-size: 28px; line-height: 1.35; display: flex; flex-direction: column; justify-content: center; }
+            .sf-step small { display: block; font-size: 21px; color: var(--muted); margin-top: 3px; line-height: 1.3; }
+            .sf-step .n { display: inline-flex; width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 21px; font-weight: 800; align-items: center; justify-content: center; margin-right: 6px; vertical-align: 1px; }
+            .sf-branch { flex: 2.3; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+            .sf-branch .sf-step { flex: 1; padding: 12px 16px; }
+            .sf-step b { display: inline-block; font-size: 22px; color: #fff; border-radius: 8px; padding: 0 10px; margin-right: 8px; }
+            .sf-step.ok { border-color: var(--green); }
+            .sf-step.ok b { background: var(--green); }
+            .sf-step.no { border-color: #8b9190; }
+            .sf-step.no b { background: #8b9190; }
+            .sf-ar { flex: none; width: 30px; display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 30px; font-weight: 800; }
+          </style>
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0; font-size: 54px">
+            시스템 개요: <em>예측에서 알림·결재까지</em>
+          </h2>
+          <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
+            프로젝트 목표: 엔진이 고장 나기 전에 정비 시점을 알려, 긴급 정비를 계획 정비로 바꾼다
+          </p>
+
+          <div class="sf-row r" style="--d: 250">
+            <div class="sf-lane" style="background: var(--blue)"><b>정비 담당자</b><span>로그인 후 올리는 사람</span></div>
+            <div class="sf-flow">
+              <div class="sf-step"><span class="n">1</span>로그인<small>역할별 권한</small></div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">2</span>현황·알림에서 즉시 조치 엔진 확인<small>새 즉시 조치는 Slack 알림</small></div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">3</span>엔진 상세: 남은 수명, 점검 예상 모듈</div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">4</span>정비 계획: 검토 시작 → 결재 요청<small>Slack 알림</small></div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">5</span>결재 결과 확인<small>승인: 정비 후 완료 처리 · 반려: 수정해 재요청</small></div>
+            </div>
+          </div>
+
+          <div class="sf-row r" style="--d: 600">
+            <div class="sf-lane" style="background: var(--green)"><b>운영 책임자</b><span>승인·반려하는 사람</span></div>
+            <div class="sf-flow">
+              <div class="sf-step"><span class="n">1</span>로그인<small>역할별 권한</small></div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">2</span>결재함: 올라온 요청과 근거 검증</div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">3</span>승인할까, 반려할까?<small>판단은 사람이</small></div><div class="sf-ar">→</div>
+              <div class="sf-branch">
+                <div class="sf-step ok"><b>승인</b> 정비 일정 확정<small>정비 후 효과·주간 리포트로 확인 · Slack 알림</small></div>
+                <div class="sf-step no"><b>반려</b> 사유 기록 → 담당자가 수정해 재요청<small>Slack 알림</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="foot">
+            Sentinel · 5조 감시자들 · 로그인은 시연용 계정 · Slack은 연결 시 동작 · 화면의 비용 수치는 가정 기반
+          </div>
+          <div class="pg"></div>
+        </section>
