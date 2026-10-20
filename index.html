@@ -2162,7 +2162,7 @@
                 <div class="ag-n">6</div>
                 <div>
                   <h3>현장 활용 · 한계 · 개선</h3>
-                  <p>담당자 역할별 활용 시나리오, 한계, 개선 방향</p>
+                  <p>담당자 역할별 활용 시나리오, SWOT, 우리나라 환경 시나리오</p>
                 </div>
               </div>
             </div>
@@ -3940,140 +3940,147 @@
           <div class="pg"></div>
         </section>
 
-        <!-- 19 한계와 개선 방향 -->
+        <!-- 19 SWOT 분석 -->
         <section
           id="analysis-limits"
           class="slide"
-          data-title="한계와 개선 방향"
+          data-title="SWOT 분석"
           data-sec="⑥ 현장 활용 · 한계 · 개선"
           data-t="25"
         >
           <style>
-            #analysis-limits .li-grid {
+            #analysis-limits .sw-grid {
               display: grid;
-              grid-template-columns: 110px repeat(2, minmax(0, 1fr));
-              column-gap: 40px;
-              margin-top: 40px;
+              grid-template-columns: 1fr 1fr;
+              gap: 22px 28px;
+              margin-top: 30px;
             }
-            #analysis-limits .li-tag {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 34px;
-              font-weight: 800;
-              color: var(--ink2);
-              writing-mode: horizontal-tb;
-            }
-            #analysis-limits .li-tag.imp {
-              color: var(--blue);
-            }
-            #analysis-limits .li-box {
+            #analysis-limits .sw-card {
+              position: relative;
               background: var(--surface);
-              border: 2px solid var(--ink2);
+              border: 2px solid var(--line);
+              border-top-width: 8px;
               border-radius: 14px;
-              padding: 22px 28px;
-              height: 330px;
+              padding: 20px 30px 14px;
+              height: 318px;
+              overflow: hidden;
             }
-            #analysis-limits .li-box.imp {
-              border-color: var(--blue);
-              height: 360px;
-            }
-            #analysis-limits .li-box h3 {
-              font-size: 38px;
+            #analysis-limits .sw-card.s { border-top-color: var(--blue); --c: var(--blue); }
+            #analysis-limits .sw-card.w { border-top-color: var(--amber); --c: #c98a14; }
+            #analysis-limits .sw-card.o { border-top-color: var(--green); --c: var(--green); }
+            #analysis-limits .sw-card.t { border-top-color: var(--red); --c: var(--red); }
+            #analysis-limits .sw-bg {
+              position: absolute;
+              right: 22px;
+              top: -6px;
+              font-size: 150px;
               font-weight: 800;
-              line-height: 1.25;
-              letter-spacing: -0.015em;
+              line-height: 1;
+              color: var(--c);
+              opacity: 0.1;
             }
-            #analysis-limits .li-box h3 span {
-              color: var(--blue);
-              background: linear-gradient(transparent 78%, #cdebf4 78%);
-            }
-            #analysis-limits .li-box .nm {
-              display: block;
+            #analysis-limits .sw-tag {
+              display: inline-block;
               font-size: 22px;
-              font-weight: 700;
-              color: var(--muted);
-              margin-bottom: 6px;
+              font-weight: 800;
+              letter-spacing: 0.04em;
+              color: #fff;
+              background: var(--c);
+              border-radius: 8px;
+              padding: 3px 14px;
             }
-            #analysis-limits .li-box ul {
-              margin-top: 16px;
+            #analysis-limits .sw-msg {
+              margin-top: 10px;
+              font-size: 40px;
+              font-weight: 800;
+              line-height: 1.22;
+              letter-spacing: -0.02em;
+              color: var(--ink);
             }
-            #analysis-limits .li-box li {
-              font-size: 29px;
-              line-height: 1.6;
+            #analysis-limits .sw-msg span {
+              color: var(--c);
+              background: linear-gradient(transparent 78%, rgba(0, 0, 0, 0.07) 78%);
+            }
+            #analysis-limits .sw-card ul {
+              margin-top: 12px;
+            }
+            #analysis-limits .sw-card li {
+              font-size: 25px;
+              line-height: 1.58;
               color: var(--ink2);
-              letter-spacing: 0.005em;
               white-space: nowrap;
             }
-            #analysis-limits .li-arrow {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 78px;
+            #analysis-limits .sw-card li b {
+              color: var(--c);
+              font-weight: 800;
             }
-            #analysis-limits .li-arrow svg {
-              width: 40px;
-              height: 62px;
+            #analysis-limits .sw-act {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 28px;
+              margin-top: 20px;
             }
-            #analysis-limits .li-link {
-              font-size: 22px;
-              font-weight: 700;
-              color: var(--blue);
-              margin-top: 10px;
+            #analysis-limits .sw-act > div {
+              background: var(--blue);
+              border-radius: 12px;
+              padding: 14px 26px;
+              font-size: 25px;
+              line-height: 1.4;
+              color: #fff;
+            }
+            #analysis-limits .sw-act b {
+              color: #9fdcf5;
+              margin-right: 10px;
+              letter-spacing: 0.04em;
             }
           </style>
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0">분석의 <em>한계</em>와 <em>개선</em> 방향</h2>
-          <div class="li-grid">
-            <div class="li-tag r" style="--d: 200">한계</div>
-            <div class="li-box r" style="--d: 250">
-              <span class="nm">01 분석 범위</span>
-              <h3>갑작스러운 고장은<br /><span>예측 범위 밖</span></h3>
+          <h2 class="r" style="--d: 0"><em>SWOT</em> 분석</h2>
+          <div class="sw-grid">
+            <div class="sw-card s r" style="--d: 250">
+              <span class="sw-bg">S</span>
+              <span class="sw-tag">STRENGTH 강점</span>
+              <p class="sw-msg">비용으로 기준을 정하고<br /><span>숫자로 검증했다</span></p>
               <ul>
-                <li>서서히 진행되는 마모만 분석</li>
-                <li>비행 중 즉시 경보는 별도 영역</li>
+                <li>위험 기준 <b>40</b> = 비용 시뮬레이션 최저 (30은 <b>+48%</b>)</li>
+                <li>공식 test 재현율 <b>0.94</b>, F1 <b>0.92</b> (기준 모델 0.59)</li>
+                <li>경보 기준 <b>5안</b> 비교, 사람이 승인하는 흐름까지 구현</li>
               </ul>
             </div>
-            <div class="li-box r" style="--d: 420">
-              <span class="nm">02 데이터 한계</span>
-              <h3>현장을 설명할<br /><span>정보가 부족</span></h3>
+            <div class="sw-card w r" style="--d: 420">
+              <span class="sw-bg">W</span>
+              <span class="sw-tag">WEAKNESS 약점</span>
+              <p class="sw-msg">현실을 모르고<br /><span>시뮬레이션 안에서만</span></p>
               <ul>
-                <li>시뮬레이션 기록·가정 비용·정비 이력 없음</li>
-                <li>사이클 = 비행 1회로 가정 (실제 하루 약 5회)</li>
-                <li>온도·습도 등 운항 환경 정보 없음</li>
+                <li>실제 정비 이력·날씨 없음, 비용은 <b>가정값</b> (1:2, 1:5)</li>
+                <li>사이클 = 비행 1회 가정 (실제 <b>하루 약 5회</b>)</li>
+                <li>엔진 <b>#179</b>는 모든 모델이 오탐</li>
               </ul>
             </div>
-
-
-            <div></div>
-            <div class="li-arrow r" style="--d: 800">
-              <svg viewBox="0 0 40 62"><path d="M20 2v52M6 40l14 14 14-14" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            </div>
-            <div class="li-arrow r" style="--d: 900">
-              <svg viewBox="0 0 40 62"><path d="M20 2v52M6 40l14 14 14-14" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            </div>
-
-
-            <div class="li-tag imp r" style="--d: 1100">개선</div>
-            <div class="li-box imp r" style="--d: 1150">
-              <span class="nm">운영 연동 준비</span>
-              <h3>비행 후 예측을<br /><span>운영 흐름에 연동</span></h3>
+            <div class="sw-card o r" style="--d: 590">
+              <span class="sw-bg">O</span>
+              <span class="sw-tag">OPPORTUNITY 기회</span>
+              <p class="sw-msg">우리나라 환경이<br /><span>기준을 바꾼다</span></p>
               <ul>
-                <li>센서 기록 자동 수집</li>
-                <li>비행 후 예측 갱신</li>
-                <li>정비 준비 시간 부족 시 긴급 표시</li>
+                <li>국내 저비용 하루 <b>4.6~6.1회</b> → 기준 40은 <b>94%</b> 고장</li>
+                <li>기준 <b>95~120</b>으로 올리면 정비 전 고장 <b>13~26%</b></li>
+                <li>여름 평균 <b>25°C·습도 84%</b>, 공공 기상 API로 확장</li>
               </ul>
             </div>
-            <div class="li-box imp r" style="--d: 1250">
-              <span class="nm">실제 기록 확보</span>
-              <h3>실제 기록으로<br /><span>현장 기준 보완</span></h3>
+            <div class="sw-card t r" style="--d: 760">
+              <span class="sw-bg">T</span>
+              <span class="sw-tag">THREAT 위협</span>
+              <p class="sw-msg">실제 검증 전에는<br /><span>현장 적용 불가</span></p>
               <ul>
-                <li>운항·정비 이력, 실제 비용 수집</li>
-                <li>국내 운항 횟수·공항 날씨 반영</li>
-                <li class="li-link">→ 다음 장: 우리나라 환경에서는?</li>
+                <li>비용 가정에 민감: 하루 5회 최적 기준 <b>105 ↔ 140</b></li>
+                <li>환경 점수 시험: 놓침 8→3, 헛경보 1→4 <b>(개선 아님)</b></li>
+                <li>갑작스러운 고장은 분석 범위 밖</li>
               </ul>
             </div>
-
+          </div>
+          <div class="sw-act r" style="--d: 950">
+            <div><b>W × O</b>정비 이력·비행 일시 확보 → 운항 횟수·공항 날씨 반영</div>
+            <div><b>S × T</b>경보 5안·시나리오로 가정 비용 변화의 영향 확인</div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
@@ -4252,7 +4259,7 @@
         "⑤ 경보 기준 5가지 안 비교 보고. 안: A GRU 예측 ≤ 40(비용 최우선, test를 보기 전에 validation 비용 시뮬레이션으로 정한 값), B GRU ≤ 42(절충), C GRU ≤ 46(test 놓침이 0이 되는 가장 작은 GRU 기준), D RF 분류 확률 ≥ 0.36(RF 현재 설정, train 교차검증으로 정한 값), E RF 분류 확률 ≥ 0.10(test 놓침 0이 되는 가장 높은 RF 기준). 결과: test 놓침/헛경보 A 8/1, B 3/3, C 0/5, D 4/8, E 0/22. validation 정비 시뮬레이션(비용 1:5): 정비 전 고장 A 0.19%, B 0.09%, C 0%, D 1.3%, E 0%. 비용 A 4.47, B 4.50, C 4.57, D 4.82, E 6.14. 평균 낭비(정비 시점에 남은 수명) A 26, B 28, C 33, D 33, E 89사이클. 해석: 놓침 0이 목표여도 GRU는 헛경보 5대, RF는 22대. 같은 놓침 수(0)에서 GRU 5 vs RF 22, 놓침 4 근처에서 GRU 2~3 vs RF 8. 주의: B·C·E의 test 값은 test를 보고 고른 기준이라 최종 기준 확정에 쓰면 사후 선택이 되므로 민감도 확인으로만 쓸 것. 표본이 작아(위험 엔진 69대, validation 49대) 안 사이의 작은 차이는 우연일 수 있음. 비용은 가정 기반 시뮬레이션. 우리의 선택: 분석은 A(40), 놓침을 더 중시하는 운영이라면 B~C. 근거: scripts/15_alert_comparison.py 및 alert_comparison_*.csv.",
         "⑥ 시스템 개요와 역할별 시나리오. 프로젝트 목표(고장 전에 정비 시점을 알려 긴급 정비를 계획 정비로)와 대시보드 흐름을 연결. 뒤에서 도는 분석: 비행 후 센서 데이터 → GRU 남은 수명 예측(90% 구간) → 위험 등급(빨강 40 이하, 노랑 80 미만) → 새로 \"즉시 조치\"가 된 엔진은 Slack으로 자동 알림(설정에서 끌 수 있음). 정비 담당자 로그인: 현황·알림에서 즉시 조치 엔진 확인 → 엔진 상세(남은 수명, 점검 예상 모듈) → 정비 계획에서 검토 시작, 결재 요청 → Slack 결재 알림. 운영 책임자 로그인: 결재함에서 요청 검증 → 승인 또는 반려(사유 기록) → Slack 알림(승인·반려·정비 완료) → 정비 효과·주간 리포트 확인. 권한: 담당자는 검토·결재 요청·회수·정비 완료, 책임자만 승인·반려(대시보드 plan 권한 규칙). 이 부분이 Human-in-the-Loop(결정은 사람)에 해당하고 AX 설계 부분. 주의: 로그인은 서버 없는 시연용 가짜 계정이며 보안 기능이 아님. Slack 알림은 서버 함수와 웹훅(SLACK_WEBHOOK_URL)이 연결돼야 동작하고, 연결 안 된 시연 환경에서는 \"미연결\"로 표시됨. 모바일은 Slack 앱 푸시를 이용하는 것이며 실제 휴대폰 수신은 발표 전 확인할 것. 화면의 가동중단·비용 금액은 가정 기반 시뮬레이션. 실제 정비 이력 입력과 오탐·놓침 피드백으로 모델을 다시 맞추는 루프는 아직 없음(다음 단계). 분기: 책임자가 승인하면 정비 일정이 확정되고 담당자가 정비 후 정비 완료 처리, 정비 효과·주간 리포트로 확인. 반려하면 사유를 기록하고 담당자가 수정해 다시 결재 요청(반려 상태에서 재요청 가능). 승인·반려·정비 완료·결재 요청 때마다 Slack 알림(연결 시). Slack은 부가 기능이라 강조하지 않아도 됨.",
         "⑥ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 화면은 실제 대시보드 캡처(홈 = 플릿 9대, 설비 상세 = #198). 가능하면 2분 라이브 데모(홈 → 설비 상세 → 시나리오). 가동중단·비용 수치는 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
-        "⑥ 분석의 한계와 개선 방향. 위가 한계, 아래가 그에 대한 개선. 분석 범위는 서서히 진행되는 마모뿐이라 비행 후 예측을 운영 흐름에 연동하는 것이 개선. 데이터는 시뮬레이션과 가정 비용이고 사이클을 비행 1회로 가정했으므로 실제 이력 수집과 국내 운항 패턴 반영이 개선(다음 두 장).",
+        "⑥ SWOT 분석. 강점: 위험 기준 40은 비용 시뮬레이션에서 최저(30은 비용 +48%), 공식 test 재현율 0.94·F1 0.92(기준 모델 0.59), 경보 기준 5안 비교와 사람이 승인하는 흐름까지 구현. 약점: 실제 정비 이력·날씨가 없고 비용은 가정값(1:2, 1:5), 사이클=비행 1회 가정(실제 하루 약 5회), 엔진 #179는 모든 모델이 오탐. 기회: 국내 저비용 항공사는 하루 4.6~6.1회라 기준 40은 94%가 정비 전 고장, 기준을 95~120으로 올리면 13~26%. 여름 평균 25°C·습도 84%이고 공공 기상 API로 확장 가능. 위협: 비용 가정에 민감(하루 5회 최적 기준이 비용 1:2면 105, 1:5면 140), 환경 점수 시험은 개선 아님(놓침 8→3, 헛경보 1→4), 갑작스러운 고장은 범위 밖. 다음 단계는 W×O(정비 이력·비행 일시 확보 후 운항 횟수·날씨 반영), S×T(5안·시나리오로 가정 비용 영향 확인).",
         "⑥ 우리나라 환경 ①. C-MAPSS는 시뮬레이션이라 항공기가 하루 1번 비행한다고 가정. 공공데이터(한국공항공사·인천공항)로 추정한 국내 항공기 1대의 하루 비행 횟수는 저비용 항공사 4.6~6.1회, 대한항공 2.6회, 아시아나 3.3회. 기상청 공항기상관측(AMOS) 7개 공항의 2025년 월별 기온·습도는 여름 평균 25°C·습도 84%, 최고 35.5°C로 고온다습(표본: 매월 15일 4개 시각). 즉 국내 운항은 하루 비행이 많고 여름 환경이 가혹함.",
         "⑥ 우리나라 환경에서 해본 시나리오 분석(시뮬레이션 데이터에 대입, 실제 항공사 검증은 아님). ① 하루 5회 비행이면 기준 40은 정비 전 고장 94%로 너무 늦음. 기준을 95~120으로 올리면 13~26%, 140이면 6%, 고장 임박 엔진 놓침은 모두 0. 라벨 상한 125에서는 N이 110을 넘으면 예측이 막혀 의미가 없어 상한을 234로 올려 재학습했고, 대신 125 이하 구간 평균 오차가 8.8에서 13.4로 커짐. ② 운전 조건 6가지에 열 부하 점수를 매겨 GRU에 넣은 시험: 평균 오차는 거의 같고(시드 변동 안), 놓침 8→3, 헛경보 1→4로 맞바뀜. 뚜렷한 개선 아님. 습도는 데이터에 없어 못 넣음.",
         "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"

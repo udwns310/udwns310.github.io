@@ -1,137 +1,144 @@
-        <!-- 19 한계와 개선 방향 -->
+        <!-- 19 SWOT 분석 -->
         <section
           id="analysis-limits"
           class="slide"
-          data-title="한계와 개선 방향"
+          data-title="SWOT 분석"
           data-sec="⑥ 현장 활용 · 한계 · 개선"
           data-t="25"
         >
           <style>
-            #analysis-limits .li-grid {
+            #analysis-limits .sw-grid {
               display: grid;
-              grid-template-columns: 110px repeat(2, minmax(0, 1fr));
-              column-gap: 40px;
-              margin-top: 40px;
+              grid-template-columns: 1fr 1fr;
+              gap: 22px 28px;
+              margin-top: 30px;
             }
-            #analysis-limits .li-tag {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 34px;
-              font-weight: 800;
-              color: var(--ink2);
-              writing-mode: horizontal-tb;
-            }
-            #analysis-limits .li-tag.imp {
-              color: var(--blue);
-            }
-            #analysis-limits .li-box {
+            #analysis-limits .sw-card {
+              position: relative;
               background: var(--surface);
-              border: 2px solid var(--ink2);
+              border: 2px solid var(--line);
+              border-top-width: 8px;
               border-radius: 14px;
-              padding: 22px 28px;
-              height: 330px;
+              padding: 20px 30px 14px;
+              height: 318px;
+              overflow: hidden;
             }
-            #analysis-limits .li-box.imp {
-              border-color: var(--blue);
-              height: 360px;
-            }
-            #analysis-limits .li-box h3 {
-              font-size: 38px;
+            #analysis-limits .sw-card.s { border-top-color: var(--blue); --c: var(--blue); }
+            #analysis-limits .sw-card.w { border-top-color: var(--amber); --c: #c98a14; }
+            #analysis-limits .sw-card.o { border-top-color: var(--green); --c: var(--green); }
+            #analysis-limits .sw-card.t { border-top-color: var(--red); --c: var(--red); }
+            #analysis-limits .sw-bg {
+              position: absolute;
+              right: 22px;
+              top: -6px;
+              font-size: 150px;
               font-weight: 800;
-              line-height: 1.25;
-              letter-spacing: -0.015em;
+              line-height: 1;
+              color: var(--c);
+              opacity: 0.1;
             }
-            #analysis-limits .li-box h3 span {
-              color: var(--blue);
-              background: linear-gradient(transparent 78%, #cdebf4 78%);
-            }
-            #analysis-limits .li-box .nm {
-              display: block;
+            #analysis-limits .sw-tag {
+              display: inline-block;
               font-size: 22px;
-              font-weight: 700;
-              color: var(--muted);
-              margin-bottom: 6px;
+              font-weight: 800;
+              letter-spacing: 0.04em;
+              color: #fff;
+              background: var(--c);
+              border-radius: 8px;
+              padding: 3px 14px;
             }
-            #analysis-limits .li-box ul {
-              margin-top: 16px;
+            #analysis-limits .sw-msg {
+              margin-top: 10px;
+              font-size: 40px;
+              font-weight: 800;
+              line-height: 1.22;
+              letter-spacing: -0.02em;
+              color: var(--ink);
             }
-            #analysis-limits .li-box li {
-              font-size: 29px;
-              line-height: 1.6;
+            #analysis-limits .sw-msg span {
+              color: var(--c);
+              background: linear-gradient(transparent 78%, rgba(0, 0, 0, 0.07) 78%);
+            }
+            #analysis-limits .sw-card ul {
+              margin-top: 12px;
+            }
+            #analysis-limits .sw-card li {
+              font-size: 25px;
+              line-height: 1.58;
               color: var(--ink2);
-              letter-spacing: 0.005em;
               white-space: nowrap;
             }
-            #analysis-limits .li-arrow {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 78px;
+            #analysis-limits .sw-card li b {
+              color: var(--c);
+              font-weight: 800;
             }
-            #analysis-limits .li-arrow svg {
-              width: 40px;
-              height: 62px;
+            #analysis-limits .sw-act {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 28px;
+              margin-top: 20px;
             }
-            #analysis-limits .li-link {
-              font-size: 22px;
-              font-weight: 700;
-              color: var(--blue);
-              margin-top: 10px;
+            #analysis-limits .sw-act > div {
+              background: var(--blue);
+              border-radius: 12px;
+              padding: 14px 26px;
+              font-size: 25px;
+              line-height: 1.4;
+              color: #fff;
+            }
+            #analysis-limits .sw-act b {
+              color: #9fdcf5;
+              margin-right: 10px;
+              letter-spacing: 0.04em;
             }
           </style>
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0">분석의 <em>한계</em>와 <em>개선</em> 방향</h2>
-          <div class="li-grid">
-            <div class="li-tag r" style="--d: 200">한계</div>
-            <div class="li-box r" style="--d: 250">
-              <span class="nm">01 분석 범위</span>
-              <h3>갑작스러운 고장은<br /><span>예측 범위 밖</span></h3>
+          <h2 class="r" style="--d: 0"><em>SWOT</em> 분석</h2>
+          <div class="sw-grid">
+            <div class="sw-card s r" style="--d: 250">
+              <span class="sw-bg">S</span>
+              <span class="sw-tag">STRENGTH 강점</span>
+              <p class="sw-msg">비용으로 기준을 정하고<br /><span>숫자로 검증했다</span></p>
               <ul>
-                <li>서서히 진행되는 마모만 분석</li>
-                <li>비행 중 즉시 경보는 별도 영역</li>
+                <li>위험 기준 <b>40</b> = 비용 시뮬레이션 최저 (30은 <b>+48%</b>)</li>
+                <li>공식 test 재현율 <b>0.94</b>, F1 <b>0.92</b> (기준 모델 0.59)</li>
+                <li>경보 기준 <b>5안</b> 비교, 사람이 승인하는 흐름까지 구현</li>
               </ul>
             </div>
-            <div class="li-box r" style="--d: 420">
-              <span class="nm">02 데이터 한계</span>
-              <h3>현장을 설명할<br /><span>정보가 부족</span></h3>
+            <div class="sw-card w r" style="--d: 420">
+              <span class="sw-bg">W</span>
+              <span class="sw-tag">WEAKNESS 약점</span>
+              <p class="sw-msg">현실을 모르고<br /><span>시뮬레이션 안에서만</span></p>
               <ul>
-                <li>시뮬레이션 기록·가정 비용·정비 이력 없음</li>
-                <li>사이클 = 비행 1회로 가정 (실제 하루 약 5회)</li>
-                <li>온도·습도 등 운항 환경 정보 없음</li>
+                <li>실제 정비 이력·날씨 없음, 비용은 <b>가정값</b> (1:2, 1:5)</li>
+                <li>사이클 = 비행 1회 가정 (실제 <b>하루 약 5회</b>)</li>
+                <li>엔진 <b>#179</b>는 모든 모델이 오탐</li>
               </ul>
             </div>
-
-
-            <div></div>
-            <div class="li-arrow r" style="--d: 800">
-              <svg viewBox="0 0 40 62"><path d="M20 2v52M6 40l14 14 14-14" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            </div>
-            <div class="li-arrow r" style="--d: 900">
-              <svg viewBox="0 0 40 62"><path d="M20 2v52M6 40l14 14 14-14" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            </div>
-
-
-            <div class="li-tag imp r" style="--d: 1100">개선</div>
-            <div class="li-box imp r" style="--d: 1150">
-              <span class="nm">운영 연동 준비</span>
-              <h3>비행 후 예측을<br /><span>운영 흐름에 연동</span></h3>
+            <div class="sw-card o r" style="--d: 590">
+              <span class="sw-bg">O</span>
+              <span class="sw-tag">OPPORTUNITY 기회</span>
+              <p class="sw-msg">우리나라 환경이<br /><span>기준을 바꾼다</span></p>
               <ul>
-                <li>센서 기록 자동 수집</li>
-                <li>비행 후 예측 갱신</li>
-                <li>정비 준비 시간 부족 시 긴급 표시</li>
+                <li>국내 저비용 하루 <b>4.6~6.1회</b> → 기준 40은 <b>94%</b> 고장</li>
+                <li>기준 <b>95~120</b>으로 올리면 정비 전 고장 <b>13~26%</b></li>
+                <li>여름 평균 <b>25°C·습도 84%</b>, 공공 기상 API로 확장</li>
               </ul>
             </div>
-            <div class="li-box imp r" style="--d: 1250">
-              <span class="nm">실제 기록 확보</span>
-              <h3>실제 기록으로<br /><span>현장 기준 보완</span></h3>
+            <div class="sw-card t r" style="--d: 760">
+              <span class="sw-bg">T</span>
+              <span class="sw-tag">THREAT 위협</span>
+              <p class="sw-msg">실제 검증 전에는<br /><span>현장 적용 불가</span></p>
               <ul>
-                <li>운항·정비 이력, 실제 비용 수집</li>
-                <li>국내 운항 횟수·공항 날씨 반영</li>
-                <li class="li-link">→ 다음 장: 우리나라 환경에서는?</li>
+                <li>비용 가정에 민감: 하루 5회 최적 기준 <b>105 ↔ 140</b></li>
+                <li>환경 점수 시험: 놓침 8→3, 헛경보 1→4 <b>(개선 아님)</b></li>
+                <li>갑작스러운 고장은 분석 범위 밖</li>
               </ul>
             </div>
-
+          </div>
+          <div class="sw-act r" style="--d: 950">
+            <div><b>W × O</b>정비 이력·비행 일시 확보 → 운항 횟수·공항 날씨 반영</div>
+            <div><b>S × T</b>경보 5안·시나리오로 가정 비용 변화의 영향 확인</div>
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
