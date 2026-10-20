@@ -1,0 +1,52 @@
+        <!-- 19b 우리나라 환경 ① 운항 횟수와 공항 날씨 -->
+        <section
+          id="flight-pattern"
+          class="slide"
+          data-title="우리나라 환경 ① 운항 횟수와 공항 날씨"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="25"
+        >
+          <style>
+            #flight-pattern .fp-row { display: grid; grid-template-columns: 150px 1fr 56px; align-items: center; height: 36px; font-size: 21px; }
+            #flight-pattern .fp-bar { height: 20px; border-radius: 0 4px 4px 0; background: var(--lgray); }
+            #flight-pattern .fp-bar.lcc { background: var(--blue); }
+            #flight-pattern .fp-v { text-align: right; font-weight: 700; }
+            #flight-pattern .wx { display: grid; grid-template-columns: repeat(12, 1fr); align-items: end; gap: 6px; height: 190px; }
+            #flight-pattern .wx-c { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+            #flight-pattern .wx-b { width: 100%; border-radius: 4px 4px 0 0; }
+            #flight-pattern .wx-v { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
+            #flight-pattern .wx-m { font-size: 17px; color: var(--muted); margin-top: 4px; }
+            #flight-pattern h4 { font-size: 23px; font-weight: 700; color: var(--ink2); margin: 10px 0 6px; }
+          </style>
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0">우리나라 환경은 어떻게 다른가 <em>① 운항 횟수와 날씨</em></h2>
+          <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
+            C-MAPSS는 시뮬레이션이라 "하루 1회 비행"을 가정함 · 공공데이터로 국내 현실을 확인
+          </p>
+          <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 18px; align-items: stretch">
+            <div class="card r" style="--d: 250; padding: 18px 26px">
+              <h3 style="margin-bottom: 6px">항공기 1대의 하루 비행 횟수 (2025)</h3>
+              <div style="font-size: 18px; color: var(--muted); height: 24px">회/일 · 파랑 = 저비용 항공사 · 논문 가정은 하루 1회</div>
+              <div class="fp-row"><span>이스타항공</span><div><div class="fp-bar lcc" style="width:100%"></div></div><span class="fp-v">6.1</span></div><div class="fp-row"><span>에어로케이</span><div><div class="fp-bar lcc" style="width:92%"></div></div><span class="fp-v">5.6</span></div><div class="fp-row"><span>진에어</span><div><div class="fp-bar lcc" style="width:92%"></div></div><span class="fp-v">5.6</span></div><div class="fp-row"><span>에어서울</span><div><div class="fp-bar lcc" style="width:87%"></div></div><span class="fp-v">5.3</span></div><div class="fp-row"><span>에어부산</span><div><div class="fp-bar lcc" style="width:82%"></div></div><span class="fp-v">5.0</span></div><div class="fp-row"><span>제주항공</span><div><div class="fp-bar lcc" style="width:80%"></div></div><span class="fp-v">4.9</span></div><div class="fp-row"><span>티웨이항공</span><div><div class="fp-bar lcc" style="width:75%"></div></div><span class="fp-v">4.6</span></div><div class="fp-row"><span>아시아나항공</span><div><div class="fp-bar" style="width:54%"></div></div><span class="fp-v">3.3</span></div><div class="fp-row"><span>대한항공</span><div><div class="fp-bar" style="width:43%"></div></div><span class="fp-v">2.6</span></div><div class="fp-row"><span>에어프레미아</span><div><div class="fp-bar" style="width:31%"></div></div><span class="fp-v">1.9</span></div>
+              <div class="cap" style="margin-top: 6px; font-size: 18px; line-height: 1.4">
+                (국내선 출발 + 국제선 출발·도착 편수) ÷ (보유 여객기 × 365) · 한국공항공사·인천공항 공공데이터
+              </div>
+            </div>
+            <div class="card r" style="--d: 450; padding: 18px 26px">
+              <h3 style="margin-bottom: 2px">국내 공항 7곳의 월별 기온·습도 (2025)</h3>
+              <h4>평균 기온 (°C)</h4>
+              <div class="wx"><div class="wx-c"><div class="wx-v">0</div><div class="wx-b" style="height:2px;background:var(--blue)"></div><div class="wx-m">1</div></div><div class="wx-c"><div class="wx-v">4</div><div class="wx-b" style="height:18px;background:var(--blue)"></div><div class="wx-m">2</div></div><div class="wx-c"><div class="wx-v">9</div><div class="wx-b" style="height:40px;background:var(--blue)"></div><div class="wx-m">3</div></div><div class="wx-c"><div class="wx-v">10</div><div class="wx-b" style="height:41px;background:var(--blue)"></div><div class="wx-m">4</div></div><div class="wx-c"><div class="wx-v">20</div><div class="wx-b" style="height:87px;background:var(--blue)"></div><div class="wx-m">5</div></div><div class="wx-c"><div class="wx-v">23</div><div class="wx-b" style="height:100px;background:var(--blue)"></div><div class="wx-m">6</div></div><div class="wx-c"><div class="wx-v">24</div><div class="wx-b" style="height:103px;background:var(--blue)"></div><div class="wx-m">7</div></div><div class="wx-c"><div class="wx-v">28</div><div class="wx-b" style="height:121px;background:var(--blue)"></div><div class="wx-m">8</div></div><div class="wx-c"><div class="wx-v">26</div><div class="wx-b" style="height:111px;background:var(--blue)"></div><div class="wx-m">9</div></div><div class="wx-c"><div class="wx-v">20</div><div class="wx-b" style="height:89px;background:var(--blue)"></div><div class="wx-m">10</div></div><div class="wx-c"><div class="wx-v">10</div><div class="wx-b" style="height:43px;background:var(--blue)"></div><div class="wx-m">11</div></div><div class="wx-c"><div class="wx-v">4</div><div class="wx-b" style="height:16px;background:var(--blue)"></div><div class="wx-m">12</div></div></div>
+              <h4>평균 습도 (%)</h4>
+              <div class="wx"><div class="wx-c"><div class="wx-v">43</div><div class="wx-b" style="height:56px;background:var(--lblue)"></div><div class="wx-m">1</div></div><div class="wx-c"><div class="wx-v">67</div><div class="wx-b" style="height:87px;background:var(--lblue)"></div><div class="wx-m">2</div></div><div class="wx-c"><div class="wx-v">65</div><div class="wx-b" style="height:84px;background:var(--lblue)"></div><div class="wx-m">3</div></div><div class="wx-c"><div class="wx-v">64</div><div class="wx-b" style="height:83px;background:var(--lblue)"></div><div class="wx-m">4</div></div><div class="wx-c"><div class="wx-v">82</div><div class="wx-b" style="height:107px;background:var(--lblue)"></div><div class="wx-m">5</div></div><div class="wx-c"><div class="wx-v">86</div><div class="wx-b" style="height:112px;background:var(--lblue)"></div><div class="wx-m">6</div></div><div class="wx-c"><div class="wx-v">85</div><div class="wx-b" style="height:111px;background:var(--lblue)"></div><div class="wx-m">7</div></div><div class="wx-c"><div class="wx-v">82</div><div class="wx-b" style="height:106px;background:var(--lblue)"></div><div class="wx-m">8</div></div><div class="wx-c"><div class="wx-v">83</div><div class="wx-b" style="height:108px;background:var(--lblue)"></div><div class="wx-m">9</div></div><div class="wx-c"><div class="wx-v">86</div><div class="wx-b" style="height:111px;background:var(--lblue)"></div><div class="wx-m">10</div></div><div class="wx-c"><div class="wx-v">65</div><div class="wx-b" style="height:85px;background:var(--lblue)"></div><div class="wx-m">11</div></div><div class="wx-c"><div class="wx-v">66</div><div class="wx-b" style="height:85px;background:var(--lblue)"></div><div class="wx-m">12</div></div></div>
+              <div class="cap" style="margin-top: 6px; font-size: 18px; line-height: 1.4">
+                기상청 공항기상관측(AMOS) · 매월 15일 02·08·14·20시 표본, 7개 공항 합산 · 여름 평균 25°C·습도 84%, 최고 35.5°C
+              </div>
+            </div>
+          </div>
+          <div class="r" style="--d: 650; margin-top: 16px; font-size: 27px; font-weight: 700; line-height: 1.5">
+            국내 저비용 항공사는 <span style="color: var(--blue)">하루 4.6~6.1회</span> 비행, 여름은 <span style="color: var(--blue)">고온·다습</span> — 엔진에 더 가혹한 환경
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+

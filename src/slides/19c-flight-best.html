@@ -1,0 +1,58 @@
+        <!-- 19c 우리나라 환경에서 해봤더니 -->
+        <section
+          id="flight-best"
+          class="slide"
+          data-title="우리나라 환경에서 해봤더니"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="30"
+        >
+          <style>
+            #flight-best table td { padding-top: 12px; padding-bottom: 12px; }
+          </style>
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0">우리나라 환경에서 <em>해봤더니</em></h2>
+          <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
+            시뮬레이션 데이터에 국내 운항 횟수와 운전 환경을 대입한 시나리오 분석 · 실제 항공사 검증은 아님
+          </p>
+          <div class="grid" style="grid-template-columns: 1.15fr 1fr; gap: 32px; margin-top: 18px; align-items: stretch">
+            <div class="card r" style="--d: 250; padding: 18px 24px">
+              <h3 style="margin-bottom: 4px">① 하루 5회 비행이면 경보 기준은?</h3>
+              <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">GRU 예측 남은 수명 ≤ N · 라벨 상한 234로 재학습 · 하루 1회면 N=40이 최적</div>
+              <table style="font-size: 23px; width: 100%">
+                <tr><th>기준</th><th class="n">정비 전<br />고장</th><th class="n">비용<br />(1:5/1:2)</th><th class="n">test<br />경보</th><th class="n">놓침</th><th class="n">헛경보</th></tr>
+                <tr><td>N = 40</td><td class="n">94%</td><td class="n">19.3 / 7.9</td><td class="n">65</td><td class="n">8</td><td class="n">4</td></tr>
+                <tr><td>N = 95</td><td class="n">26%</td><td class="n">9.3 / 5.7</td><td class="n">148</td><td class="n">0</td><td class="n">18</td></tr>
+                <tr><td>N = 110</td><td class="n">17%</td><td class="n">8.2 / 5.7</td><td class="n">171</td><td class="n">0</td><td class="n">22</td></tr>
+                <tr class="sel"><td>N = 120</td><td class="n">13%</td><td class="n">7.8 / 5.8</td><td class="n">180</td><td class="n">0</td><td class="n">17</td></tr>
+                <tr><td>N = 140</td><td class="n">6%</td><td class="n">7.3 / 6.2</td><td class="n">206</td><td class="n">0</td><td class="n">18</td></tr>
+              </table>
+              <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
+                기준 40은 하루 5회에선 <span style="color: var(--blue)">너무 늦음</span> → 운항 횟수에 맞춰 기준을 올려야 함
+              </div>
+              <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.4">
+                정비 전 고장·비용 = validation 49대 시뮬레이션 · 놓침·헛경보 = 공식 test(고장 임박 69대) · 상한을 올리면 125 이하 구간 평균 오차 8.8 → 13.4
+              </div>
+            </div>
+            <div class="card r" style="--d: 450; padding: 18px 24px">
+              <h3 style="margin-bottom: 4px">② 운전 환경 점수를 넣어 봤더니</h3>
+              <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">운전 조건 6가지에 열 부하 점수(0~1)를 매겨 GRU 입력에 추가 (train에서만 산정)</div>
+              <table style="font-size: 23px; width: 100%">
+                <tr><th>지표 (기준 40)</th><th class="n">기존</th><th class="n">+환경 점수</th></tr>
+                <tr><td>validation 평균 오차</td><td class="n">7.82</td><td class="n">7.61</td></tr>
+                <tr><td>test 평균 오차</td><td class="n">17.31</td><td class="n">16.97</td></tr>
+                <tr><td>test 놓침</td><td class="n">8</td><td class="n">3</td></tr>
+                <tr><td>test 헛경보</td><td class="n">1</td><td class="n">4</td></tr>
+                <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n">21</td></tr>
+              </table>
+              <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
+                놓침은 줄고 헛경보는 늘어 <span style="color: var(--blue)">서로 맞바뀐 수준</span> — 뚜렷한 개선은 아님
+              </div>
+              <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.4">
+                시드 1회 · 평균 오차 차이는 시드 간 변동(±0.7) 안 · 습도는 데이터에 없어 넣지 못함 · 실제 공항 날씨는 비행 일시·공항 기록이 있어야 연결 가능
+              </div>
+            </div>
+          </div>
+          <div class="foot">Sentinel · 5조 감시자들</div>
+          <div class="pg"></div>
+        </section>
+
