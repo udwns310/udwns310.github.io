@@ -3489,7 +3489,7 @@
                   / +5%</span
                 ></span
               ><span class="l" style="margin-top: 0"
-                ><b>기준 45 / 50</b><br />40보다 늘어나는 비용<br />너무 일찍 정비해서</span
+                ><b>기준 45 / 50</b><br />40보다 늘어나는 비용<br />지나치게 일찍 정비해서</span
               >
             </div>
           </div>
@@ -3520,7 +3520,7 @@
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
           <h2 class="r" style="--d: 0">
-            FD004로 배운 GRU, <em>다른 데이터에도 통할까?</em>
+            FD004로 배운 GRU, <em>다른 데이터에도 적용될까?</em>
           </h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
             FD001 = 같은 엔진 시뮬레이션의 더 단순한 서브셋 · GRU 공식 test 오차 (MAE, 사이클 · 낮을수록 좋음)
@@ -3545,7 +3545,7 @@
             </div>
             <div style="display: flex; flex-direction: column; gap: 14px">
               <div class="card r" style="--d: 600; padding: 14px 22px">
-                <div style="font-size: 28px; font-weight: 800"><span style="display:inline-block;background:var(--blue);color:#fff;font-size:22px;font-weight:800;padding:1px 14px;border-radius:999px;margin-right:12px;vertical-align:3px">통함</span>복잡 → 단순</div>
+                <div style="font-size: 28px; font-weight: 800"><span style="display:inline-block;background:var(--blue);color:#fff;font-size:22px;font-weight:800;padding:1px 14px;border-radius:999px;margin-right:12px;vertical-align:3px">적용 가능</span>복잡 → 단순</div>
                 <div style="font-size: 25px; line-height: 1.45; margin-top: 6px; color: var(--ink2)">FD004로 배운 GRU를 FD001에 적용: 오차 <b>11.2</b> (FD001 전용 모델 9.6에 근접)</div>
               </div>
               <div class="card r" style="--d: 800; padding: 14px 22px">
@@ -3562,7 +3562,7 @@
             class="r"
             style="--d: 1200; margin-top: 18px; background: var(--blue); color: #fff; border-radius: 16px; padding: 14px 28px; font-size: 28px; font-weight: 700; text-align: center"
           >
-            복잡한 데이터로 배운 모델은 단순한 데이터에서도 통하지만, 반대는 아님
+            복잡한 데이터로 배운 모델은 단순한 데이터에서도 적용되지만, 반대는 아님
           </div>
           <div class="foot">Sentinel · 5조 감시자들</div>
           <div class="pg"></div>
@@ -3575,7 +3575,7 @@
           data-t="25"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">RF 오탐 사례 — 엔진 #179: <em>한참 남았는데 경보</em></h2>
+          <h2 class="r" style="--d: 0">RF 오탐 사례 — 엔진 #179: <em>수명이 충분한데 경보</em></h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
             RF 분류(위험 확률 ≥ 0.36) · validation 엔진 #179 (수명 435사이클, 헛경보 59사이클)
           </p>
@@ -3727,7 +3727,7 @@
           data-t="8"
         >
           <div class="chap">⑤ 평가 · 오류 분석</div>
-          <h2 class="r" style="--d: 0">GRU 미탐 사례 — 엔진 #235: <em>예측이 길어서 경보가 늦음</em></h2>
+          <h2 class="r" style="--d: 0">GRU 미탐 사례 — 엔진 #235: <em>예측이 길어 경보가 늦음</em></h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">GRU(예측 남은 수명 ≤ 40이면 경보) · validation 엔진 #235 (수명 199사이클, 놓침 13사이클)</p>
           <div
             class="grid"
@@ -3875,7 +3875,7 @@
             <div class="sf-flow">
               <div class="sf-step"><span class="n">1</span>로그인<small>역할별 권한</small></div><div class="sf-ar">→</div>
               <div class="sf-step"><span class="n">2</span>결재함: 올라온 요청과 근거 검증</div><div class="sf-ar">→</div>
-              <div class="sf-step"><span class="n">3</span>승인할까, 반려할까?<small>판단은 사람이</small></div><div class="sf-ar">→</div>
+              <div class="sf-step"><span class="n">3</span>승인 또는 반려<small>판단은 사람이</small></div><div class="sf-ar">→</div>
               <div class="sf-branch">
                 <div class="sf-step ok"><b>승인</b> 정비 일정 확정<small>정비 후 효과·주간 리포트로 확인 · Slack 알림</small></div>
                 <div class="sf-step no"><b>반려</b> 사유 기록 → 담당자가 수정해 재요청<small>Slack 알림</small></div>
@@ -4040,7 +4040,7 @@
             <div class="sw-card s r" style="--d: 250">
               <span class="sw-bg">S</span>
               <span class="sw-tag">STRENGTH 강점</span>
-              <p class="sw-msg">비용으로 기준을 정하고<br /><span>숫자로 검증했다</span></p>
+              <p class="sw-msg">비용으로 기준을 정하고<br /><span>수치로 검증</span></p>
               <ul>
                 <li>위험 기준 <b>40</b> = 비용 시뮬레이션 최저 (30은 <b>+48%</b>)</li>
                 <li>공식 test 재현율 <b>0.94</b>, F1 <b>0.92</b> (기준 모델 0.59)</li>
@@ -4050,7 +4050,7 @@
             <div class="sw-card w r" style="--d: 420">
               <span class="sw-bg">W</span>
               <span class="sw-tag">WEAKNESS 약점</span>
-              <p class="sw-msg">현실을 모르고<br /><span>시뮬레이션 안에서만</span></p>
+              <p class="sw-msg">실제 기록 없이<br /><span>시뮬레이션에 의존</span></p>
               <ul>
                 <li>실제 정비 이력·날씨 없음, 비용은 <b>가정값</b> (1:2, 1:5)</li>
                 <li>사이클 = 비행 1회 가정 (실제 <b>하루 약 5회</b>)</li>
@@ -4073,7 +4073,7 @@
               <p class="sw-msg">실제 검증 전에는<br /><span>현장 적용 불가</span></p>
               <ul>
                 <li>비용 가정에 민감: 하루 5회 최적 기준 <b>105 ↔ 140</b></li>
-                <li>환경 점수 시험: 놓침 8→3, 헛경보 1→4 <b>(개선 아님)</b></li>
+                <li>환경 점수 시험: 놓침 8→3, 헛경보 1→4 <b>(개선 미확인)</b></li>
                 <li>갑작스러운 고장은 분석 범위 밖</li>
               </ul>
             </div>
@@ -4090,7 +4090,7 @@
         <section
           id="flight-pattern"
           class="slide"
-          data-title="우리나라 환경 ① 운항 횟수와 공항 날씨"
+          data-title="W × O ① 운항 횟수·날씨를 반영하면"
           data-sec="⑥ 현장 활용 · 한계 · 개선"
           data-t="25"
         >
@@ -4107,9 +4107,9 @@
             #flight-pattern h4 { font-size: 23px; font-weight: 700; color: var(--ink2); margin: 10px 0 6px; }
           </style>
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0">우리나라 환경은 어떻게 다른가 <em>① 운항 횟수와 날씨</em></h2>
+          <h2 class="r" style="--d: 0"><em>W × O ①</em> 운항 횟수·날씨를 반영하면</h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
-            C-MAPSS는 시뮬레이션이라 "하루 1회 비행"을 가정함 · 공공데이터로 국내 현실을 확인
+            약점(하루 1회 가정, 날씨 정보 없음)을 기회(국내 운항·날씨 공공데이터)로 보완 · 공공데이터로 본 국내 현실
           </p>
           <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 18px; align-items: stretch">
             <div class="card r" style="--d: 250; padding: 18px 26px">
@@ -4142,7 +4142,7 @@
         <section
           id="flight-best"
           class="slide"
-          data-title="우리나라 환경에서 해봤더니"
+          data-title="W × O ② 국내 운항·환경 반영 결과"
           data-sec="⑥ 현장 활용 · 한계 · 개선"
           data-t="30"
         >
@@ -4150,7 +4150,7 @@
             #flight-best table td { padding-top: 12px; padding-bottom: 12px; }
           </style>
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0">우리나라 환경에서 <em>해봤더니</em></h2>
+          <h2 class="r" style="--d: 0"><em>W × O ②</em> 국내 운항·환경 반영 결과</h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
             시뮬레이션 데이터에 국내 운항 횟수와 운전 환경을 대입한 시나리오 분석 · 실제 항공사 검증은 아님
           </p>
@@ -4167,14 +4167,14 @@
                 <tr><td>N = 140</td><td class="n">6%</td><td class="n">7.3 / 6.2</td><td class="n">206</td><td class="n">0</td><td class="n">18</td></tr>
               </table>
               <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
-                기준 40은 하루 5회에선 <span style="color: var(--blue)">너무 늦음</span> → 운항 횟수에 맞춰 기준을 올려야 함
+                기준 40은 하루 5회 운항에는 <span style="color: var(--blue)">경보가 늦음</span> → 운항 횟수에 맞춘 기준 상향
               </div>
               <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.4">
                 정비 전 고장·비용 = validation 49대 시뮬레이션 · 놓침·헛경보 = 공식 test(고장 임박 69대) · 상한을 올리면 125 이하 구간 평균 오차 8.8 → 13.4
               </div>
             </div>
             <div class="card r" style="--d: 450; padding: 18px 24px">
-              <h3 style="margin-bottom: 4px">② 운전 환경 점수를 넣어 봤더니</h3>
+              <h3 style="margin-bottom: 4px">② 운전 환경 점수 추가 시험</h3>
               <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">운전 조건 6가지에 열 부하 점수(0~1)를 매겨 GRU 입력에 추가 (train에서만 산정)</div>
               <table style="font-size: 23px; width: 100%">
                 <tr><th>지표 (기준 40)</th><th class="n">기존</th><th class="n">+환경 점수</th></tr>
@@ -4185,7 +4185,7 @@
                 <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n">21</td></tr>
               </table>
               <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
-                놓침은 줄고 헛경보는 늘어 <span style="color: var(--blue)">서로 맞바뀐 수준</span> — 뚜렷한 개선은 아님
+                놓침은 줄고 헛경보는 늘어 <span style="color: var(--blue)">상쇄되는 수준</span> — 뚜렷한 개선은 확인되지 않음
               </div>
               <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.4">
                 시드 1회 · 평균 오차 차이는 시드 간 변동(±0.7) 안 · 습도는 데이터에 없어 넣지 못함 · 실제 공항 날씨는 비행 일시·공항 기록이 있어야 연결 가능
@@ -4261,7 +4261,7 @@
         "⑥ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 화면은 실제 대시보드 캡처(홈 = 플릿 9대, 설비 상세 = #198). 가능하면 2분 라이브 데모(홈 → 설비 상세 → 시나리오). 가동중단·비용 수치는 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
         "⑥ SWOT 분석. 강점: 위험 기준 40은 비용 시뮬레이션에서 최저(30은 비용 +48%), 공식 test 재현율 0.94·F1 0.92(기준 모델 0.59), 경보 기준 5안 비교와 사람이 승인하는 흐름까지 구현. 약점: 실제 정비 이력·날씨가 없고 비용은 가정값(1:2, 1:5), 사이클=비행 1회 가정(실제 하루 약 5회), 엔진 #179는 모든 모델이 오탐. 기회: 국내 저비용 항공사는 하루 4.6~6.1회라 기준 40은 94%가 정비 전 고장, 기준을 95~120으로 올리면 13~26%. 여름 평균 25°C·습도 84%이고 공공 기상 API로 확장 가능. 위협: 비용 가정에 민감(하루 5회 최적 기준이 비용 1:2면 105, 1:5면 140), 환경 점수 시험은 개선 아님(놓침 8→3, 헛경보 1→4), 갑작스러운 고장은 범위 밖. 다음 단계는 W×O(정비 이력·비행 일시 확보 후 운항 횟수·날씨 반영), S×T(5안·시나리오로 가정 비용 영향 확인).",
         "⑥ 우리나라 환경 ①. C-MAPSS는 시뮬레이션이라 항공기가 하루 1번 비행한다고 가정. 공공데이터(한국공항공사·인천공항)로 추정한 국내 항공기 1대의 하루 비행 횟수는 저비용 항공사 4.6~6.1회, 대한항공 2.6회, 아시아나 3.3회. 기상청 공항기상관측(AMOS) 7개 공항의 2025년 월별 기온·습도는 여름 평균 25°C·습도 84%, 최고 35.5°C로 고온다습(표본: 매월 15일 4개 시각). 즉 국내 운항은 하루 비행이 많고 여름 환경이 가혹함.",
-        "⑥ 우리나라 환경에서 해본 시나리오 분석(시뮬레이션 데이터에 대입, 실제 항공사 검증은 아님). ① 하루 5회 비행이면 기준 40은 정비 전 고장 94%로 너무 늦음. 기준을 95~120으로 올리면 13~26%, 140이면 6%, 고장 임박 엔진 놓침은 모두 0. 라벨 상한 125에서는 N이 110을 넘으면 예측이 막혀 의미가 없어 상한을 234로 올려 재학습했고, 대신 125 이하 구간 평균 오차가 8.8에서 13.4로 커짐. ② 운전 조건 6가지에 열 부하 점수를 매겨 GRU에 넣은 시험: 평균 오차는 거의 같고(시드 변동 안), 놓침 8→3, 헛경보 1→4로 맞바뀜. 뚜렷한 개선 아님. 습도는 데이터에 없어 못 넣음.",
+        "⑥ W×O: 국내 운항·환경을 반영한 시나리오 분석(시뮬레이션 데이터에 대입, 실제 항공사 검증은 아님). ① 하루 5회 비행이면 기준 40은 정비 전 고장 94%로 너무 늦음. 기준을 95~120으로 올리면 13~26%, 140이면 6%, 고장 임박 엔진 놓침은 모두 0. 라벨 상한 125에서는 N이 110을 넘으면 예측이 막혀 의미가 없어 상한을 234로 올려 재학습했고, 대신 125 이하 구간 평균 오차가 8.8에서 13.4로 커짐. ② 운전 조건 6가지에 열 부하 점수를 매겨 GRU에 넣은 시험: 평균 오차는 거의 같고(시드 변동 안), 놓침 8→3, 헛경보 1→4로 맞바뀜. 뚜렷한 개선 아님. 습도는 데이터에 없어 못 넣음.",
         "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"
 ];
       const deck = document.getElementById("deck"),
