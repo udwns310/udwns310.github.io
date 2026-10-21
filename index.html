@@ -3036,20 +3036,6 @@
     <div class="ps r" style="--d: 400">
       <div class="psh">
         <span class="pn">2</span>
-        <h4>모델 3개 학습</h4>
-      </div>
-      <div class="vis">
-        <div class="chips c3">
-          <span class="chip g">기준 모델</span
-          ><span class="chip g">RandomForest</span
-          ><span class="chip b">GRU</span>
-        </div>
-      </div>
-      <p class="cp">단순 규칙 → 표 모델 → 순서 모델 (입력이 서로 다름, 아래)</p>
-    </div>
-    <div class="ps r" style="--d: 600">
-      <div class="psh">
-        <span class="pn">3</span>
         <h4>후보 8종 비교</h4>
       </div>
       <div class="vis">
@@ -3059,7 +3045,19 @@
           ><span>LSTM</span><span class="sel">GRU</span>
         </div>
       </div>
-      <p class="cp">같은 엔진 분할·같은 지표로 비교해 최종 모델 선정</p>
+      <p class="cp">같은 엔진 분할·같은 지표로 validation에서 비교</p>
+    </div>
+    <div class="ps r" style="--d: 600">
+      <div class="psh">
+        <span class="pn">3</span>
+        <h4>최종 모델 선정</h4>
+      </div>
+      <div class="vis">
+        <div class="chips c3">
+          <span class="chip b">GRU</span>
+        </div>
+      </div>
+      <p class="cp">평균 오차 최저 · 시드 3회 반복도 GRU 우세</p>
     </div>
     <div class="ps r" style="--d: 800">
       <div class="psh">
@@ -3073,7 +3071,7 @@
           ><span><b>NASA 점수</b> 늦은 예측에 벌점</span>
         </div>
       </div>
-      <p class="cp">세 지표로 오차를 비교</p>
+      <p class="cp">공식 test에서 기준 모델·RandomForest·GRU(아래)를 세 지표로 비교</p>
     </div>
   </div>
   <div class="mrow3">
