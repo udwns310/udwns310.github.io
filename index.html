@@ -4119,58 +4119,38 @@
           </div>
           <div class="pg"></div>
         </section>
-        <!-- 15 현장 활용 -->
+        <!-- 시연 영상 -->
         <section
           class="slide"
-          data-title="현장 활용: 대시보드와 보전 시나리오"
+          data-title="시연 영상"
           data-sec="⑥ 현장 활용 · 한계 · 개선"
-          data-t="315"
+          data-t="120"
         >
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0; margin-top: 20px; font-size: 54px">
-            정비 담당자의 월요일 아침: <em>신호등을 보고 일정을 잡는다</em>
-          </h2>
-          <div
-            class="grid"
-            style="grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 22px"
-          >
-            <div class="r" style="--d: 250">
-              <img
-                class="fig"
-                style="width: 100%; border: 2px solid var(--line); border-radius: 14px"
-                src="assets/dash_home.png"
-                alt="대시보드 홈: 엔진 플릿 현황"
+          <h2 class="r" style="--d: 0; font-size: 54px"><em>시연</em> 영상</h2>
+          <div class="r" style="--d: 250; position: relative; width: 1360px; height: 765px; margin: 18px auto 0; border-radius: 14px; overflow: hidden; background: #0b1f2c">
+            <video
+              controls
+              preload="metadata"
+              playsinline
+              style="width: 100%; height: 100%; object-fit: contain; display: block"
+            >
+              <source
+                src="assets/demo.mp4"
+                type="video/mp4"
+                onerror="this.closest('div').querySelector('.demo-miss').style.display = 'flex'"
               />
-              <div class="cap">① 홈: 엔진 플릿 현황 (test 248대 중 9대) — 위험·주의·정상</div>
-            </div>
-            <div class="r" style="--d: 450">
-              <img
-                class="fig"
-                style="width: 100%; border: 2px solid var(--line); border-radius: 14px"
-                src="assets/dash_detail.png"
-                alt="대시보드 설비 상세: Engine #198"
-              />
-              <div class="cap">② 설비 상세: Engine #198 예측 남은 수명 약 17사이클 (90% 구간 2~26)</div>
+            </video>
+            <div
+              class="demo-miss"
+              style="display: none; position: absolute; inset: 0; align-items: center; justify-content: center; color: #9fdcf5; font-size: 30px; pointer-events: none"
+            >
+              assets/demo.mp4 파일을 넣으면 여기서 재생됩니다
             </div>
           </div>
-          <ul class="b" style="margin-top: 14px">
-            <li class="r" style="--d: 900; margin: 4px 0">
-              <span style="font-size: 26px"
-                >비행 후 데이터가 들어오면 갱신되는 <b>예지보전</b> 도구 — 몇 주 단위 정비 계획용 (비행 중 즉시 안전 경보는 별개 시스템)</span
-              >
-            </li>
-            <li class="r" style="--d: 1100; margin: 4px 0">
-              <span style="font-size: 26px"
-                >빨간불 → 다음 정비 슬롯 배정, 부품·인력 준비(최소 7일) · test 결과: 탐지 <b>61</b> / 놓침 <b>8</b> / 헛경보 <b>1</b> (F1 0.93)</span
-              >
-            </li>
-          </ul>
-          <div class="foot">
-            Sentinels · 5조 · 화면의 가동중단·비용 수치는 가정 기반 시뮬레이션
-          </div>
+          <div class="foot">Sentinels · 5조</div>
           <div class="pg"></div>
         </section>
-
         <!-- 18 Q&A -->
         <section class="slide cover" data-title="Q&A" data-sec="" data-t="0">
           <div class="chap r" style="--d: 0">감사합니다</div>
@@ -4235,7 +4215,7 @@
         "⑥ 우리나라 환경 ①. C-MAPSS는 시뮬레이션이라 항공기가 하루 1번 비행한다고 가정. 공공데이터(한국공항공사·인천공항)로 추정한 국내 항공기 1대의 하루 비행 횟수는 국내 항공사 1.9~6.1회(저비용 항공사 4.6~6.1회, 대한항공 2.6회, 아시아나 3.3회). 기상청 공항기상관측(AMOS) 7개 공항의 2025년 월별 기온·습도는 여름 평균 25°C·습도 84%, 최고 35.5°C로 고온다습(표본: 매월 15일 4개 시각). 즉 국내 운항은 하루 비행이 많고 여름 환경이 가혹함.",
         "⑥ W×O: 국내 운항·환경을 반영한 시나리오 분석(시뮬레이션 데이터에 대입, 실제 항공사 검증은 아님). ① 하루 5회 비행이면 기준 40은 정비 전 고장 94%로 너무 늦음. 기준을 95~120으로 올리면 13~26%, 140이면 6%, 고장 임박 엔진 놓침은 모두 0. 라벨 상한 125에서는 N이 110을 넘으면 예측이 막혀 의미가 없어 상한을 234로 올려 재학습했고, 대신 125 이하 구간 평균 오차가 8.8에서 13.4로 커짐. ② 실제 공항 기온·습도(기상청 AMOS 2025)를 점수 4개로 만들어 GRU에 넣은 시험: 비행 기록이 없어 엔진마다 시작 날짜·공항을 무작위로 배정한 가정 시험이며(배정 3가지), 평균 오차는 거의 같고 놓침 8→2~3, 헛경보 1→2~6, 헛경보 엔진 10→23~30으로 맞바뀜. 날씨를 열화와 무관하게 붙인 값이라 개선이 나와도 근거가 아니고, 뚜렷한 개선은 없음. 실제 비행 일시·공항 기록이 있으면 같은 틀로 재검증.",
         "⑥ 시스템 개요와 역할별 시나리오. 프로젝트 목표(고장 전에 정비 시점을 알려 긴급 정비를 계획 정비로)와 대시보드 흐름을 연결. 뒤에서 도는 분석: 비행 후 센서 데이터 → GRU 남은 수명 예측(90% 구간) → 위험 등급(빨강 40 이하, 노랑 80 미만) → 새로 \"즉시 조치\"가 된 엔진은 Slack으로 자동 알림(설정에서 끌 수 있음). 정비 담당자 로그인: 현황·알림에서 즉시 조치 엔진 확인 → 엔진 상세(남은 수명, 점검 예상 모듈) → 정비 계획에서 검토 시작, 결재 요청 → Slack 결재 알림. 운영 책임자 로그인: 결재함에서 요청 검증 → 승인 또는 반려(사유 기록) → Slack 알림(승인·반려·정비 완료) → 정비 효과·주간 리포트 확인. 권한: 담당자는 검토·결재 요청·회수·정비 완료, 책임자만 승인·반려(대시보드 plan 권한 규칙). 이 부분이 Human-in-the-Loop(결정은 사람)에 해당하고 AX 설계 부분. 주의: 로그인은 서버 없는 시연용 가짜 계정이며 보안 기능이 아님. Slack 알림은 서버 함수와 웹훅(SLACK_WEBHOOK_URL)이 연결돼야 동작하고, 연결 안 된 시연 환경에서는 \"미연결\"로 표시됨. 모바일은 Slack 앱 푸시를 이용하는 것이며 실제 휴대폰 수신은 발표 전 확인할 것. 화면의 가동중단·비용 금액은 가정 기반 시뮬레이션. 실제 정비 이력 입력과 오탐·놓침 피드백으로 모델을 다시 맞추는 루프는 아직 없음(다음 단계). 분기: 책임자가 승인하면 정비 일정이 확정되고 담당자가 정비 후 정비 완료 처리, 정비 효과·주간 리포트로 확인. 반려하면 사유를 기록하고 담당자가 수정해 다시 결재 요청(반려 상태에서 재요청 가능). 승인·반려·정비 완료·결재 요청 때마다 Slack 알림(연결 시). Slack은 부가 기능이라 강조하지 않아도 됨.",
-        "⑥ 현장 활용(대시보드). 장면 설명: 비행을 마치고 데이터가 들어오면 갱신. 빨간불 엔진을 다음 정비 슬롯에 배정. #198 예측 수명이 사이클 #99에 40을 넘어 위험 진입. 화면은 실제 대시보드 캡처(홈 = 플릿 9대, 설비 상세 = #198). 가능하면 2분 라이브 데모(홈 → 설비 상세 → 시나리오). 가동중단·비용 수치는 가정값, 실제 결과는 탐지 61/놓침 8/헛경보 1. 비행 중 즉시 경보는 별개 시스템.",
+        "시연 영상 재생. 대시보드 흐름(현황 → 엔진 상세 → 정비 계획 → 결재 요청 → 책임자 승인·반려)을 영상으로 보여주고, 24번 슬라이드의 사람이 결정하는 흐름과 연결해 설명. 영상 파일은 assets/demo.mp4. 재생 버튼은 마우스로 클릭(스페이스·엔터는 슬라이드가 넘어감).",
         "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"
 ];
       const deck = document.getElementById("deck"),

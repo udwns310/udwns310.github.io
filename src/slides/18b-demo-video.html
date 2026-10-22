@@ -1,0 +1,32 @@
+        <!-- 시연 영상 -->
+        <section
+          class="slide"
+          data-title="시연 영상"
+          data-sec="⑥ 현장 활용 · 한계 · 개선"
+          data-t="120"
+        >
+          <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
+          <h2 class="r" style="--d: 0; font-size: 54px"><em>시연</em> 영상</h2>
+          <div class="r" style="--d: 250; position: relative; width: 1360px; height: 765px; margin: 18px auto 0; border-radius: 14px; overflow: hidden; background: #0b1f2c">
+            <video
+              controls
+              preload="metadata"
+              playsinline
+              style="width: 100%; height: 100%; object-fit: contain; display: block"
+            >
+              <source
+                src="assets/demo.mp4"
+                type="video/mp4"
+                onerror="this.closest('div').querySelector('.demo-miss').style.display = 'flex'"
+              />
+            </video>
+            <div
+              class="demo-miss"
+              style="display: none; position: absolute; inset: 0; align-items: center; justify-content: center; color: #9fdcf5; font-size: 30px; pointer-events: none"
+            >
+              assets/demo.mp4 파일을 넣으면 여기서 재생됩니다
+            </div>
+          </div>
+          <div class="foot">Sentinels · 5조</div>
+          <div class="pg"></div>
+        </section>
