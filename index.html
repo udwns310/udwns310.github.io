@@ -1721,8 +1721,14 @@
         opacity: 0;
         transition: opacity 0.3s;
       }
-      body:hover #hud {
+      body.mv #hud {
         opacity: 0.9;
+      }
+      body:not(.mv) {
+        cursor: none;
+      }
+      body:not(.mv) * {
+        cursor: none !important;
       }
       #hud button {
         background: #4b5151;
@@ -4380,7 +4386,15 @@
         if (e.clientX < innerWidth * 0.28) go(-1);
         else go(1);
       });
-
+      // 마우스가 2.5초 가만히 있으면 하단 버튼과 포인터를 숨김
+      let mvTimer;
+      function wakeMouse() {
+        document.body.classList.add("mv");
+        clearTimeout(mvTimer);
+        mvTimer = setTimeout(() => document.body.classList.remove("mv"), 2500);
+      }
+      addEventListener("mousemove", wakeMouse);
+      addEventListener("mousedown", wakeMouse);
       const h = parseInt(location.hash.slice(1));
       show(isNaN(h) ? 0 : h - 1);
     </script>

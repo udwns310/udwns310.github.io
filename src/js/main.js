@@ -160,4 +160,12 @@
         if (e.clientX < innerWidth * 0.28) go(-1);
         else go(1);
       });
-
+      // 마우스가 2.5초 가만히 있으면 하단 버튼과 포인터를 숨김
+      let mvTimer;
+      function wakeMouse() {
+        document.body.classList.add("mv");
+        clearTimeout(mvTimer);
+        mvTimer = setTimeout(() => document.body.classList.remove("mv"), 2500);
+      }
+      addEventListener("mousemove", wakeMouse);
+      addEventListener("mousedown", wakeMouse);

@@ -1712,8 +1712,14 @@
         opacity: 0;
         transition: opacity 0.3s;
       }
-      body:hover #hud {
+      body.mv #hud {
         opacity: 0.9;
+      }
+      body:not(.mv) {
+        cursor: none;
+      }
+      body:not(.mv) * {
+        cursor: none !important;
       }
       #hud button {
         background: #4b5151;
