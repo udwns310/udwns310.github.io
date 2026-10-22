@@ -4024,14 +4024,14 @@
             </div>
             <div class="card r" style="--d: 450; padding: 18px 24px">
               <h3 style="margin-bottom: 4px">② 공항 기온·습도 점수 추가 시험</h3>
-              <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">실제 공항 기온·습도(기상청 AMOS 2025)를 점수 4개로 만들어 GRU 입력에 추가</div>
-              <table style="font-size: 23px; width: 100%">
-                <tr><th>지표 (기준 40)</th><th class="n">기존</th><th class="n">+날씨 점수 (3회)</th></tr>
-                <tr><td>validation 평균 오차</td><td class="n">7.82</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(214,69,61,.38) 62%, rgba(214,69,61,.38) 92%, transparent 92%)">7.95~8.23</span></td></tr>
-                <tr><td>test 평균 오차</td><td class="n">17.31</td><td class="n">16.96~17.41</td></tr>
-                <tr><td>test 놓침</td><td class="n">8</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(5,80,125,.38) 62%, rgba(5,80,125,.38) 92%, transparent 92%)">2~3</span></td></tr>
-                <tr><td>test 헛경보</td><td class="n">1</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(214,69,61,.38) 62%, rgba(214,69,61,.38) 92%, transparent 92%)">2~6</span></td></tr>
-                <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(214,69,61,.38) 62%, rgba(214,69,61,.38) 92%, transparent 92%)">23~30</span></td></tr>
+              <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">실제 공항 기온·습도(기상청 AMOS 2025)를 점수 4개로 만들어 GRU 입력에 추가 · 기준 40, 3회 반복</div>
+              <table style="font-size: 21px; width: 100%">
+                <tr><th>지표</th><th class="n">기존</th><th class="n">+날씨 점수</th><th style="padding-left: 18px">해석</th></tr>
+                <tr><td style="white-space: nowrap">validation 오차</td><td class="n">7.82</td><td class="n">7.95~8.23</td><td style="padding-left: 18px; white-space: nowrap; font-weight: 700; color: var(--red)">▲ 0.13~0.41 악화</td></tr>
+                <tr><td style="white-space: nowrap">test 오차</td><td class="n">17.31</td><td class="n">16.96~17.41</td><td style="padding-left: 18px; white-space: nowrap; font-weight: 700; color: var(--muted)">▼0.35~▲0.10 엇갈림</td></tr>
+                <tr><td style="white-space: nowrap">test 놓침</td><td class="n">8</td><td class="n">2~3</td><td style="padding-left: 18px; white-space: nowrap; font-weight: 700; color: var(--blue)">▼ 5~6 개선</td></tr>
+                <tr><td style="white-space: nowrap">test 헛경보</td><td class="n">1</td><td class="n">2~6</td><td style="padding-left: 18px; white-space: nowrap; font-weight: 700; color: var(--red)">▲ 1~5 악화</td></tr>
+                <tr><td style="white-space: nowrap">헛경보 엔진</td><td class="n">10</td><td class="n">23~30</td><td style="padding-left: 18px; white-space: nowrap; font-weight: 700; color: var(--red)">▲ 13~20 악화</td></tr>
               </table>
               <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
                 놓침은 줄고 헛경보는 늘어 <span style="color: var(--blue)">상쇄되는 수준</span> — 뚜렷한 개선은 확인되지 않음
