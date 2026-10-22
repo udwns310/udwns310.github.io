@@ -20,10 +20,10 @@
               <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">GRU 예측 남은 수명 ≤ N · 라벨 상한 234로 재학습 · 하루 1회면 N=40이 최적</div>
               <table style="font-size: 23px; width: 100%">
                 <tr><th>기준</th><th class="n">정비 전<br />고장</th><th class="n">비용<br />(1:5/1:2)</th><th class="n">test<br />경보</th><th class="n">놓침</th><th class="n">헛경보</th></tr>
-                <tr><td>N = 40</td><td class="n">94%</td><td class="n">19.3 / 7.9</td><td class="n">65</td><td class="n">8</td><td class="n">4</td></tr>
+                <tr class="sel"><td>N = 40</td><td class="n">94%</td><td class="n">19.3 / 7.9</td><td class="n">65</td><td class="n">8</td><td class="n">4</td></tr>
                 <tr><td>N = 95</td><td class="n">26%</td><td class="n">9.3 / 5.7</td><td class="n">148</td><td class="n">0</td><td class="n">18</td></tr>
                 <tr><td>N = 110</td><td class="n">17%</td><td class="n">8.2 / 5.7</td><td class="n">171</td><td class="n">0</td><td class="n">22</td></tr>
-                <tr class="sel"><td>N = 120</td><td class="n">13%</td><td class="n">7.8 / 5.8</td><td class="n">180</td><td class="n">0</td><td class="n">17</td></tr>
+                <tr><td>N = 120</td><td class="n">13%</td><td class="n">7.8 / 5.8</td><td class="n">180</td><td class="n">0</td><td class="n">17</td></tr>
                 <tr><td>N = 140</td><td class="n">6%</td><td class="n">7.3 / 6.2</td><td class="n">206</td><td class="n">0</td><td class="n">18</td></tr>
               </table>
               <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
@@ -38,11 +38,11 @@
               <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">실제 공항 기온·습도(기상청 AMOS 2025)를 점수 4개로 만들어 GRU 입력에 추가</div>
               <table style="font-size: 23px; width: 100%">
                 <tr><th>지표 (기준 40)</th><th class="n">기존</th><th class="n">+날씨 점수 (3회)</th></tr>
-                <tr><td>validation 평균 오차</td><td class="n">7.82</td><td class="n">7.95~8.23</td></tr>
+                <tr><td>validation 평균 오차</td><td class="n">7.82</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(214,69,61,.38) 62%, rgba(214,69,61,.38) 92%, transparent 92%)">7.95~8.23</span></td></tr>
                 <tr><td>test 평균 오차</td><td class="n">17.31</td><td class="n">16.96~17.41</td></tr>
-                <tr><td>test 놓침</td><td class="n">8</td><td class="n">2~3</td></tr>
-                <tr><td>test 헛경보</td><td class="n">1</td><td class="n">2~6</td></tr>
-                <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n">23~30</td></tr>
+                <tr><td>test 놓침</td><td class="n">8</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(5,80,125,.38) 62%, rgba(5,80,125,.38) 92%, transparent 92%)">2~3</span></td></tr>
+                <tr><td>test 헛경보</td><td class="n">1</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(214,69,61,.38) 62%, rgba(214,69,61,.38) 92%, transparent 92%)">2~6</span></td></tr>
+                <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n"><span style="background: linear-gradient(transparent 62%, rgba(214,69,61,.38) 62%, rgba(214,69,61,.38) 92%, transparent 92%)">23~30</span></td></tr>
               </table>
               <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
                 놓침은 줄고 헛경보는 늘어 <span style="color: var(--blue)">상쇄되는 수준</span> — 뚜렷한 개선은 확인되지 않음
