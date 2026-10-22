@@ -12,7 +12,7 @@
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
           <h2 class="r" style="--d: 0"><em>W × O ②</em> 국내 운항·환경 반영 결과</h2>
           <p class="sm r" style="--d: 120; margin: 4px 0 0; font-size: 24px; color: var(--muted)">
-            시뮬레이션 데이터에 국내 운항 횟수와 운전 환경을 대입한 시나리오 분석 · 실제 항공사 검증은 아님
+            시뮬레이션 데이터에 국내 운항 횟수와 공항 날씨를 대입한 시나리오 분석 · 실제 항공사 검증은 아님
           </p>
           <div class="grid" style="grid-template-columns: 1.15fr 1fr; gap: 32px; margin-top: 18px; align-items: stretch">
             <div class="card r" style="--d: 250; padding: 18px 24px">
@@ -34,21 +34,21 @@
               </div>
             </div>
             <div class="card r" style="--d: 450; padding: 18px 24px">
-              <h3 style="margin-bottom: 4px">② 운전 환경 점수 추가 시험</h3>
-              <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">운전 조건 6가지에 열 부하 점수(0~1)를 매겨 GRU 입력에 추가 (train에서만 산정)</div>
+              <h3 style="margin-bottom: 4px">② 공항 기온·습도 점수 추가 시험</h3>
+              <div style="font-size: 20px; color: var(--muted); margin-bottom: 6px">실제 공항 기온·습도(기상청 AMOS 2025)를 점수 4개로 만들어 GRU 입력에 추가</div>
               <table style="font-size: 23px; width: 100%">
-                <tr><th>지표 (기준 40)</th><th class="n">기존</th><th class="n">+환경 점수</th></tr>
-                <tr><td>validation 평균 오차</td><td class="n">7.82</td><td class="n">7.61</td></tr>
-                <tr><td>test 평균 오차</td><td class="n">17.31</td><td class="n">16.97</td></tr>
-                <tr><td>test 놓침</td><td class="n">8</td><td class="n">3</td></tr>
-                <tr><td>test 헛경보</td><td class="n">1</td><td class="n">4</td></tr>
-                <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n">21</td></tr>
+                <tr><th>지표 (기준 40)</th><th class="n">기존</th><th class="n">+날씨 점수 (3회)</th></tr>
+                <tr><td>validation 평균 오차</td><td class="n">7.82</td><td class="n">7.95~8.23</td></tr>
+                <tr><td>test 평균 오차</td><td class="n">17.31</td><td class="n">16.96~17.41</td></tr>
+                <tr><td>test 놓침</td><td class="n">8</td><td class="n">2~3</td></tr>
+                <tr><td>test 헛경보</td><td class="n">1</td><td class="n">2~6</td></tr>
+                <tr><td>헛경보 받은 엔진(val)</td><td class="n">10</td><td class="n">23~30</td></tr>
               </table>
               <div style="margin-top: 10px; font-size: 24px; font-weight: 700; line-height: 1.4">
                 놓침은 줄고 헛경보는 늘어 <span style="color: var(--blue)">상쇄되는 수준</span> — 뚜렷한 개선은 확인되지 않음
               </div>
               <div class="cap" style="margin-top: 6px; font-size: 17px; line-height: 1.4">
-                시드 1회 · 평균 오차 차이는 시드 간 변동(±0.7) 안 · 습도는 데이터에 없어 넣지 못함 · 실제 공항 날씨는 비행 일시·공항 기록이 있어야 연결 가능
+                엔진마다 시작 날짜·공항을 무작위로 배정한 가정 시험(날씨 배정 3가지) · 날씨가 열화와 무관하게 붙어 개선이 나와도 근거 아님 · 실제 비행 일시·공항 기록이 있으면 같은 틀로 재검증
               </div>
             </div>
           </div>
