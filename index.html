@@ -3946,6 +3946,7 @@
             .sf-branch { grid-column: 7 / span 3; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
             .sf-branch .sf-step { flex: 1; padding: 12px 16px; justify-content: center; }
             .sf-step b { display: inline-block; font-size: 22px; color: #fff; border-radius: 8px; padding: 0 10px; margin-right: 8px; }
+            .sf-r1 .sf-step .n { background: var(--green); }
             .sf-step.ok { border-color: var(--green); }
             .sf-step.ok b { background: var(--green); }
             .sf-step.no { border-color: #8b9190; }
@@ -3961,8 +3962,8 @@
           </p>
 
           <div class="sf-row r" style="--d: 250">
-            <div class="sf-lane" style="background: var(--blue)"><b>정비 담당자</b><span>결재 요청하는 사람</span></div>
-            <div class="sf-flow">
+            <div class="sf-lane" style="background: var(--green)"><b>정비 담당자</b><span>결재 요청하는 사람</span></div>
+            <div class="sf-flow sf-r1">
               <div class="sf-step"><span class="n">1</span>로그인<small>역할별 권한</small></div><div class="sf-ar">→</div>
               <div class="sf-step"><span class="n">2</span>현황·알림에서 즉시 조치 엔진 확인<small>새 즉시 조치는 Slack 알림</small></div><div class="sf-ar">→</div>
               <div class="sf-step"><span class="n">3</span>엔진 상세: 남은 수명, 점검 예상 모듈</div><div class="sf-ar">→</div>
@@ -3972,7 +3973,7 @@
           </div>
 
           <div class="sf-row r" style="--d: 600">
-            <div class="sf-lane" style="background: var(--green)"><b>운영 책임자</b><span>승인·반려하는 사람</span></div>
+            <div class="sf-lane" style="background: var(--blue)"><b>운영 책임자</b><span>승인·반려하는 사람</span></div>
             <div class="sf-flow">
               <div class="sf-step"><span class="n">1</span>로그인<small>역할별 권한</small></div><div class="sf-ar">→</div>
               <div class="sf-step"><span class="n">2</span>결재함: 올라온 요청과 근거 검증</div><div class="sf-ar">→</div>
