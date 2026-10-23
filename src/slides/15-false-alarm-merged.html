@@ -1,0 +1,26 @@
+        <!-- 오탐 사례: 엔진 #179 (RF · GRU) -->
+        <section
+          class="slide"
+          data-title="오탐 사례: 엔진 #179 (RF · GRU)"
+          data-sec="⑤ 평가 · 오류 분석"
+          data-t="25"
+        >
+          <style>
+            .er-row { display: grid; grid-template-columns: 550px 1fr; gap: 24px; margin-top: 12px; align-items: stretch; }
+            .er-img { position: relative; height: 345px; overflow: hidden; border: 2px solid var(--line); border-radius: 12px; background: #fff; }
+            .er-img img { width: 550px; display: block; margin-top: -26px; }
+            .er-tag { position: absolute; left: 10px; top: 8px; color: #fff; font-size: 19px; font-weight: 800; padding: 3px 14px; border-radius: 999px; }
+            .er-boxes { display: grid; grid-template-rows: 1fr 1fr 1fr; gap: 10px; }
+            .er-box { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 0 20px; display: flex; align-items: center; gap: 16px; font-size: 23px; line-height: 1.35; color: var(--ink2); }
+            .er-box b { color: var(--ink); }
+            .er-pill { flex: none; width: 88px; text-align: center; color: #fff; font-size: 21px; font-weight: 800; padding: 3px 0; border-radius: 999px; }
+          </style>
+          <div class="chap">⑤ 평가 · 오류 분석</div>
+          <h2 class="r" style="--d: 0; font-size: 50px; margin-bottom: 14px">오탐 사례 — 엔진 #179: <em>수명이 충분한데 경보</em></h2>
+          <div class="er-row r" style="--d: 250"><div class="er-img"><img src="assets/cls_error_case_false_alarm.png" alt="RF 분류 · 엔진 #179 · 헛경보 59사이클" /><span class="er-tag" style="background:#05507d">RF 분류 · 엔진 #179 · 헛경보 59사이클</span></div><div class="er-boxes"><div class="er-box"><span class="er-pill" style="background:var(--blue)">상황</span><div>안전한 구간(남은 수명 194~245)에서 <b>45사이클</b>, 위험 직전에서 14사이클 경보</div></div><div class="er-box"><span class="er-pill" style="background:var(--gray)">원인</span><div>241번째 전후로 <b>모든 센서가 한꺼번에 정상으로</b> — 정비 후 회복처럼 보이는 모양(가설)</div></div><div class="er-box"><span class="er-pill" style="background:var(--lblue)">시사점</span><div>구분하려면 <b>정비 이력</b> 필요 · 같은 모양이 학습 데이터에 3대(#71·#179·#185)</div></div></div></div><div class="er-row r" style="--d: 550"><div class="er-img"><img src="assets/gru_error_case_false_alarm.png" alt="GRU · 엔진 #179 · 헛경보 41사이클" /><span class="er-tag" style="background:#2f9e5e">GRU · 엔진 #179 · 헛경보 41사이클</span></div><div class="er-boxes"><div class="er-box"><span class="er-pill" style="background:var(--blue)">상황</span><div>안전한 구간(194~225)에서 <b>32사이클</b>, 위험 직전에서 9사이클 경보</div></div><div class="er-box"><span class="er-pill" style="background:var(--gray)">원인</span><div>센서가 정상으로 돌아가며 <b>예측이 6까지 떨어졌다가 약 100으로 복귀</b> — RF와 같은 모양</div></div><div class="er-box"><span class="er-pill" style="background:var(--lblue)">시사점</span><div>기준 40 → 45로 올리면 이 엔진 헛경보 <b>41 → 55사이클</b>, 기준만으로는 해결 안 됨</div></div></div></div>
+          <div class="r" style="--d: 900; margin-top: 10px; background: var(--blue); color: #fff; border-radius: 16px; font-weight: 700; text-align: center; font-size: 27px; padding: 12px 28px">
+            모델이 달라도 같은 엔진에서 헛경보 — 모델 실수만이 아니라 <b>데이터(정비 이력 없음)의 한계</b>
+          </div>
+          <div class="foot">Sentinels · 5조</div>
+          <div class="pg"></div>
+        </section>
