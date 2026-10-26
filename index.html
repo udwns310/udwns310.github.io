@@ -2020,7 +2020,7 @@
           <div class="chap r" style="--d: 0">
             설비 고장을 예측하는 AI 데이터 분석 1기 · 통합 프로젝트
           </div>
-          <h1 class="r" style="--d: 200">Sentinels</h1>
+          <h1 id="mm-cover" class="r" style="--d: 200">Sentinels</h1>
           <!-- <p class="r" style="--d: 300; font-size: 52px; color: #fff">
             <잠들지 않는 눈>
           </p> -->
@@ -2051,7 +2051,7 @@
           .badge.lead { font-size: inherit; line-height: inherit; color: inherit; }
         </style>
           <div class="chap">팀 소개</div>
-          <h2 class="r" style="--d: 0">5조 <em>Sentinels</em> — 조원별 역할</h2>
+          <h2 class="r" style="--d: 0">5조 <em id="mm-team">Sentinels</em> — 조원별 역할</h2>
 
           <div class="team">
             <div class="badge lead r" style="--d: 350">
@@ -4021,7 +4021,7 @@
 </style>
 <div class="q-wrap">
 <div class="a-q"><h2 class="q-text r fade" style="--d:0">엔진이 고장 나기 전에, <em>정비 시점</em>을 알 수 있을까?</h2><p class="q-sub r fade" style="--d:150"><em>정비 비용</em>은 얼마나 줄일 수 있을까?</p></div>
-<div class="a-ans"><div class="a-name">Sentinel</div></div>
+<div class="a-ans"><div class="a-name" id="mm-answer">Sentinel</div></div>
 </div>
 </section>
         <!-- 시연 영상 -->
@@ -4032,7 +4032,7 @@
           data-t="120"
         >
           <div class="chap">⑥ 현장 활용 · 한계 · 개선</div>
-          <h2 class="r" style="--d: 0; font-size: 54px"><em>시연</em> 영상</h2>
+          <h2 class="r" style="--d: 0; font-size: 54px"><em id="mm-demo">Sentinel</em> 시연 영상</h2>
           <div class="r" style="--d: 250; position: relative; width: 1360px; height: 765px; margin: 18px auto 0; border-radius: 14px; overflow: hidden; background: #0b1f2c">
             <video
               controls
@@ -4056,6 +4056,24 @@
           <div class="foot">Sentinels · 5조</div>
           <div class="pg"></div>
         </section>
+<section id="answer2" class="slide question" data-title="AX와 Sentinel" data-sec="⑥ 현장 활용 · 한계 · 개선" data-t="15">
+<style>
+#answer2 .q-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#answer2 .q-text{margin:0;font-size:60px;line-height:1.15;white-space:nowrap;width:max-content}
+#answer2 .q-sub{margin:36px 0 0;font-size:60px;line-height:1.15;font-weight:800;letter-spacing:-0.015em;white-space:nowrap}
+#answer2 em{font-style:normal;color:var(--blue)}
+#answer2 .a-q{display:flex;flex-direction:column;align-items:center}
+#answer2.active .a-q{animation:aq-up2 1s cubic-bezier(.65,0,.2,1) 1.6s both}
+@keyframes aq-up2{to{transform:translateY(-215px) scale(.7);opacity:.5}}
+#answer2 .a-ans{position:absolute;left:0;right:0;top:580px;text-align:center;opacity:0}
+#answer2.active .a-ans{animation:rise .9s var(--ease) 2.5s both}
+#answer2 .a-name{font-size:170px;line-height:1.05;font-weight:800;letter-spacing:-0.02em;color:var(--blue)}
+</style>
+<div class="q-wrap">
+<div class="a-q"><h2 class="q-text r fade" style="--d:0">AX는 AI를 붙이는 게 아니라, <em>일하는 방식</em>을 바꾸는 것입니다.</h2><p class="q-sub r fade" style="--d:150"><em>AI와 사람이 함께 결정</em>하는 정비</p></div>
+<div class="a-ans"><div class="a-name">Sentinel</div></div>
+</div>
+</section>
         <!-- 18 Q&A -->
         <section class="slide cover" data-title="Q&A" data-sec="" data-t="0">
           <div class="chap r" style="--d: 0">감사합니다</div>
@@ -4125,6 +4143,7 @@
         "⑥ 시스템 개요와 역할별 시나리오. 프로젝트 목표(고장 전에 정비 시점을 알려 긴급 정비를 계획 정비로)와 대시보드 흐름을 연결. 뒤에서 도는 분석: 비행 후 센서 데이터 → GRU 남은 수명 예측(90% 구간) → 위험 등급(빨강 40 이하, 노랑 80 미만) → 새로 \"즉시 조치\"가 된 엔진은 Slack으로 자동 알림(설정에서 끌 수 있음). 정비 담당자 로그인: 현황·알림에서 즉시 조치 엔진 확인 → 엔진 상세(남은 수명, 점검 예상 모듈) → 정비 계획에서 검토 시작, 결재 요청 → Slack 결재 알림. 운영 책임자 로그인: 결재함에서 요청 검증 → 승인 또는 반려(사유 기록) → Slack 알림(승인·반려·정비 완료) → 정비 효과·주간 리포트 확인. 권한: 담당자는 검토·결재 요청·회수·정비 완료, 책임자만 승인·반려(대시보드 plan 권한 규칙). 이 부분이 Human-in-the-Loop(결정은 사람)에 해당하고 AX 설계 부분. 주의: 로그인은 서버 없는 시연용 가짜 계정이며 보안 기능이 아님. Slack 알림은 서버 함수와 웹훅(SLACK_WEBHOOK_URL)이 연결돼야 동작하고, 연결 안 된 시연 환경에서는 \"미연결\"로 표시됨. 모바일은 Slack 앱 푸시를 이용하는 것이며 실제 휴대폰 수신은 발표 전 확인할 것. 화면의 가동중단·비용 금액은 가정 기반 시뮬레이션. 실제 정비 이력 입력과 오탐·놓침 피드백으로 모델을 다시 맞추는 루프는 아직 없음(다음 단계). 분기: 책임자가 승인하면 정비 일정이 확정되고 담당자가 정비 후 정비 완료 처리, 정비 효과·주간 리포트로 확인. 반려하면 사유를 기록하고 담당자가 수정해 다시 결재 요청(반려 상태에서 재요청 가능). 승인·반려·정비 완료·결재 요청 때마다 Slack 알림(연결 시). Slack은 부가 기능이라 강조하지 않아도 됨.",
         "답(15초). 처음 질문이 다시 뜨고, 잠시 뒤 위로 올라가며 Sentinel이 나타난다. 멘트: \"처음 질문으로 돌아가겠습니다. 엔진이 고장 나기 전에 정비 시점을 알 수 있을까, 그리고 정비 비용은 얼마나 줄일 수 있을까. 저희가 만든 답이 Sentinel입니다. 비용은 논문의 비율을 가정해 비교한 결과라는 점은 앞서 말씀드렸습니다. 이제 실제 화면으로 보시겠습니다.\" 주의: 비용 절감을 단정하지 말고 비교·판단을 돕는다고 말할 것.",
         "시연 영상 재생. 대시보드 흐름(현황 → 엔진 상세 → 정비 계획 → 결재 요청 → 책임자 승인·반려)을 영상으로 보여주고, 24번 슬라이드의 사람이 결정하는 흐름과 연결해 설명. 영상 파일은 assets/demo.mp4. 재생 버튼은 마우스로 클릭(스페이스·엔터는 슬라이드가 넘어감).",
+        "마무리(15초). 시연이 끝나면 문구가 뜨고, 잠시 뒤 위로 올라가며 Sentinel이 나타난다. 멘트: \"정리하겠습니다. AX는 AI를 붙이는 것이 아니라, 일하는 방식을 바꾸는 것입니다. 저희가 만든 Sentinel은 예측은 모델이 하고, 정비 여부의 결정은 사람이 하는, AI와 사람이 함께 결정하는 정비입니다. 경청해 주셔서 감사합니다.\" 주의: 비용 절감 효과는 논문 가정 기반 비교이므로 단정하지 않는다.",
         "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"
 ];
       const deck = document.getElementById("deck"),
@@ -4298,6 +4317,83 @@
       }
       addEventListener("mousemove", wakeMouse);
       addEventListener("mousedown", wakeMouse);
+      // 한 단어가 다음 슬라이드의 제목 속 같은 단어 자리로 이동(모핑)한다.
+      // src(보내는 슬라이드의 요소)와 dst(받는 슬라이드의 요소)는 슬라이드가 바로 이어질 때만 연결된다.
+      function wordMorph(srcSel, dstSel, o = {}) {
+        const src = document.querySelector(srcSel);
+        const dst = document.querySelector(dstSel);
+        const fromIdx = slides.indexOf(src.closest(".slide"));
+        const toIdx = slides.indexOf(dst.closest(".slide"));
+        const parent = dst.closest(".r") || dst.parentElement;
+        const others = [...dst.closest(".slide").querySelectorAll(".r")].filter((e) => e !== parent);
+        const textRect = (el) => {
+          const r = document.createRange();
+          r.selectNodeContents(el);
+          return r.getBoundingClientRect();
+        };
+        const reset = () => {
+          dst.style.visibility = "";
+          parent.style.animation = "";
+          others.forEach((e) => (e.style.animationDelay = ""));
+        };
+        const baseShow = show;
+        show = function (i) {
+          const from = cur;
+          reset();
+          if (from !== fromIdx || i !== toIdx) return baseShow(i);
+          const dk = deck.getBoundingClientRect();
+          const sc = dk.width / 1920;
+          const cs = getComputedStyle(src);
+          const a = textRect(src);
+          const bg = getComputedStyle(slides[fromIdx]);
+          const clone = document.createElement("div");
+          clone.textContent = src.textContent;
+          clone.style.cssText =
+            "position:absolute;z-index:60;margin:0;white-space:nowrap;width:max-content;left:0;top:0;" +
+            "font-family:" + cs.fontFamily + ";font-size:" + cs.fontSize + ";font-weight:" + cs.fontWeight +
+            ";letter-spacing:" + cs.letterSpacing + ";line-height:" + cs.lineHeight + ";color:" + cs.color + ";";
+          deck.appendChild(clone);
+          // 글자 영역이 원래 글자와 겹치도록 놓는다
+          const c0 = textRect(clone);
+          const cb = clone.getBoundingClientRect();
+          clone.style.left = (a.left - c0.left) / sc + "px";
+          clone.style.top = (a.top - c0.top) / sc + "px";
+          clone.style.transformOrigin = (c0.left - cb.left) / sc + "px " + (c0.top - cb.top) / sc + "px";
+          let ov = null;
+          if (o.overlay) {
+            ov = document.createElement("div");
+            ov.style.cssText =
+              "position:absolute;inset:0;z-index:55;background-image:" + bg.backgroundImage +
+              ";background-color:" + bg.backgroundColor + ";";
+            deck.insertBefore(ov, clone);
+          }
+          parent.style.animation = "none";
+          dst.style.visibility = "hidden";
+          baseShow(i);
+          const b = textRect(dst);
+          const k = b.width / a.width;
+          const endColor = getComputedStyle(dst).color;
+          parent.style.animation = "";
+          others.forEach((e) => (e.style.animationDelay = "calc(var(--d, 0) * 1ms + 600ms)"));
+          const move = clone.animate(
+            [
+              { transform: "translate(0,0) scale(1)", color: cs.color },
+              { transform: "translate(" + (b.left - a.left) / sc + "px," + (b.top - a.top) / sc + "px) scale(" + k + ")", color: endColor },
+            ],
+            { duration: 1000, easing: "cubic-bezier(.65,0,.2,1)", fill: "forwards" },
+          );
+          if (ov) ov.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, easing: "ease-in-out", fill: "forwards" });
+          const done = () => {
+            dst.style.visibility = "";
+            clone.remove();
+            if (ov) ov.remove();
+          };
+          move.onfinish = done;
+          move.oncancel = done;
+        };
+      }
+      wordMorph("#mm-cover", "#mm-team", { overlay: true });
+      wordMorph("#mm-answer", "#mm-demo");
       // 문제제기 슬라이드 → 문제 정의 슬라이드로 넘어갈 때, 질문 문구가 제목 자리로 줄어들며 이동(모핑)한다.
       (() => {
         const baseShow = show;
