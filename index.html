@@ -2177,6 +2177,15 @@
           <div class="pg"></div>
         </section>
 
+<section id="question" class="slide question" data-title="문제제기" data-sec="① 문제 정의" data-t="10">
+<style>
+#question .q-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#question .q-sub{margin:36px 0 0;font-size:74px;line-height:1.15;font-weight:800;letter-spacing:-0.015em;white-space:nowrap}
+#question .q-sub em{font-style:normal;color:var(--blue)}
+#question .q-text{margin:0;font-size:74px;line-height:1.15;white-space:nowrap;width:max-content}
+</style>
+<div class="q-wrap"><h2 class="q-text r fade" style="--d:300">엔진이 고장 나기 전에, <em>정비 시점</em>을 알 수 있을까?</h2><p class="q-sub r fade" style="--d:1100"><em>정비 비용</em>은 얼마나 줄일 수 있을까?</p></div>
+</section>
 <section id="problem-definition" class="slide refined" data-title="문제 정의: 무엇을 위험으로 볼 것인가" data-sec="① 문제 정의" data-t="45">
 <style>
 #problem-definition .problem-cards{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:28px;margin-top:28px}
@@ -2185,7 +2194,7 @@
 #problem-definition .life>div{font-size:26px}</style>
 <div class="chap">① 문제 정의</div>
 
-<h2 class="r" style="--d:0">엔진이 <em>고장 나기 전에</em>, 정비 시점을 알 수 있을까?</h2>
+<h2 class="r" style="--d:0">엔진이 고장 나기 전에, <em>정비 시점</em>을 알 수 있을까?</h2>
 <p class="intro r" style="--d:180;font-size:34px;color:var(--ink)">센서 기록 → <b>남은 수명 예측</b> → 정비 시점 판단</p>
 <p class="support r" style="--d:300;margin-top:12px">온도·압력·회전속도로 앞으로 몇 번 더 비행할 수 있는지 예측하고, 고장 전 계획 정비로 긴급 정비 비용을 줄일 수 있는지 확인</p>
 <div class="r" style="--d:450;margin-top:26px"><div class="life"><div class="z1">정상 · 80사이클 이상</div><div class="z2">주의 · 40~80</div><div class="z3">위험 · 40 이하</div><div class="z4">고장</div></div><p class="caption" style="margin-top:12px">왼쪽 → 오른쪽: 운행 사이클 누적 · 1사이클 = 엔진 1회 운행 · 한 행 = 해당 시점의 운전조건·센서값</p></div>
@@ -2223,7 +2232,7 @@
           data-t="25"
         >
           <div class="chap">① 문제 정의</div>
-          <h2 class="r" style="--d: 0; font-size: 54px">시스템 <em>아키텍처</em></h2>
+          <h2 class="r" style="--d: 0; font-size: 54px">정비 시점과 비용을 <em>알 수 있는 시스템</em> 아키텍처</h2>
           <div class="r" style="--d: 250; margin-top: 28px">
             <svg viewBox="0 0 1680 690" width="1680" height="690" style="font-family: inherit; display: block"><defs><marker id="ahp" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="#05507d"/></marker></defs><rect x="0" y="100" width="240" height="580" rx="10" fill="#f6f8fa" stroke="#9db0bd" stroke-width="1.5" stroke-dasharray="7 5"/><text x="18" y="132.1" font-size="17" font-weight="800" fill="#5d6c78" text-anchor="start" letter-spacing="1.6">DATA SOURCES</text><rect x="284" y="100" width="360" height="580" rx="10" fill="#f6f8fa" stroke="#9db0bd" stroke-width="1.5" stroke-dasharray="7 5"/><text x="302" y="132.1" font-size="17" font-weight="800" fill="#5d6c78" text-anchor="start" letter-spacing="1.6">ANALYTICS · OFFLINE</text><rect x="688" y="100" width="524" height="580" rx="10" fill="#f6f8fa" stroke="#9db0bd" stroke-width="1.5" stroke-dasharray="7 5"/><text x="706" y="132.1" font-size="17" font-weight="800" fill="#5d6c78" text-anchor="start" letter-spacing="1.6">WEB APPLICATION · VERCEL</text><rect x="1256" y="100" width="200" height="580" rx="10" fill="#f6f8fa" stroke="#9db0bd" stroke-width="1.5" stroke-dasharray="7 5"/><text x="1274" y="132.1" font-size="17" font-weight="800" fill="#5d6c78" text-anchor="start" letter-spacing="1.6">SERVERLESS API</text><rect x="1500" y="100" width="180" height="580" rx="10" fill="#f6f8fa" stroke="#9db0bd" stroke-width="1.5" stroke-dasharray="7 5"/><text x="1518" y="132.1" font-size="17" font-weight="800" fill="#5d6c78" text-anchor="start" letter-spacing="1.6">EXTERNAL</text><image href="assets/logos/react-original.svg" x="1170.0" y="112.0" width="28" height="28"/><image href="assets/logos/typescript-original.svg" x="1132.0" y="112.0" width="28" height="28"/><image href="assets/logos/vercel-original.svg" x="1094.0" y="112.0" width="28" height="28"/><image href="assets/logos/python-original.svg" x="597.0" y="109.0" width="34" height="34"/><rect x="82.0" y="196.0" width="76" height="76" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><image href="assets/logos/nasa.svg" x="99.0" y="213.0" width="42" height="42"/><text x="120.0" y="297.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">NASA C-MAPSS</text><text x="120.0" y="322.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">FD004 시뮬레이션</text><rect x="82.0" y="366.0" width="76" height="76" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><ellipse cx="120.0" cy="396" rx="11" ry="4.5" fill="none" stroke="#05507d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M109.0 396 v16 a11 4.5 0 0 0 22 0 v-16 M109.0 404 a11 4.5 0 0 0 22 0" fill="none" stroke="#05507d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="120.0" y="467.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">공공데이터포털</text><text x="120.0" y="492.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">하루 비행 횟수</text><rect x="82.0" y="536.0" width="76" height="76" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><circle cx="126.0" cy="568" r="6" fill="#FDB827"/><path d="M108.0 584 a6 6 0 0 1 1 -11 a8 8 0 0 1 15 2 a5 5 0 0 1 0 9 z" fill="#3b8fd9"/><text x="120.0" y="637.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">기상청 AMOS</text><text x="120.0" y="662.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">공항 기온·습도</text><rect x="300" y="160" width="328" height="72" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><rect x="318.0" y="174.0" width="44" height="44" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><image href="assets/logos/pandas-original.svg" x="323.0" y="179.0" width="34" height="34"/><text x="376" y="205.4" font-size="26" font-weight="700" fill="#16222c" text-anchor="start">전처리 · 특성</text><line x1="464.0" y1="236" x2="464.0" y2="258" stroke="#05507d" stroke-width="1.8" marker-end="url(#ahp)"/><rect x="300" y="262" width="328" height="72" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><rect x="318.0" y="276.0" width="44" height="44" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><image href="assets/logos/scikitlearn-original.svg" x="322.0" y="280.0" width="36" height="36"/><text x="376" y="307.4" font-size="26" font-weight="700" fill="#16222c" text-anchor="start">RandomForest</text><line x1="464.0" y1="338" x2="464.0" y2="360" stroke="#05507d" stroke-width="1.8" marker-end="url(#ahp)"/><rect x="300" y="364" width="328" height="72" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><rect x="318.0" y="378.0" width="44" height="44" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><image href="assets/logos/pytorch-original.svg" x="323.0" y="383.0" width="34" height="34"/><text x="376" y="409.4" font-size="26" font-weight="700" fill="#16222c" text-anchor="start">GRU</text><line x1="464.0" y1="440" x2="464.0" y2="462" stroke="#05507d" stroke-width="1.8" marker-end="url(#ahp)"/><rect x="300" y="466" width="328" height="72" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><rect x="318.0" y="480.0" width="44" height="44" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><path d="M329 513.0 V504.0 M340 513.0 V492.0 M351 513.0 V499.0 M326 514.0 H354" fill="none" stroke="#05507d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="376" y="511.4" font-size="26" font-weight="700" fill="#16222c" text-anchor="start">경보 기준 · 비용</text><line x1="464.0" y1="542" x2="464.0" y2="564" stroke="#05507d" stroke-width="1.8" marker-end="url(#ahp)"/><rect x="300" y="568" width="328" height="72" rx="8" fill="#eef3f7" stroke="#c3cfd7" stroke-width="1.4"/><rect x="300" y="568" width="5" height="72" rx="2" fill="#05507d"/><rect x="318.0" y="582.0" width="44" height="44" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><path d="M331 592.0 h12 l7 7 v17 h-19 z M343 592.0 v7 h7 M335 607.0 h10 M335 612.0 h10" fill="none" stroke="#05507d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="376" y="613.4" font-size="26" font-weight="700" fill="#16222c" text-anchor="start">예측 데이터 파일</text><rect x="708.0" y="160" width="235.0" height="84" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><rect x="708.0" y="160" width="5" height="84" rx="2" fill="#2f9e5e"/><text x="726.0" y="199.6" font-size="24" font-weight="700" fill="#16222c" text-anchor="start">정비 계획</text><text x="726.0" y="222.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">검토 → 결재 요청</text><rect x="957.0" y="160" width="235.0" height="84" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><rect x="957.0" y="160" width="5" height="84" rx="2" fill="#05507d"/><text x="975.0" y="199.6" font-size="24" font-weight="700" fill="#16222c" text-anchor="start">결재함</text><text x="975.0" y="222.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">근거 검증 → 승인 · 반려</text><rect x="708.0" y="264" width="235.0" height="84" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><text x="726.0" y="303.6" font-size="24" font-weight="700" fill="#16222c" text-anchor="start">현황 · 알림</text><text x="726.0" y="326.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">즉시 조치 · 일정</text><rect x="957.0" y="264" width="235.0" height="84" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><text x="975.0" y="303.6" font-size="24" font-weight="700" fill="#16222c" text-anchor="start">리포트 · 효과</text><text x="975.0" y="326.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">주간 요약 · 비용</text><rect x="708.0" y="368" width="235.0" height="84" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><text x="726.0" y="407.6" font-size="24" font-weight="700" fill="#16222c" text-anchor="start">엔진 상세</text><text x="726.0" y="430.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">고장 진단 · 구간</text><rect x="957.0" y="368" width="235.0" height="84" rx="8" fill="#fff" stroke="#c3cfd7" stroke-width="1.4"/><text x="975.0" y="407.6" font-size="24" font-weight="700" fill="#16222c" text-anchor="start">메신저 · 봇</text><text x="975.0" y="430.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">대화 · 조회 질의</text><rect x="708" y="480" width="484" height="92" rx="8" fill="#fff" stroke="#8796a1" stroke-width="1.4" stroke-dasharray="6 5"/><text x="950.0" y="520.3" font-size="23" font-weight="700" fill="#16222c" text-anchor="middle">브라우저 저장소</text><text x="950.0" y="548.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">처리 기록 · 설정 · 메신저  (서버 · DB 없음)</text><text x="950.0" y="656.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">정적 호스팅 · 실시간 추론 서버 없음</text><rect x="1318.0" y="236.0" width="76" height="76" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><path d="M1347.0 281 h18 l-2 -4 v-7 a7 7 0 0 0 -14 0 v7 z M1353.0 285 h6" fill="none" stroke="#05507d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="1356.0" y="337.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">notify</text><text x="1356.0" y="362.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">결재 · 즉시 조치 알림</text><rect x="1318.0" y="456.0" width="76" height="76" rx="9" fill="#eef3f7" stroke="#c8d3da" stroke-width="1.2"/><path d="M1344.0 484 h24 v15 h-13 l-6 6 v-6 h-5 z" fill="none" stroke="#05507d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="1356.0" y="557.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">summary · chat</text><text x="1356.0" y="582.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">요약 · 봇 답변</text><rect x="1552.0" y="236" width="76" height="76" rx="9" fill="#fff" stroke="#c8d3da" stroke-width="1.2"/><image href="assets/logos/slack-original.svg" x="1566.0" y="250.0" width="48" height="48"/><text x="1590.0" y="337.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">Slack</text><text x="1590.0" y="362.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">정비 · 결재 채널</text><rect x="1552.0" y="456" width="76" height="76" rx="9" fill="#fff" stroke="#c8d3da" stroke-width="1.2"/><image href="assets/logos/gemini.png" x="1566.0" y="470.0" width="48" height="48"/><text x="1590.0" y="557.9" font-size="22" font-weight="700" fill="#16222c" text-anchor="middle">Gemini</text><text x="1590.0" y="582.8" font-size="19" font-weight="400" fill="#5d6c78" text-anchor="middle">생성형 AI</text><rect x="720.5" y="0" width="210" height="66" rx="10" fill="#fff" stroke="#2f9e5e" stroke-width="2"/><rect x="732.5" y="11.0" width="44" height="44" rx="9" fill="#f4f7f9" stroke="#c8d3da" stroke-width="1.2"/><circle cx="754.5" cy="27" r="7" fill="#2f9e5e"/><path d="M741.5 47 q0 -12 13 -12 q13 0 13 12 z" fill="#2f9e5e"/><text x="790.5" y="30.3" font-size="23" font-weight="800" fill="#2f9e5e" text-anchor="start">정비 담당자</text><text x="790.5" y="53.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">검토 · 결재 요청</text><line x1="825.5" y1="70" x2="825.5" y2="97" stroke="#2f9e5e" stroke-width="2" marker-end="url(#ahp)" marker-start="url(#ahp)"/><rect x="969.5" y="0" width="210" height="66" rx="10" fill="#fff" stroke="#05507d" stroke-width="2"/><rect x="981.5" y="11.0" width="44" height="44" rx="9" fill="#f4f7f9" stroke="#c8d3da" stroke-width="1.2"/><circle cx="1003.5" cy="27" r="7" fill="#05507d"/><path d="M990.5 47 q0 -12 13 -12 q13 0 13 12 z" fill="#05507d"/><text x="1039.5" y="30.3" font-size="23" font-weight="800" fill="#05507d" text-anchor="start">운영 책임자</text><text x="1039.5" y="53.5" font-size="18" font-weight="400" fill="#5d6c78" text-anchor="start">승인 · 반려</text><line x1="1074.5" y1="70" x2="1074.5" y2="97" stroke="#05507d" stroke-width="2" marker-end="url(#ahp)" marker-start="url(#ahp)"/><circle cx="950.0" cy="100" r="15" fill="#05507d"/><text x="950.0" y="106.8" font-size="19" font-weight="800" fill="#fff" text-anchor="middle">3</text><line x1="243" y1="390.0" x2="281" y2="390.0" stroke="#05507d" stroke-width="2.2" marker-end="url(#ahp)"/><circle cx="262.0" cy="364.0" r="15" fill="#05507d"/><text x="262.0" y="370.8" font-size="19" font-weight="800" fill="#fff" text-anchor="middle">1</text><line x1="647" y1="390.0" x2="685" y2="390.0" stroke="#05507d" stroke-width="2.2" marker-end="url(#ahp)"/><circle cx="666.0" cy="364.0" r="15" fill="#05507d"/><text x="666.0" y="370.8" font-size="19" font-weight="800" fill="#fff" text-anchor="middle">2</text><line x1="1215" y1="390.0" x2="1253" y2="390.0" stroke="#05507d" stroke-width="2.2" marker-end="url(#ahp)" marker-start="url(#ahp)"/><circle cx="1234.0" cy="364.0" r="15" fill="#05507d"/><text x="1234.0" y="370.8" font-size="19" font-weight="800" fill="#fff" text-anchor="middle">4</text><line x1="1459" y1="274" x2="1497" y2="274" stroke="#05507d" stroke-width="2.2" marker-end="url(#ahp)"/><line x1="1459" y1="494" x2="1497" y2="494" stroke="#05507d" stroke-width="2.2" marker-end="url(#ahp)" marker-start="url(#ahp)"/><circle cx="1478.0" cy="248" r="15" fill="#05507d"/><text x="1478.0" y="254.8" font-size="19" font-weight="800" fill="#fff" text-anchor="middle">5</text></svg>
           </div>
@@ -3997,6 +4006,24 @@
           </div>
           <div class="pg"></div>
         </section>
+<section id="answer" class="slide question" data-title="답: Sentinel" data-sec="⑥ 현장 활용 · 한계 · 개선" data-t="15">
+<style>
+#answer .q-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#answer .q-text{margin:0;font-size:74px;line-height:1.15;white-space:nowrap;width:max-content}
+#answer .q-sub{margin:36px 0 0;font-size:74px;line-height:1.15;font-weight:800;letter-spacing:-0.015em;white-space:nowrap}
+#answer em{font-style:normal;color:var(--blue)}
+#answer .a-q{display:flex;flex-direction:column;align-items:center}
+#answer.active .a-q{animation:aq-up 1s cubic-bezier(.65,0,.2,1) 1.6s both}
+@keyframes aq-up{to{transform:translateY(-215px) scale(.7);opacity:.5}}
+#answer .a-ans{position:absolute;left:0;right:0;top:580px;text-align:center;opacity:0}
+#answer.active .a-ans{animation:rise .9s var(--ease) 2.5s both}
+#answer .a-name{font-size:170px;line-height:1.05;font-weight:800;letter-spacing:-0.02em;color:var(--blue)}
+</style>
+<div class="q-wrap">
+<div class="a-q"><h2 class="q-text r fade" style="--d:0">엔진이 고장 나기 전에, <em>정비 시점</em>을 알 수 있을까?</h2><p class="q-sub r fade" style="--d:150"><em>정비 비용</em>은 얼마나 줄일 수 있을까?</p></div>
+<div class="a-ans"><div class="a-name">Sentinel</div></div>
+</div>
+</section>
         <!-- 시연 영상 -->
         <section
           class="slide"
@@ -4075,9 +4102,10 @@
         "표지. 인사, 팀 소개, 주제 한 줄: '센서 기록으로 엔진 고장 임박을 미리 알려 정비 시점을 계획하는 프로젝트'. 데이터는 NASA 시뮬레이션 데이터라는 점을 첫 장에서 짧게 언급.",
         "조원별 역할. 이름과 담당만 짧게 소개하고 넘어간다. 코드 작성은 전원이 함께 했다는 점을 한 번 언급.",
         "목차. 여섯 단계로 진행한다고 한 문장으로 안내. 1분 이내.",
+        "문제제기(10초). 슬라이드를 넘기고 잠깐 멈춰 질문을 읽게 둔다. 멘트: \"오늘 저희가 답하려는 질문은 하나입니다. 엔진이 고장 나기 전에, 정비 시점을 알 수 있을까? 그리고 정비 비용은 얼마나 줄일 수 있을까?\" 다음 슬라이드로 넘기면 이 문구가 제목 자리로 줄어들며 이동(모핑). 마지막에 시스템을 설명할 때 이 질문으로 다시 돌아온다.",
         "① 문제 정의. 한 문장: 어떤 설비의 무엇을, 왜, 어느 수준까지 맞히면 성공인가. 설비=터보팬 엔진, 예측 대상=남은 비행 횟수(RUL). 이상 정의=남은 수명 40 이하. 중요한 이유=긴급 정비는 계획 정비보다 2~5배 비쌈(문헌 비율 1:2, 1:5). 필수=이진 분류, 선택=RUL 회귀. 성공 기준=혼동행렬과 정밀도·재현율·F1, 놓치지 않기(재현율) 우선.",
         "① 페르소나(가상). 같은 경보라도 쓰는 역할의 우선순위가 다르면 알맞은 경보 기준이 달라진다. 운영 책임자(비용 최우선): 목표 총 정비 비용 최소, 제약 주간 계획과 정비 준비 7일 이상, 안전 하한 정비 전 고장 엔진 1% 이하(가정) (이후 경보 기준 5가지 안 비교에서 비용 최우선 안과 연결). 정비 담당자(안전 최우선): 목표 위험 엔진을 놓치지 않기, 제약 조기 정비로 늘어나는 비용은 감수, 안전 하한 test 놓침 0대(가정) (안전 최우선 안과 연결). 주의: 가상 페르소나이며, 안전 하한 값은 결과를 본 뒤 정한 가정이므로 질문받으면 솔직히 밝힐 것. 실제 운영에서는 고객이 정함.",
-        "시스템 아키텍처(약 30초, 번호 순서대로). 멘트: \"시스템 구조를 번호 순서대로 설명드리겠습니다. 먼저 1번, 데이터는 NASA 시뮬레이션 데이터가 중심이고, 공공데이터포털의 하루 비행 횟수와 기상청 공항 기온·습도를 시나리오 분석에 더했습니다. 분석 단계에서는 전처리 후 RandomForest와 GRU로 위험과 남은 수명을 예측하고, 경보 기준과 비용을 시뮬레이션합니다. 2번, 이 결과를 예측 데이터 파일로 내보내 웹 대시보드에 배포하기 때문에 실시간 추론 서버 없이 화면이 동작합니다. 3번, 정비 담당자가 엔진을 검토해 결재를 요청하면 운영 책임자가 근거를 검증해 승인 또는 반려합니다. 4, 5번, 알림과 요약은 서버리스 함수가 Slack과 Gemini에 연결해 처리하고, 연결돼 있을 때만 동작합니다. 정리하면 예측은 미리 계산해 두고, 정비 여부의 결정은 사람이 합니다.\" 주의: 실시간 추론 서버와 DB는 없고 처리 기록은 브라우저에 저장. 공개 시연 주소의 Slack은 실제 전송 없이 응답만 하는 기본 설정(SLACK_LIVE). 로그인은 시연용 계정. 공공데이터·기상청 자료는 대시보드가 직접 부르지 않고 분석 쪽 시나리오(하루 5회, 날씨 점수 시험)에만 사용.",
+        "시스템 아키텍처(약 30초, 번호 순서대로). 멘트: \"처음 질문, 엔진이 고장 나기 전에 정비 시점을 알 수 있을까, 그리고 비용은 얼마나 줄일 수 있을까? 저희의 답이 이 시스템입니다. 구조를 번호 순서대로 설명드리겠습니다. 먼저 1번, 데이터는 NASA 시뮬레이션 데이터가 중심이고, 공공데이터포털의 하루 비행 횟수와 기상청 공항 기온·습도를 시나리오 분석에 더했습니다. 분석 단계에서는 전처리 후 RandomForest와 GRU로 위험과 남은 수명을 예측하고, 경보 기준과 비용을 시뮬레이션합니다. 2번, 이 결과를 예측 데이터 파일로 내보내 웹 대시보드에 배포하기 때문에 실시간 추론 서버 없이 화면이 동작합니다. 3번, 정비 담당자가 엔진을 검토해 결재를 요청하면 운영 책임자가 근거를 검증해 승인 또는 반려합니다. 4, 5번, 알림과 요약은 서버리스 함수가 Slack과 Gemini에 연결해 처리하고, 연결돼 있을 때만 동작합니다. 정리하면 예측은 미리 계산해 두고, 정비 여부의 결정은 사람이 합니다.\" 주의: 실시간 추론 서버와 DB는 없고 처리 기록은 브라우저에 저장. 공개 시연 주소의 Slack은 실제 전송 없이 응답만 하는 기본 설정(SLACK_LIVE). 로그인은 시연용 계정. 공공데이터·기상청 자료는 대시보드가 직접 부르지 않고 분석 쪽 시나리오(하루 5회, 날씨 점수 시험)에만 사용.",
         "② 사용한 데이터 파일과 참고 문헌. 데이터: NASA PCoE의 C-MAPSS(Saxena 외 2008) 중 FD004(중심)와 FD001(교차 검증용) 2개 세트, 파일 6개. FD004: train 61,249행(엔진 249대), test 41,214행(248대), RUL 248행. FD001: train 20,631행(100대), test 13,096행(100대), RUL 100행. train·test는 26열(엔진 번호, 사이클, 운전 설정 3, 센서 21). 시뮬레이션 데이터이며 실제 항공사 데이터가 아님. FD002·FD003은 사용하지 않음. 참고 문헌: Saxena 외(2008) 데이터·센서 표·NASA 점수, de Pater 외(2022)와 Lee·Mitici(2023)는 비용 비율(1:5, 1:2)과 정비 운영 조건(준비 7일, 슬롯 10~20일, 주간 계획)으로 위험 기준 40 시뮬레이션, 공공데이터포털(한국공항공사 기종별 운송실적·보유현황, 인천공항 항공사별 통계)은 국내 항공사 하루 비행 횟수 추정(1.9~6.1회)에, 기상청 API허브 항공기상청 공항기상관측(AMOS)은 공항 7곳 기온·습도(2025년)로 하루 5회 시나리오와 날씨 점수 시험에 사용. (MathWorks 두 문서 — RUL 상한·정규화·순환 신경망 구조 — 는 슬라이드에서 뺐고 결과보고서 참고 문헌에는 남아 있음.) 세부 대응표는 분석 레포 docs/DESIGN_DECISIONS.md 5장.",
         "② 데이터의 구성. 한 행 = 엔진 한 대의 한 번의 운행(사이클). 26열: 엔진 번호·사이클 2, 운전 설정 3(고도·마하수·스로틀), 센서 21(온도·압력·회전속도·비율). 파란 행은 운전조건이 사이클마다 바뀐다는 것을 보여줌(FD004는 6가지 조합). 센서 21개 중 15개 사용: 같은 운전조건에서 표준편차가 0.01 미만인 사실상 상수 센서 6개(s1·s5·s10·s16·s18·s19)는 제외. train 61,249행(엔진 249대), test 41,214행(엔진 248대). FD004를 쓰는 이유: 4개 서브셋 중 운전조건 6가지·고장 모드 2가지로 가장 복잡. 시뮬레이션 데이터.",
         "② 전처리 4단계. ① 점검: FD004 train·test 모두 결측값 0, 중복 행 0, 엔진별 사이클이 1씩 이어짐 → 채우거나 지울 것이 없음. ② 정답 라벨 만들기: 데이터에 남은 수명(RUL) 열이 없어 '엔진의 마지막 사이클 − 현재 사이클'로 계산하고, 가장 짧은 수명(128)보다 작은 125에서 자름. ③ 운전조건 6가지별로 따로 표준화(Z-score)(조건 변화가 열화로 보이지 않게). ④ 엔진 단위 200/49 분할, 표준화 기준(평균·표준편차)은 학습 엔진만으로 계산(누수 방지), 공식 test는 마지막에 한 번. 센서 15개를 고른 이유는 앞 슬라이드(데이터 이해)에서 설명.",
@@ -4095,6 +4123,7 @@
         "⑥ 우리나라 환경 ①. C-MAPSS는 시뮬레이션이라 항공기가 하루 1번 비행한다고 가정. 공공데이터(한국공항공사·인천공항)로 추정한 국내 항공기 1대의 하루 비행 횟수는 국내 항공사 1.9~6.1회(저비용 항공사 4.6~6.1회, 대한항공 2.6회, 아시아나 3.3회). 기상청 공항기상관측(AMOS) 7개 공항의 2025년 월별 기온·습도는 여름 평균 25°C·습도 84%, 최고 35.5°C로 고온다습(표본: 매월 15일 4개 시각). 즉 국내 운항은 하루 비행이 많고 여름 환경이 가혹함.",
         "⑥ W×O: 국내 운항·환경을 반영한 시나리오 분석(시뮬레이션 데이터에 대입, 실제 항공사 검증은 아님). ① 하루 5회 비행이면 기준 40은 정비 전 고장 94%로 너무 늦음. 기준을 95~120으로 올리면 13~26%, 140이면 6%, 고장 임박 엔진 놓침은 모두 0. 라벨 상한 125에서는 N이 110을 넘으면 예측이 막혀 의미가 없어 상한을 234로 올려 재학습했고, 대신 125 이하 구간 평균 오차가 8.8에서 13.4로 커짐. ② 실제 공항 기온·습도(기상청 AMOS 2025)를 점수 4개로 만들어 GRU에 넣은 시험: 비행 기록이 없어 엔진마다 시작 날짜·공항을 무작위로 배정한 가정 시험이며(배정 3가지), 평균 오차는 거의 같고 놓침 8→2~3, 헛경보 1→2~6, 헛경보 엔진 10→23~30으로 맞바뀜. 날씨를 열화와 무관하게 붙인 값이라 개선이 나와도 근거가 아니고, 뚜렷한 개선은 없음. 실제 비행 일시·공항 기록이 있으면 같은 틀로 재검증.",
         "⑥ 시스템 개요와 역할별 시나리오. 프로젝트 목표(고장 전에 정비 시점을 알려 긴급 정비를 계획 정비로)와 대시보드 흐름을 연결. 뒤에서 도는 분석: 비행 후 센서 데이터 → GRU 남은 수명 예측(90% 구간) → 위험 등급(빨강 40 이하, 노랑 80 미만) → 새로 \"즉시 조치\"가 된 엔진은 Slack으로 자동 알림(설정에서 끌 수 있음). 정비 담당자 로그인: 현황·알림에서 즉시 조치 엔진 확인 → 엔진 상세(남은 수명, 점검 예상 모듈) → 정비 계획에서 검토 시작, 결재 요청 → Slack 결재 알림. 운영 책임자 로그인: 결재함에서 요청 검증 → 승인 또는 반려(사유 기록) → Slack 알림(승인·반려·정비 완료) → 정비 효과·주간 리포트 확인. 권한: 담당자는 검토·결재 요청·회수·정비 완료, 책임자만 승인·반려(대시보드 plan 권한 규칙). 이 부분이 Human-in-the-Loop(결정은 사람)에 해당하고 AX 설계 부분. 주의: 로그인은 서버 없는 시연용 가짜 계정이며 보안 기능이 아님. Slack 알림은 서버 함수와 웹훅(SLACK_WEBHOOK_URL)이 연결돼야 동작하고, 연결 안 된 시연 환경에서는 \"미연결\"로 표시됨. 모바일은 Slack 앱 푸시를 이용하는 것이며 실제 휴대폰 수신은 발표 전 확인할 것. 화면의 가동중단·비용 금액은 가정 기반 시뮬레이션. 실제 정비 이력 입력과 오탐·놓침 피드백으로 모델을 다시 맞추는 루프는 아직 없음(다음 단계). 분기: 책임자가 승인하면 정비 일정이 확정되고 담당자가 정비 후 정비 완료 처리, 정비 효과·주간 리포트로 확인. 반려하면 사유를 기록하고 담당자가 수정해 다시 결재 요청(반려 상태에서 재요청 가능). 승인·반려·정비 완료·결재 요청 때마다 Slack 알림(연결 시). Slack은 부가 기능이라 강조하지 않아도 됨.",
+        "답(15초). 처음 질문이 다시 뜨고, 잠시 뒤 위로 올라가며 Sentinel이 나타난다. 멘트: \"처음 질문으로 돌아가겠습니다. 엔진이 고장 나기 전에 정비 시점을 알 수 있을까, 그리고 정비 비용은 얼마나 줄일 수 있을까. 저희가 만든 답이 Sentinel입니다. 비용은 논문의 비율을 가정해 비교한 결과라는 점은 앞서 말씀드렸습니다. 이제 실제 화면으로 보시겠습니다.\" 주의: 비용 절감을 단정하지 말고 비교·판단을 돕는다고 말할 것.",
         "시연 영상 재생. 대시보드 흐름(현황 → 엔진 상세 → 정비 계획 → 결재 요청 → 책임자 승인·반려)을 영상으로 보여주고, 24번 슬라이드의 사람이 결정하는 흐름과 연결해 설명. 영상 파일은 assets/demo.mp4. 재생 버튼은 마우스로 클릭(스페이스·엔터는 슬라이드가 넘어감).",
         "Q&A. 예상 질문: 왜 40인가? / 왜 GRU(딥러닝)인가? / 숫자를 믿을 수 있나? / 비용은 실제인가? / 고장 모드별로는? / 실시간으로 쓰나?"
 ];
@@ -4269,6 +4298,67 @@
       }
       addEventListener("mousemove", wakeMouse);
       addEventListener("mousedown", wakeMouse);
+      // 문제제기 슬라이드 → 문제 정의 슬라이드로 넘어갈 때, 질문 문구가 제목 자리로 줄어들며 이동(모핑)한다.
+      (() => {
+        const baseShow = show;
+        const qIdx = slides.findIndex((s) => s.id === "question");
+        const target = qIdx >= 0 ? slides[qIdx + 1].querySelector("h2") : null;
+        const others = target
+          ? [...target.parentElement.querySelectorAll(".r")].filter((e) => e !== target)
+          : [];
+        const resetTarget = () => {
+          others.forEach((e) => (e.style.animationDelay = ""));
+          if (target) {
+            target.style.animation = "";
+            target.style.opacity = "";
+          }
+        };
+        show = function (i) {
+          const from = cur;
+          const morph = target && from === qIdx && i === qIdx + 1;
+          resetTarget();
+          if (!morph) return baseShow(i);
+          const q = slides[qIdx].querySelector(".q-text");
+          const dk = deck.getBoundingClientRect();
+          const sc = dk.width / 1920;
+          const a = q.getBoundingClientRect();
+          const sub = slides[qIdx].querySelector(".q-sub");
+          const c = sub.getBoundingClientRect();
+          const clone = q.cloneNode(true);
+          clone.classList.remove("r", "fade");
+          clone.style.cssText =
+            "position:absolute;z-index:60;margin:0;transform-origin:0 0;opacity:1;animation:none;" +
+            "left:" + (a.left - dk.left) / sc + "px;top:" + (a.top - dk.top) / sc + "px;";
+          target.style.animation = "none";
+          target.style.opacity = "0";
+          // 제목이 자리 잡은 뒤에 나머지 내용이 올라오도록 늦춘다
+          others.forEach((e) => (e.style.animationDelay = "calc(var(--d, 0) * 1ms + 700ms)"));
+          baseShow(i);
+          const b = target.getBoundingClientRect();
+          const k = parseFloat(getComputedStyle(target).fontSize) / parseFloat(getComputedStyle(q).fontSize);
+          deck.appendChild(clone);
+          const subClone = sub.cloneNode(true);
+          subClone.classList.remove("r", "fade");
+          subClone.style.cssText =
+            "position:absolute;z-index:60;margin:0;opacity:1;animation:none;" +
+            "left:" + (c.left - dk.left) / sc + "px;top:" + (c.top - dk.top) / sc + "px;";
+          deck.appendChild(subClone);
+          subClone.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: "forwards" }).onfinish = () => subClone.remove();
+          const move = clone.animate(
+            [
+              { transform: "translate(0,0) scale(1)" },
+              { transform: "translate(" + (b.left - a.left) / sc + "px," + (b.top - a.top) / sc + "px) scale(" + k + ")" },
+            ],
+            { duration: 1000, easing: "cubic-bezier(.65,0,.2,1)", fill: "forwards" },
+          );
+          const done = () => {
+            target.style.opacity = "1";
+            clone.remove();
+          };
+          move.onfinish = done;
+          move.oncancel = done;
+        };
+      })();
       const h = parseInt(location.hash.slice(1));
       show(isNaN(h) ? 0 : h - 1);
     </script>

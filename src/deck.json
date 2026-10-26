@@ -2,6 +2,7 @@
   "01-cover",
   "02-team",
   "03-agenda",
+  "03b-question",
   "04-problem",
   "04b-personas",
   "17d-architecture-pro",
@@ -22,6 +23,7 @@
   "19b-flight-pattern",
   "19c-flight-best",
   "17b-system-flow",
+  "17e-question-answer",
   "18b-demo-video",
   "21-qna"
 ]
